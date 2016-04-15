@@ -19,9 +19,9 @@ package me.raatiniemi.cli.scheme;
 import java.util.Objects;
 
 class SchemeArgument {
-    private String shortName;
+    private final String shortName;
 
-    SchemeArgument(String shortName) {
+    private SchemeArgument(String shortName) {
         this.shortName = shortName;
     }
 
@@ -41,5 +41,18 @@ class SchemeArgument {
 
         SchemeArgument argument = (SchemeArgument) o;
         return Objects.equals(getShortName(), argument.getShortName());
+    }
+
+    static class Builder {
+        private String shortName;
+
+        Builder shortName(String shortName) {
+            this.shortName = shortName;
+            return this;
+        }
+
+        SchemeArgument build() {
+            return new SchemeArgument(this.shortName);
+        }
     }
 }

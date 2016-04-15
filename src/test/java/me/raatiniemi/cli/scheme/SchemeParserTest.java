@@ -45,6 +45,12 @@ public class SchemeParserTest {
         this.parser = new SchemeParser(parseTarget);
     }
 
+    private static SchemeArgument buildSchemeArgument(String shortName) {
+        return new SchemeArgument.Builder()
+                .shortName(shortName)
+                .build();
+    }
+
     @Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(
@@ -57,15 +63,15 @@ public class SchemeParserTest {
                         {
                                 "With short name option",
                                 new SchemeArgument[]{
-                                        new SchemeArgument("d")
+                                        buildSchemeArgument("d")
                                 },
                                 WithShortNameOption.class
                         },
                         {
                                 "With short name options",
                                 new SchemeArgument[]{
-                                        new SchemeArgument("d"),
-                                        new SchemeArgument("h")
+                                        buildSchemeArgument("d"),
+                                        buildSchemeArgument("h")
                                 },
                                 WithShortNameOptions.class
                         }
