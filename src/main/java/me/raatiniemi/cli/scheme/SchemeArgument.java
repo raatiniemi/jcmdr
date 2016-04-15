@@ -43,6 +43,14 @@ class SchemeArgument {
         return Objects.equals(getShortName(), argument.getShortName());
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + Objects.hashCode(getShortName());
+
+        return result;
+    }
+
     static class Builder {
         private String shortName;
 
