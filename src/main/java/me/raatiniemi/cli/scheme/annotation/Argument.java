@@ -25,4 +25,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Argument {
     String shortName() default "";
+
+    String longName() default "";
 }

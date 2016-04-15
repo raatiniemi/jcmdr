@@ -45,9 +45,10 @@ public class SchemeParserTest {
         this.parser = new SchemeParser(parseTarget);
     }
 
-    private static SchemeArgument buildSchemeArgument(String shortName) {
+    private static SchemeArgument buildSchemeArgument(String shortName, String longName) {
         return new SchemeArgument.Builder()
                 .shortName(shortName)
+                .longName(longName)
                 .build();
     }
 
@@ -63,17 +64,40 @@ public class SchemeParserTest {
                         {
                                 "With short name option",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d")
+                                        buildSchemeArgument("d", null)
                                 },
                                 WithShortNameOption.class
                         },
                         {
                                 "With short name options",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d"),
-                                        buildSchemeArgument("h")
+                                        buildSchemeArgument("d", null),
+                                        buildSchemeArgument("h", null)
                                 },
                                 WithShortNameOptions.class
+                        },
+                        {
+                                "With long name option",
+                                new SchemeArgument[]{
+                                        buildSchemeArgument(null, "debug")
+                                },
+                                WithLongNameOption.class
+                        },
+                        {
+                                "With long name options",
+                                new SchemeArgument[]{
+                                        buildSchemeArgument(null, "debug"),
+                                        buildSchemeArgument(null, "help")
+                                },
+                                WithLongNameOptions.class
+                        },
+                        {
+                                "With short and long name options",
+                                new SchemeArgument[]{
+                                        buildSchemeArgument("d", "debug"),
+                                        buildSchemeArgument("h", "help")
+                                },
+                                WithShortAndLongNameOptions.class
                         }
                 }
         );
@@ -123,6 +147,35 @@ public class SchemeParserTest {
         }
 
         @Argument(shortName = "h")
+        public void h() {
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private class WithLongNameOption {
+        @Argument(longName = "debug")
+        public void d() {
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private class WithLongNameOptions {
+        @Argument(longName = "debug")
+        public void d() {
+        }
+
+        @Argument(longName = "help")
+        public void h() {
+        }
+    }
+
+    @SuppressWarnings("unused")
+    private class WithShortAndLongNameOptions {
+        @Argument(shortName = "d", longName = "debug")
+        public void d() {
+        }
+
+        @Argument(shortName = "h", longName = "help")
         public void h() {
         }
     }

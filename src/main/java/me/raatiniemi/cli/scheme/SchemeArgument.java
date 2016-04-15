@@ -20,13 +20,19 @@ import java.util.Objects;
 
 class SchemeArgument {
     private final String shortName;
+    private final String longName;
 
-    private SchemeArgument(String shortName) {
+    private SchemeArgument(String shortName, String longName) {
         this.shortName = shortName;
+        this.longName = longName;
     }
 
     private String getShortName() {
         return this.shortName;
+    }
+
+    private String getLongName() {
+        return longName;
     }
 
     @Override
@@ -40,27 +46,38 @@ class SchemeArgument {
         }
 
         SchemeArgument argument = (SchemeArgument) o;
-        return Objects.equals(getShortName(), argument.getShortName());
+        return Objects.equals(getShortName(), argument.getShortName())
+                && Objects.equals(getLongName(), argument.getLongName());
     }
 
     @Override
     public int hashCode() {
         int result = 17;
         result = 31 * result + Objects.hashCode(getShortName());
+        result = 31 * result + Objects.hashCode(getLongName());
 
         return result;
     }
 
     static class Builder {
         private String shortName;
+        private String longName;
 
         Builder shortName(String shortName) {
             this.shortName = shortName;
             return this;
         }
 
+        Builder longName(String longName) {
+            this.longName = longName;
+            return this;
+        }
+
         SchemeArgument build() {
-            return new SchemeArgument(this.shortName);
+            return new SchemeArgument(
+                    this.shortName,
+                    this.longName
+            );
         }
     }
 }
