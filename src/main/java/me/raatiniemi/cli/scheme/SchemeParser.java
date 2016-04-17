@@ -19,10 +19,10 @@ package me.raatiniemi.cli.scheme;
 import me.raatiniemi.cli.scheme.annotation.Argument;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Parse the argument scheme from a target class.
@@ -35,23 +35,16 @@ class SchemeParser {
     }
 
     List<SchemeArgument> parse() {
-        List<SchemeArgument> arguments = new ArrayList<>();
-
-        for (Method method : getMethods()) {
-            if (!method.isAnnotationPresent(Argument.class)) {
-                continue;
-            }
-
-            Argument argument = method.getAnnotation(Argument.class);
-
-            SchemeArgument.Builder builder = new SchemeArgument.Builder()
-                    .shortName(argument.shortName())
-                    .longName(argument.longName());
-
-            arguments.add(builder.build());
-        }
-
-        return arguments;
+        return getMethods().stream()
+                .filter(method -> method.isAnnotationPresent(Argument.class))
+                .map(method -> method.getAnnotation(Argument.class))
+                .map(annotation ->
+                        new SchemeArgument.Builder()
+                                .shortName(annotation.shortName())
+                                .longName(annotation.longName())
+                                .build()
+                )
+                .collect(Collectors.toList());
     }
 
     private List<Method> getMethods() {
