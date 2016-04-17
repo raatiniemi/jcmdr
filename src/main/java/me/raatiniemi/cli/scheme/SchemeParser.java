@@ -20,9 +20,10 @@ import me.raatiniemi.cli.scheme.annotation.Argument;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -37,15 +38,10 @@ class SchemeParser {
 
     List<SchemeArgument> parse() {
         return getMethods().stream()
-                .filter(method -> method.isAnnotationPresent(Argument.class))
+                .filter(includeMethodsWithAnnotation())
                 .sorted(sortMethodsByName())
-                .map(method -> method.getAnnotation(Argument.class))
-                .map(annotation ->
-                        new SchemeArgument.Builder()
-                                .shortName(annotation.shortName())
-                                .longName(annotation.longName())
-                                .build()
-                )
+                .map(getAnnotationFromMethod())
+                .map(buildSchemeArgumentFromAnnotation())
                 .collect(Collectors.toList());
     }
 
@@ -53,7 +49,22 @@ class SchemeParser {
         return Arrays.asList(this.target.getMethods());
     }
 
+    private Predicate<Method> includeMethodsWithAnnotation() {
+        return method -> method.isAnnotationPresent(Argument.class);
+    }
+
     private Comparator<Method> sortMethodsByName() {
         return (lhs, rhs) -> lhs.getName().compareTo(rhs.getName());
+    }
+
+    private Function<Method, Argument> getAnnotationFromMethod() {
+        return method -> method.getAnnotation(Argument.class);
+    }
+
+    private Function<Argument, SchemeArgument> buildSchemeArgumentFromAnnotation() {
+        return annotation -> new SchemeArgument.Builder()
+                .shortName(annotation.shortName())
+                .longName(annotation.longName())
+                .build();
     }
 }
