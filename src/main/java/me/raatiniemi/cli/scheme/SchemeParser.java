@@ -20,6 +20,8 @@ import me.raatiniemi.cli.scheme.annotation.Argument;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,8 +37,7 @@ class SchemeParser {
     List<SchemeArgument> parse() {
         List<SchemeArgument> arguments = new ArrayList<>();
 
-        Method[] methods = this.target.getMethods();
-        for (Method method : methods) {
+        for (Method method : getMethods()) {
             if (!method.isAnnotationPresent(Argument.class)) {
                 continue;
             }
@@ -57,5 +58,20 @@ class SchemeParser {
         }
 
         return arguments;
+    }
+
+    private List<Method> getMethods() {
+        return sortMethodsByName(
+                Arrays.asList(this.target.getMethods())
+        );
+    }
+
+    private List<Method> sortMethodsByName(List<Method> methods) {
+        Collections.sort(
+                methods,
+                (lhs, rhs) -> lhs.getName().compareTo(rhs.getName())
+        );
+
+        return methods;
     }
 }
