@@ -44,15 +44,9 @@ class SchemeParser {
 
             Argument argument = method.getAnnotation(Argument.class);
 
-            SchemeArgument.Builder builder = new SchemeArgument.Builder();
-
-            if (argument.shortName().length() > 0) {
-                builder.shortName(argument.shortName());
-            }
-
-            if (argument.longName().length() > 0) {
-                builder.longName(argument.longName());
-            }
+            SchemeArgument.Builder builder = new SchemeArgument.Builder()
+                    .shortName(argument.shortName())
+                    .longName(argument.longName());
 
             arguments.add(builder.build());
         }

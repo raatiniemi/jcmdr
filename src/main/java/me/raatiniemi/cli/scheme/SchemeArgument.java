@@ -64,12 +64,18 @@ class SchemeArgument {
         private String longName;
 
         Builder shortName(String shortName) {
-            this.shortName = shortName;
+            if (null != shortName && shortName.length() > 0) {
+                this.shortName = shortName;
+            }
+
             return this;
         }
 
         Builder longName(String longName) {
-            this.longName = longName;
+            if (null != longName && longName.length() > 0) {
+                this.longName = longName;
+            }
+
             return this;
         }
 
