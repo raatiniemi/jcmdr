@@ -32,12 +32,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class ArgumentParserTest {
     private String message;
-    private List<PosixOption> expected;
+    private List<Argument> expected;
     private ArgumentParser parser;
 
     public ArgumentParserTest(
             String message,
-            PosixOption[] expected,
+            Argument[] expected,
             String arguments,
             SchemeArgument[] schemeArguments
     ) {
@@ -87,7 +87,7 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With POSIX option",
-                                new PosixOption[]{
+                                new Argument[]{
                                         new PosixOption("d")
                                 },
                                 "-d",
@@ -109,7 +109,7 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With POSIX options (combined)",
-                                new PosixOption[]{
+                                new Argument[]{
                                         new PosixOption("d"),
                                         new PosixOption("v")
                                 },
@@ -121,7 +121,7 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With POSIX options and without full argument scheme",
-                                new PosixOption[]{
+                                new Argument[]{
                                         new PosixOption("d")
                                 },
                                 "-dv",
@@ -148,12 +148,12 @@ public class ArgumentParserTest {
     }
 
     private void assertValidArguments() {
-        List<PosixOption> actual = this.parser.parse();
+        List<Argument> actual = this.parser.parse();
         assertEquals(this.message, this.expected, actual);
     }
 
     private void assertInvalidArguments() {
-        List<PosixOption> actual = this.parser.parse();
+        List<Argument> actual = this.parser.parse();
         assertTrue(this.message, actual.isEmpty());
     }
 }

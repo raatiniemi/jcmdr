@@ -16,29 +16,5 @@
 
 package me.raatiniemi.cli.argument;
 
-class PosixOption extends Argument {
-    private String option;
-
-    PosixOption(String option) {
-        this.option = option;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (!(o instanceof PosixOption)) {
-            return false;
-        }
-
-        PosixOption that = (PosixOption) o;
-        return this.option.equals(that.option);
-    }
-
-    @Override
-    public int hashCode() {
-        return this.option.hashCode();
-    }
+abstract class Argument {
 }

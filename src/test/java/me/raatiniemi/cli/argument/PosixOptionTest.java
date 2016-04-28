@@ -16,7 +16,6 @@
 
 package me.raatiniemi.cli.argument;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -24,26 +23,15 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(Parameterized.class)
-public class PosixOptionTest {
-    private String message;
-    private Boolean expected;
-    private PosixOption option;
-    private Object compareTo;
-
+public class PosixOptionTest extends ArgumentTest {
     public PosixOptionTest(
             String message,
             Boolean expected,
             PosixOption option,
             Object compareTo
     ) {
-        this.message = message;
-        this.expected = expected;
-        this.option = option;
-        this.compareTo = compareTo;
+        super(message, expected, option, compareTo);
     }
 
     @Parameters
@@ -84,43 +72,5 @@ public class PosixOptionTest {
                         }
                 }
         );
-    }
-
-    @Test
-    public void equals() {
-        if (shouldBeEqual()) {
-            assertEqual();
-            return;
-        }
-
-        assertNotEqual();
-    }
-
-    private Boolean shouldBeEqual() {
-        return this.expected;
-    }
-
-    private void assertEqual() {
-        assertTrue(this.message, this.option.equals(this.compareTo));
-
-        validateHashCodeWhenEqual();
-    }
-
-    private void validateHashCodeWhenEqual() {
-        assertTrue(this.message, this.option.hashCode() == this.compareTo.hashCode());
-    }
-
-    private void assertNotEqual() {
-        assertFalse(this.message, this.option.equals(this.compareTo));
-
-        validateHashCodeWhenNotEqual();
-    }
-
-    private void validateHashCodeWhenNotEqual() {
-        if (null == this.compareTo) {
-            return;
-        }
-
-        assertFalse(this.message, this.option.hashCode() == this.compareTo.hashCode());
     }
 }

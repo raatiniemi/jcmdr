@@ -31,7 +31,7 @@ class ArgumentParser {
         this.schemeArguments = schemeArguments;
     }
 
-    List<PosixOption> parse() {
+    List<Argument> parse() {
         if (isMissingArgumentScheme()) {
             return Collections.emptyList();
         }
@@ -51,8 +51,8 @@ class ArgumentParser {
         return null == this.arguments || 0 == this.arguments.length();
     }
 
-    private List<PosixOption> parseArgumentSegments() {
-        List<PosixOption> arguments = new ArrayList<>();
+    private List<Argument> parseArgumentSegments() {
+        List<Argument> arguments = new ArrayList<>();
 
         for (String argumentSegment : getArgumentSegments()) {
             argumentSegment = argumentSegment.replace("-", "");
