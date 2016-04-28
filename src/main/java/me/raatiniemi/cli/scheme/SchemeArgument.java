@@ -18,7 +18,7 @@ package me.raatiniemi.cli.scheme;
 
 import java.util.Objects;
 
-class SchemeArgument {
+public class SchemeArgument {
     private final String shortName;
     private final String longName;
 
@@ -33,6 +33,10 @@ class SchemeArgument {
 
     private String getLongName() {
         return longName;
+    }
+
+    public boolean validate(String argument) {
+        return argument.equals(getShortName());
     }
 
     @Override
@@ -59,11 +63,11 @@ class SchemeArgument {
         return result;
     }
 
-    static class Builder {
+    public static class Builder {
         private String shortName;
         private String longName;
 
-        Builder shortName(String shortName) {
+        public Builder shortName(String shortName) {
             if (null != shortName && shortName.length() > 0) {
                 this.shortName = shortName;
             }
@@ -71,7 +75,7 @@ class SchemeArgument {
             return this;
         }
 
-        Builder longName(String longName) {
+        public Builder longName(String longName) {
             if (null != longName && longName.length() > 0) {
                 this.longName = longName;
             }
@@ -79,7 +83,7 @@ class SchemeArgument {
             return this;
         }
 
-        SchemeArgument build() {
+        public SchemeArgument build() {
             return new SchemeArgument(
                     this.shortName,
                     this.longName
