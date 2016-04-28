@@ -25,6 +25,7 @@ import java.util.List;
 class ArgumentParser {
     private String arguments;
     private SchemeArgument[] schemeArguments;
+    private List<Argument> parsedArguments = new ArrayList<>();
 
     ArgumentParser(String arguments, SchemeArgument[] schemeArguments) {
         this.arguments = arguments;
@@ -52,29 +53,53 @@ class ArgumentParser {
     }
 
     private List<Argument> parseArgumentSegments() {
-        List<Argument> arguments = new ArrayList<>();
-
         for (String argumentSegment : getArgumentSegments()) {
-            argumentSegment = argumentSegment.replace("-", "");
-            char[] options = argumentSegment.toCharArray();
-
-            for (char character : options) {
-                String option = String.valueOf(character);
-                for (SchemeArgument schemeArgument : this.schemeArguments) {
-                    if (!schemeArgument.validate(option)) {
-                        continue;
-                    }
-
-                    arguments.add(new PosixOption(option));
-                    break;
-                }
+            if (isGnuOption(argumentSegment)) {
+                parseGnuOption(argumentSegment);
+                continue;
             }
+
+            parsePosixArgumentSegment(argumentSegment);
         }
 
-        return arguments;
+        return this.parsedArguments;
     }
 
     private String[] getArgumentSegments() {
         return this.arguments.split(" ");
+    }
+
+    private boolean isGnuOption(String argumentSegment) {
+        return argumentSegment.startsWith("--");
+    }
+
+    private void parseGnuOption(String argumentSegment) {
+        argumentSegment = argumentSegment.replace("--", "");
+
+        for (SchemeArgument schemeArgument : this.schemeArguments) {
+            if (!schemeArgument.validate(argumentSegment)) {
+                continue;
+            }
+
+            this.parsedArguments.add(new GnuOption(argumentSegment));
+            break;
+        }
+    }
+
+    private void parsePosixArgumentSegment(String argumentSegment) {
+        argumentSegment = argumentSegment.replace("-", "");
+        char[] options = argumentSegment.toCharArray();
+
+        for (char character : options) {
+            String option = String.valueOf(character);
+            for (SchemeArgument schemeArgument : this.schemeArguments) {
+                if (!schemeArgument.validate(option)) {
+                    continue;
+                }
+
+                this.parsedArguments.add(new PosixOption(option));
+                break;
+            }
+        }
     }
 }

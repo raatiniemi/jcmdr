@@ -36,7 +36,8 @@ public class SchemeArgument {
     }
 
     public boolean validate(String argument) {
-        return argument.equals(getShortName());
+        return argument.equals(getShortName())
+                || argument.equals(getLongName());
     }
 
     @Override
