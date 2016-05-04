@@ -16,11 +16,13 @@
 
 package me.raatiniemi.cli.argument;
 
-class PosixOption extends Argument {
-    private String option;
+import me.raatiniemi.cli.scheme.SchemeArgument;
 
-    PosixOption(String option) {
-        this.option = option;
+class PosixOption extends Argument {
+    private SchemeArgument schemeArgument;
+
+    PosixOption(SchemeArgument schemeArgument) {
+        this.schemeArgument = schemeArgument;
     }
 
     @Override
@@ -34,11 +36,11 @@ class PosixOption extends Argument {
         }
 
         PosixOption that = (PosixOption) o;
-        return this.option.equals(that.option);
+        return this.schemeArgument.equals(that.schemeArgument);
     }
 
     @Override
     public int hashCode() {
-        return this.option.hashCode();
+        return this.schemeArgument.hashCode();
     }
 }

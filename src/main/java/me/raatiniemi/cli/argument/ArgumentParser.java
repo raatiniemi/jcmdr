@@ -97,7 +97,7 @@ class ArgumentParser {
                     continue;
                 }
 
-                this.parsedArguments.add(new PosixOption(option));
+                this.parsedArguments.add(new PosixOption(schemeArgument));
                 break;
             }
         }

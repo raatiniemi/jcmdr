@@ -88,7 +88,7 @@ public class ArgumentParserTest {
                         {
                                 "With POSIX option",
                                 new Argument[]{
-                                        new PosixOption("d")
+                                        new PosixOption(buildSchemeArgument("d", null))
                                 },
                                 "-d",
                                 new SchemeArgument[]{
@@ -98,8 +98,8 @@ public class ArgumentParserTest {
                         {
                                 "With POSIX options",
                                 new PosixOption[]{
-                                        new PosixOption("d"),
-                                        new PosixOption("v")
+                                        new PosixOption(buildSchemeArgument("d", null)),
+                                        new PosixOption(buildSchemeArgument("v", null))
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
@@ -110,8 +110,8 @@ public class ArgumentParserTest {
                         {
                                 "With POSIX options (combined)",
                                 new Argument[]{
-                                        new PosixOption("d"),
-                                        new PosixOption("v")
+                                        new PosixOption(buildSchemeArgument("d", null)),
+                                        new PosixOption(buildSchemeArgument("v", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -122,7 +122,7 @@ public class ArgumentParserTest {
                         {
                                 "With POSIX options and without full argument scheme",
                                 new Argument[]{
-                                        new PosixOption("d")
+                                        new PosixOption(buildSchemeArgument("d", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -174,7 +174,7 @@ public class ArgumentParserTest {
                         {
                                 "With POSIX and GNU options",
                                 new Argument[]{
-                                        new PosixOption("d"),
+                                        new PosixOption(buildSchemeArgument("d", null)),
                                         new GnuOption("verbose")
                                 },
                                 "-d --verbose",

@@ -16,6 +16,7 @@
 
 package me.raatiniemi.cli.argument;
 
+import me.raatiniemi.cli.scheme.SchemeArgument;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -34,9 +35,15 @@ public class PosixOptionTest extends ArgumentTest {
         super(message, expected, option, compareTo);
     }
 
+    private static SchemeArgument buildSchemeArgument(String shortName) {
+        return new SchemeArgument.Builder()
+                .shortName(shortName)
+                .build();
+    }
+
     @Parameters
     public static Collection<Object[]> parameters() {
-        PosixOption option = new PosixOption("d");
+        PosixOption option = new PosixOption(buildSchemeArgument("d"));
 
         return Arrays.asList(
                 new Object[][]{
@@ -62,13 +69,13 @@ public class PosixOptionTest extends ArgumentTest {
                                 "With different option",
                                 Boolean.FALSE,
                                 option,
-                                new PosixOption("h")
+                                new PosixOption(buildSchemeArgument("h"))
                         },
                         {
                                 "With same option",
                                 Boolean.TRUE,
                                 option,
-                                new PosixOption("d")
+                                new PosixOption(buildSchemeArgument("d"))
                         }
                 }
         );
