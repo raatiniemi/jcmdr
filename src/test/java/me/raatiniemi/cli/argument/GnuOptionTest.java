@@ -16,6 +16,7 @@
 
 package me.raatiniemi.cli.argument;
 
+import me.raatiniemi.cli.scheme.SchemeArgument;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -34,9 +35,15 @@ public class GnuOptionTest extends ArgumentTest {
         super(message, expected, option, compareTo);
     }
 
+    private static SchemeArgument buildSchemeArgument(String longName) {
+        return new SchemeArgument.Builder()
+                .longName(longName)
+                .build();
+    }
+
     @Parameters
     public static Collection<Object[]> parameters() {
-        GnuOption option = new GnuOption("debug");
+        GnuOption option = new GnuOption(buildSchemeArgument("debug"));
 
         return Arrays.asList(
                 new Object[][]{
@@ -62,13 +69,13 @@ public class GnuOptionTest extends ArgumentTest {
                                 "With different option",
                                 Boolean.FALSE,
                                 option,
-                                new GnuOption("help")
+                                new GnuOption(buildSchemeArgument("help"))
                         },
                         {
                                 "With same option",
                                 Boolean.TRUE,
                                 option,
-                                new GnuOption("debug")
+                                new GnuOption(buildSchemeArgument("debug"))
                         }
                 }
         );

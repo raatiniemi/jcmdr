@@ -81,7 +81,7 @@ class ArgumentParser {
                 continue;
             }
 
-            this.parsedArguments.add(new GnuOption(argumentSegment));
+            this.parsedArguments.add(new GnuOption(schemeArgument));
             break;
         }
     }

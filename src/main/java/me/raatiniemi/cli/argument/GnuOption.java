@@ -16,11 +16,13 @@
 
 package me.raatiniemi.cli.argument;
 
-class GnuOption extends Argument {
-    private String option;
+import me.raatiniemi.cli.scheme.SchemeArgument;
 
-    GnuOption(String option) {
-        this.option = option;
+class GnuOption extends Argument {
+    private SchemeArgument schemeArgument;
+
+    GnuOption(SchemeArgument schemeArgument) {
+        this.schemeArgument = schemeArgument;
     }
 
     @Override
@@ -34,12 +36,12 @@ class GnuOption extends Argument {
         }
 
         GnuOption that = (GnuOption) o;
-        return this.option.equals(that.option);
+        return this.schemeArgument.equals(that.schemeArgument);
 
     }
 
     @Override
     public int hashCode() {
-        return this.option.hashCode();
+        return this.schemeArgument.hashCode();
     }
 }

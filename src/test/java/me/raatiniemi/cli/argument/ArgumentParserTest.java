@@ -132,7 +132,7 @@ public class ArgumentParserTest {
                         {
                                 "With GNU option",
                                 new Argument[]{
-                                        new GnuOption("debug")
+                                        new GnuOption(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
@@ -142,8 +142,8 @@ public class ArgumentParserTest {
                         {
                                 "With GNU options",
                                 new Argument[]{
-                                        new GnuOption("debug"),
-                                        new GnuOption("verbose")
+                                        new GnuOption(buildSchemeArgument(null, "debug")),
+                                        new GnuOption(buildSchemeArgument(null, "verbose"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -154,7 +154,7 @@ public class ArgumentParserTest {
                         {
                                 "With GNU options and without full argument scheme",
                                 new Argument[]{
-                                        new GnuOption("debug")
+                                        new GnuOption(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -164,7 +164,7 @@ public class ArgumentParserTest {
                         {
                                 "GNU option separated with dash",
                                 new Argument[]{
-                                        new GnuOption("human-readable")
+                                        new GnuOption(buildSchemeArgument(null, "human-readable"))
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
@@ -175,7 +175,7 @@ public class ArgumentParserTest {
                                 "With POSIX and GNU options",
                                 new Argument[]{
                                         new PosixOption(buildSchemeArgument("d", null)),
-                                        new GnuOption("verbose")
+                                        new GnuOption(buildSchemeArgument(null, "verbose"))
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{
