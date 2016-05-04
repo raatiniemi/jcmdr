@@ -72,7 +72,7 @@ public class SchemeArgumentTest {
                                 ""
                         },
                         {
-                                "With different options",
+                                "With different short options",
                                 Boolean.FALSE,
                                 schemeArgument,
                                 new SchemeArgument.Builder()
@@ -80,11 +80,31 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
-                                "With same options",
+                                "With same short options",
                                 Boolean.TRUE,
                                 schemeArgument,
                                 new SchemeArgument.Builder()
                                         .shortName("d")
+                                        .build()
+                        },
+                        {
+                                "With same long options",
+                                Boolean.FALSE,
+                                new SchemeArgument.Builder()
+                                        .longName("help")
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .longName("debug")
+                                        .build()
+                        },
+                        {
+                                "With different long options",
+                                Boolean.TRUE,
+                                new SchemeArgument.Builder()
+                                        .longName("debug")
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .longName("debug")
                                         .build()
                         },
                         {
