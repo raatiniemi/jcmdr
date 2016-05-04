@@ -16,5 +16,31 @@
 
 package me.raatiniemi.cli.argument;
 
-abstract class Argument {
+import me.raatiniemi.cli.scheme.SchemeArgument;
+
+class Argument {
+    private SchemeArgument schemeArgument;
+
+    Argument(SchemeArgument schemeArgument) {
+        this.schemeArgument = schemeArgument;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof Argument)) {
+            return false;
+        }
+
+        Argument that = (Argument) o;
+        return this.schemeArgument.equals(that.schemeArgument);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.schemeArgument.hashCode();
+    }
 }

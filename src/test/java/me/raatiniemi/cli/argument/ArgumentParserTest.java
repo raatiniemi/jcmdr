@@ -86,9 +86,9 @@ public class ArgumentParserTest {
                                 null
                         },
                         {
-                                "With POSIX option",
+                                "With short option",
                                 new Argument[]{
-                                        new PosixOption(buildSchemeArgument("d", null))
+                                        new Argument(buildSchemeArgument("d", null))
                                 },
                                 "-d",
                                 new SchemeArgument[]{
@@ -96,10 +96,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options",
-                                new PosixOption[]{
-                                        new PosixOption(buildSchemeArgument("d", null)),
-                                        new PosixOption(buildSchemeArgument("v", null))
+                                "With short options",
+                                new Argument[]{
+                                        new Argument(buildSchemeArgument("d", null)),
+                                        new Argument(buildSchemeArgument("v", null))
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
@@ -108,10 +108,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options (combined)",
+                                "With short options (combined)",
                                 new Argument[]{
-                                        new PosixOption(buildSchemeArgument("d", null)),
-                                        new PosixOption(buildSchemeArgument("v", null))
+                                        new Argument(buildSchemeArgument("d", null)),
+                                        new Argument(buildSchemeArgument("v", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -120,9 +120,9 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options and without full argument scheme",
+                                "With short options, without full argument scheme",
                                 new Argument[]{
-                                        new PosixOption(buildSchemeArgument("d", null))
+                                        new Argument(buildSchemeArgument("d", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -130,9 +130,9 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU option",
+                                "With long option",
                                 new Argument[]{
-                                        new GnuOption(buildSchemeArgument(null, "debug"))
+                                        new Argument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
@@ -140,10 +140,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU options",
+                                "With long options",
                                 new Argument[]{
-                                        new GnuOption(buildSchemeArgument(null, "debug")),
-                                        new GnuOption(buildSchemeArgument(null, "verbose"))
+                                        new Argument(buildSchemeArgument(null, "debug")),
+                                        new Argument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -152,19 +152,19 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU options and without full argument scheme",
+                                "With long options, without full argument scheme",
                                 new Argument[]{
-                                        new GnuOption(buildSchemeArgument(null, "debug"))
+                                        new Argument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("", "debug")
+                                        buildSchemeArgument(null, "debug")
                                 }
                         },
                         {
-                                "GNU option separated with dash",
+                                "Long option separated with dash",
                                 new Argument[]{
-                                        new GnuOption(buildSchemeArgument(null, "human-readable"))
+                                        new Argument(buildSchemeArgument(null, "human-readable"))
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
@@ -172,10 +172,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX and GNU options",
+                                "With short and long options",
                                 new Argument[]{
-                                        new PosixOption(buildSchemeArgument("d", null)),
-                                        new GnuOption(buildSchemeArgument(null, "verbose"))
+                                        new Argument(buildSchemeArgument("d", null)),
+                                        new Argument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{

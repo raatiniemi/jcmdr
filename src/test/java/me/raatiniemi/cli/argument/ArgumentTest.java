@@ -16,18 +16,26 @@
 
 package me.raatiniemi.cli.argument;
 
+import me.raatiniemi.cli.scheme.SchemeArgument;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-abstract class ArgumentTest {
+@RunWith(Parameterized.class)
+public class ArgumentTest {
     private String message;
     private Boolean expected;
     private Argument argument;
     private Object compareTo;
 
-    ArgumentTest(
+    public ArgumentTest(
             String message,
             Boolean expected,
             Argument argument,
@@ -37,6 +45,68 @@ abstract class ArgumentTest {
         this.expected = expected;
         this.message = message;
         this.argument = argument;
+    }
+
+    private static SchemeArgument buildSchemeArgument(
+            String shortName,
+            String longName
+    ) {
+        return new SchemeArgument.Builder()
+                .shortName(shortName)
+                .longName(longName)
+                .build();
+    }
+
+    @Parameters
+    public static Collection<Object[]> parameters() {
+        Argument argument = new Argument(buildSchemeArgument("d", "debug"));
+
+        return Arrays.asList(
+                new Object[][]{
+                        {
+                                "With same instance",
+                                Boolean.TRUE,
+                                argument,
+                                argument
+                        },
+                        {
+                                "With null",
+                                Boolean.FALSE,
+                                new Argument(buildSchemeArgument("d", "debug")),
+                                null
+                        },
+                        {
+                                "With incompatible object",
+                                Boolean.FALSE,
+                                new Argument(buildSchemeArgument("d", "debug")),
+                                ""
+                        },
+                        {
+                                "With different options",
+                                Boolean.FALSE,
+                                new Argument(buildSchemeArgument("d", "debug")),
+                                new Argument(buildSchemeArgument("h", "help"))
+                        },
+                        {
+                                "With same options",
+                                Boolean.TRUE,
+                                new Argument(buildSchemeArgument("d", "debug")),
+                                new Argument(buildSchemeArgument("d", "debug"))
+                        },
+                        {
+                                "With different short options",
+                                Boolean.FALSE,
+                                new Argument(buildSchemeArgument("h", "debug")),
+                                new Argument(buildSchemeArgument("d", "debug"))
+                        },
+                        {
+                                "With different long options",
+                                Boolean.FALSE,
+                                new Argument(buildSchemeArgument("d", "debug")),
+                                new Argument(buildSchemeArgument("d", "help"))
+                        }
+                }
+        );
     }
 
     @Test

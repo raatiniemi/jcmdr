@@ -81,7 +81,7 @@ class ArgumentParser {
                 continue;
             }
 
-            this.parsedArguments.add(new GnuOption(schemeArgument));
+            this.parsedArguments.add(new Argument(schemeArgument));
             break;
         }
     }
@@ -97,7 +97,7 @@ class ArgumentParser {
                     continue;
                 }
 
-                this.parsedArguments.add(new PosixOption(schemeArgument));
+                this.parsedArguments.add(new Argument(schemeArgument));
                 break;
             }
         }
