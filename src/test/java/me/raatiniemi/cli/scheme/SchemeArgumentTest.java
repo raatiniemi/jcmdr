@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -45,8 +46,14 @@ public class SchemeArgumentTest {
         this.compareTo = compareTo;
     }
 
+    private static Method getMethodReference(String methodName)
+            throws NoSuchMethodException {
+        return SchemeArgumentTest.class.getMethod(methodName);
+    }
+
     @Parameterized.Parameters
-    public static Collection<Object[]> parameters() {
+    public static Collection<Object[]> parameters()
+            throws NoSuchMethodException {
         SchemeArgument schemeArgument = new SchemeArgument.Builder()
                 .shortName("d")
                 .build();
@@ -105,6 +112,26 @@ public class SchemeArgumentTest {
                                         .build(),
                                 new SchemeArgument.Builder()
                                         .longName("debug")
+                                        .build()
+                        },
+                        {
+                                "With same methods",
+                                Boolean.TRUE,
+                                new SchemeArgument.Builder()
+                                        .methodReference(getMethodReference("equals"))
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .methodReference(getMethodReference("equals"))
+                                        .build()
+                        },
+                        {
+                                "With different methods",
+                                Boolean.FALSE,
+                                new SchemeArgument.Builder()
+                                        .methodReference(getMethodReference("equals"))
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .methodReference(getMethodReference("hashCode"))
                                         .build()
                         },
                         {
