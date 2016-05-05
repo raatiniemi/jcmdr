@@ -16,6 +16,7 @@
 
 package me.raatiniemi.cli.scheme;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
@@ -45,6 +46,10 @@ public class SchemeArgument {
     public boolean validate(String argument) {
         return argument.equals(getShortName())
                 || argument.equals(getLongName());
+    }
+
+    public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
+        methodReference.invoke(target);
     }
 
     @Override

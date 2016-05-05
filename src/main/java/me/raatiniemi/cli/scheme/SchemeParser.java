@@ -29,14 +29,14 @@ import java.util.stream.Collectors;
 /**
  * Parse the argument scheme from a target class.
  */
-class SchemeParser {
+public class SchemeParser {
     private Class<?> target;
 
-    SchemeParser(Class<?> target) {
+    public SchemeParser(Class<?> target) {
         this.target = target;
     }
 
-    List<SchemeArgument> parse() {
+    public List<SchemeArgument> parse() {
         return getMethods().stream()
                 .filter(includeMethodsWithAnnotation())
                 .sorted(sortMethodsByName())
