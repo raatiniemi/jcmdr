@@ -25,14 +25,14 @@ import java.util.List;
 public class ArgumentParser {
     private String arguments;
     private List<SchemeArgument> schemeArguments;
-    private List<Argument> parsedArguments = new ArrayList<>();
+    private List<ParsedArgument> parsedArguments = new ArrayList<>();
 
     public ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
         this.schemeArguments = schemeArguments;
     }
 
-    public List<Argument> parse() {
+    public List<ParsedArgument> parse() {
         if (isMissingArgumentScheme()) {
             return Collections.emptyList();
         }
@@ -52,7 +52,7 @@ public class ArgumentParser {
         return null == this.arguments || 0 == this.arguments.length();
     }
 
-    private List<Argument> parseArgumentSegments() {
+    private List<ParsedArgument> parseArgumentSegments() {
         for (String argumentSegment : getArgumentSegments()) {
             if (isGnuOption(argumentSegment)) {
                 parseGnuOption(argumentSegment);
@@ -81,7 +81,7 @@ public class ArgumentParser {
                 continue;
             }
 
-            this.parsedArguments.add(new Argument(schemeArgument));
+            this.parsedArguments.add(new ParsedArgument(schemeArgument));
             break;
         }
     }
@@ -97,7 +97,7 @@ public class ArgumentParser {
                     continue;
                 }
 
-                this.parsedArguments.add(new Argument(schemeArgument));
+                this.parsedArguments.add(new ParsedArgument(schemeArgument));
                 break;
             }
         }

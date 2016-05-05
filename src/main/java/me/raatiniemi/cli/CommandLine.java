@@ -16,7 +16,7 @@
 
 package me.raatiniemi.cli;
 
-import me.raatiniemi.cli.argument.Argument;
+import me.raatiniemi.cli.argument.ParsedArgument;
 import me.raatiniemi.cli.argument.ArgumentParser;
 import me.raatiniemi.cli.scheme.SchemeArgument;
 import me.raatiniemi.cli.scheme.SchemeParser;
@@ -43,12 +43,12 @@ class CommandLine<T> {
 
     private void processArguments()
             throws InvocationTargetException, IllegalAccessException {
-        for (Argument argument : getArguments()) {
-            argument.call(this.target);
+        for (ParsedArgument parsedArgument : getParsedArguments()) {
+            parsedArgument.call(this.target);
         }
     }
 
-    private List<Argument> getArguments() {
+    private List<ParsedArgument> getParsedArguments() {
         return getArgumentParser().parse();
     }
 

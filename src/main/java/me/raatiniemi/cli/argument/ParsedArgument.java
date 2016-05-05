@@ -20,10 +20,10 @@ import me.raatiniemi.cli.scheme.SchemeArgument;
 
 import java.lang.reflect.InvocationTargetException;
 
-public class Argument {
+public class ParsedArgument {
     private SchemeArgument schemeArgument;
 
-    Argument(SchemeArgument schemeArgument) {
+    ParsedArgument(SchemeArgument schemeArgument) {
         this.schemeArgument = schemeArgument;
     }
 
@@ -40,11 +40,11 @@ public class Argument {
             return true;
         }
 
-        if (!(o instanceof Argument)) {
+        if (!(o instanceof ParsedArgument)) {
             return false;
         }
 
-        Argument that = (Argument) o;
+        ParsedArgument that = (ParsedArgument) o;
         return this.schemeArgument.equals(that.schemeArgument);
     }
 

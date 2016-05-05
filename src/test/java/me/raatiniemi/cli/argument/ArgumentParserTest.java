@@ -32,12 +32,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class ArgumentParserTest {
     private String message;
-    private List<Argument> expected;
+    private List<ParsedArgument> expected;
     private ArgumentParser parser;
 
     public ArgumentParserTest(
             String message,
-            Argument[] expected,
+            ParsedArgument[] expected,
             String arguments,
             SchemeArgument[] schemeArguments
     ) {
@@ -90,8 +90,8 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With short option",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument("d", null))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null))
                                 },
                                 "-d",
                                 new SchemeArgument[]{
@@ -100,9 +100,9 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With short options",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument("d", null)),
-                                        new Argument(buildSchemeArgument("v", null))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument("v", null))
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
@@ -112,9 +112,9 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With short options (combined)",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument("d", null)),
-                                        new Argument(buildSchemeArgument("v", null))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument("v", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -124,8 +124,8 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With short options, without full argument scheme",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument("d", null))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -134,8 +134,8 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With long option",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument(null, "debug"))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
@@ -144,9 +144,9 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With long options",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument(null, "debug")),
-                                        new Argument(buildSchemeArgument(null, "verbose"))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug")),
+                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -156,8 +156,8 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With long options, without full argument scheme",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument(null, "debug"))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -166,8 +166,8 @@ public class ArgumentParserTest {
                         },
                         {
                                 "Long option separated with dash",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument(null, "human-readable"))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "human-readable"))
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
@@ -176,9 +176,9 @@ public class ArgumentParserTest {
                         },
                         {
                                 "With short and long options",
-                                new Argument[]{
-                                        new Argument(buildSchemeArgument("d", null)),
-                                        new Argument(buildSchemeArgument(null, "verbose"))
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{
@@ -205,12 +205,12 @@ public class ArgumentParserTest {
     }
 
     private void assertValidArguments() {
-        List<Argument> actual = this.parser.parse();
+        List<ParsedArgument> actual = this.parser.parse();
         assertEquals(this.message, this.expected, actual);
     }
 
     private void assertInvalidArguments() {
-        List<Argument> actual = this.parser.parse();
+        List<ParsedArgument> actual = this.parser.parse();
         assertTrue(this.message, actual.isEmpty());
     }
 }

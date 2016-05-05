@@ -29,22 +29,22 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class ArgumentTest {
+public class ParsedArgumentTest {
     private String message;
     private Boolean expected;
-    private Argument argument;
+    private ParsedArgument parsedArgument;
     private Object compareTo;
 
-    public ArgumentTest(
+    public ParsedArgumentTest(
             String message,
             Boolean expected,
-            Argument argument,
+            ParsedArgument parsedArgument,
             Object compareTo
     ) {
         this.compareTo = compareTo;
         this.expected = expected;
         this.message = message;
-        this.argument = argument;
+        this.parsedArgument = parsedArgument;
     }
 
     private static SchemeArgument buildSchemeArgument(
@@ -59,51 +59,51 @@ public class ArgumentTest {
 
     @Parameters
     public static Collection<Object[]> parameters() {
-        Argument argument = new Argument(buildSchemeArgument("d", "debug"));
+        ParsedArgument parsedArgument = new ParsedArgument(buildSchemeArgument("d", "debug"));
 
         return Arrays.asList(
                 new Object[][]{
                         {
                                 "With same instance",
                                 Boolean.TRUE,
-                                argument,
-                                argument
+                                parsedArgument,
+                                parsedArgument
                         },
                         {
                                 "With null",
                                 Boolean.FALSE,
-                                new Argument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(buildSchemeArgument("d", "debug")),
                                 null
                         },
                         {
                                 "With incompatible object",
                                 Boolean.FALSE,
-                                new Argument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(buildSchemeArgument("d", "debug")),
                                 ""
                         },
                         {
                                 "With different options",
                                 Boolean.FALSE,
-                                new Argument(buildSchemeArgument("d", "debug")),
-                                new Argument(buildSchemeArgument("h", "help"))
+                                new ParsedArgument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(buildSchemeArgument("h", "help"))
                         },
                         {
                                 "With same options",
                                 Boolean.TRUE,
-                                new Argument(buildSchemeArgument("d", "debug")),
-                                new Argument(buildSchemeArgument("d", "debug"))
+                                new ParsedArgument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(buildSchemeArgument("d", "debug"))
                         },
                         {
                                 "With different short options",
                                 Boolean.FALSE,
-                                new Argument(buildSchemeArgument("h", "debug")),
-                                new Argument(buildSchemeArgument("d", "debug"))
+                                new ParsedArgument(buildSchemeArgument("h", "debug")),
+                                new ParsedArgument(buildSchemeArgument("d", "debug"))
                         },
                         {
                                 "With different long options",
                                 Boolean.FALSE,
-                                new Argument(buildSchemeArgument("d", "debug")),
-                                new Argument(buildSchemeArgument("d", "help"))
+                                new ParsedArgument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(buildSchemeArgument("d", "help"))
                         }
                 }
         );
@@ -124,17 +124,17 @@ public class ArgumentTest {
     }
 
     private void assertEqual() {
-        assertTrue(this.message, this.argument.equals(this.compareTo));
+        assertTrue(this.message, this.parsedArgument.equals(this.compareTo));
 
         validateHashCodeWhenEqual();
     }
 
     private void validateHashCodeWhenEqual() {
-        assertTrue(this.message, this.argument.hashCode() == this.compareTo.hashCode());
+        assertTrue(this.message, this.parsedArgument.hashCode() == this.compareTo.hashCode());
     }
 
     private void assertNotEqual() {
-        assertFalse(this.message, this.argument.equals(this.compareTo));
+        assertFalse(this.message, this.parsedArgument.equals(this.compareTo));
 
         validateHashCodeWhenNotEqual();
     }
@@ -144,6 +144,6 @@ public class ArgumentTest {
             return;
         }
 
-        assertFalse(this.message, this.argument.hashCode() == this.compareTo.hashCode());
+        assertFalse(this.message, this.parsedArgument.hashCode() == this.compareTo.hashCode());
     }
 }
