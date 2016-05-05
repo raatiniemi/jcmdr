@@ -46,7 +46,10 @@ public class ArgumentParserTest {
             this.expected = Arrays.asList(expected);
         }
 
-        this.parser = new ArgumentParser(arguments, schemeArguments);
+        this.parser = new ArgumentParser(
+                arguments,
+                null == schemeArguments ? null : Arrays.asList(schemeArguments)
+        );
     }
 
     private static SchemeArgument buildSchemeArgument(

@@ -24,10 +24,10 @@ import java.util.List;
 
 class ArgumentParser {
     private String arguments;
-    private SchemeArgument[] schemeArguments;
+    private List<SchemeArgument> schemeArguments;
     private List<Argument> parsedArguments = new ArrayList<>();
 
-    ArgumentParser(String arguments, SchemeArgument[] schemeArguments) {
+    ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
         this.schemeArguments = schemeArguments;
     }
@@ -45,7 +45,7 @@ class ArgumentParser {
     }
 
     private boolean isMissingArgumentScheme() {
-        return null == this.schemeArguments;
+        return null == this.schemeArguments || this.schemeArguments.isEmpty();
     }
 
     private boolean isMissingArguments() {
