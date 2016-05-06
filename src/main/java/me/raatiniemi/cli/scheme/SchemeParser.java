@@ -36,6 +36,26 @@ public class SchemeParser {
         this.target = target;
     }
 
+    private static Predicate<Method> includeMethodsWithAnnotation() {
+        return method -> method.isAnnotationPresent(Argument.class);
+    }
+
+    private static Comparator<Method> sortMethodsByName() {
+        return (lhs, rhs) -> lhs.getName().compareTo(rhs.getName());
+    }
+
+    private static Function<Method, SchemeArgument> buildSchemeArgumentFromMethod() {
+        return method -> {
+            Argument argument = method.getAnnotation(Argument.class);
+
+            return new SchemeArgument.Builder()
+                    .shortName(argument.shortName())
+                    .longName(argument.longName())
+                    .methodReference(method)
+                    .build();
+        };
+    }
+
     public List<SchemeArgument> parse() {
         return getMethods().stream()
                 .filter(includeMethodsWithAnnotation())
@@ -46,25 +66,5 @@ public class SchemeParser {
 
     private List<Method> getMethods() {
         return Arrays.asList(this.target.getMethods());
-    }
-
-    private Predicate<Method> includeMethodsWithAnnotation() {
-        return method -> method.isAnnotationPresent(Argument.class);
-    }
-
-    private Comparator<Method> sortMethodsByName() {
-        return (lhs, rhs) -> lhs.getName().compareTo(rhs.getName());
-    }
-
-    private Function<Method, SchemeArgument> buildSchemeArgumentFromMethod() {
-        return method -> {
-            Argument argument = method.getAnnotation(Argument.class);
-
-            return new SchemeArgument.Builder()
-                    .shortName(argument.shortName())
-                    .longName(argument.longName())
-                    .methodReference(method)
-                    .build();
-        };
     }
 }
