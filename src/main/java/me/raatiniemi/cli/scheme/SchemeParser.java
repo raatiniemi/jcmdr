@@ -29,19 +29,18 @@ import java.util.stream.Collectors;
 /**
  * Parse the argument scheme from a target class.
  */
-class SchemeParser {
+public class SchemeParser {
     private Class<?> target;
 
-    SchemeParser(Class<?> target) {
+    public SchemeParser(Class<?> target) {
         this.target = target;
     }
 
-    List<SchemeArgument> parse() {
+    public List<SchemeArgument> parse() {
         return getMethods().stream()
                 .filter(includeMethodsWithAnnotation())
                 .sorted(sortMethodsByName())
-                .map(getAnnotationFromMethod())
-                .map(buildSchemeArgumentFromAnnotation())
+                .map(buildSchemeArgumentFromMethod())
                 .collect(Collectors.toList());
     }
 
@@ -57,14 +56,15 @@ class SchemeParser {
         return (lhs, rhs) -> lhs.getName().compareTo(rhs.getName());
     }
 
-    private Function<Method, Argument> getAnnotationFromMethod() {
-        return method -> method.getAnnotation(Argument.class);
-    }
+    private Function<Method, SchemeArgument> buildSchemeArgumentFromMethod() {
+        return method -> {
+            Argument argument = method.getAnnotation(Argument.class);
 
-    private Function<Argument, SchemeArgument> buildSchemeArgumentFromAnnotation() {
-        return annotation -> new SchemeArgument.Builder()
-                .shortName(annotation.shortName())
-                .longName(annotation.longName())
-                .build();
+            return new SchemeArgument.Builder()
+                    .shortName(argument.shortName())
+                    .longName(argument.longName())
+                    .methodReference(method)
+                    .build();
+        };
     }
 }

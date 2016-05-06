@@ -16,15 +16,23 @@
 
 package me.raatiniemi.cli.scheme;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 public class SchemeArgument {
     private final String shortName;
     private final String longName;
+    private final Method methodReference;
 
-    private SchemeArgument(String shortName, String longName) {
+    private SchemeArgument(
+            String shortName,
+            String longName,
+            Method methodReference
+    ) {
         this.shortName = shortName;
         this.longName = longName;
+        this.methodReference = methodReference;
     }
 
     private String getShortName() {
@@ -40,6 +48,10 @@ public class SchemeArgument {
                 || argument.equals(getLongName());
     }
 
+    public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
+        methodReference.invoke(target);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -52,7 +64,8 @@ public class SchemeArgument {
 
         SchemeArgument argument = (SchemeArgument) o;
         return Objects.equals(getShortName(), argument.getShortName())
-                && Objects.equals(getLongName(), argument.getLongName());
+                && Objects.equals(getLongName(), argument.getLongName())
+                && Objects.equals(this.methodReference, argument.methodReference);
     }
 
     @Override
@@ -60,6 +73,7 @@ public class SchemeArgument {
         int result = 17;
         result = 31 * result + Objects.hashCode(getShortName());
         result = 31 * result + Objects.hashCode(getLongName());
+        result = 31 * result + Objects.hashCode(this.methodReference);
 
         return result;
     }
@@ -67,6 +81,7 @@ public class SchemeArgument {
     public static class Builder {
         private String shortName;
         private String longName;
+        private Method methodReference;
 
         public Builder shortName(String shortName) {
             if (null != shortName && shortName.length() > 0) {
@@ -84,10 +99,19 @@ public class SchemeArgument {
             return this;
         }
 
+        Builder methodReference(Method methodReference) {
+            if (null != methodReference) {
+                this.methodReference = methodReference;
+            }
+
+            return this;
+        }
+
         public SchemeArgument build() {
             return new SchemeArgument(
                     this.shortName,
-                    this.longName
+                    this.longName,
+                    this.methodReference
             );
         }
     }

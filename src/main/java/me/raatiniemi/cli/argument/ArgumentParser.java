@@ -22,17 +22,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class ArgumentParser {
+public class ArgumentParser {
     private String arguments;
-    private SchemeArgument[] schemeArguments;
-    private List<Argument> parsedArguments = new ArrayList<>();
+    private List<SchemeArgument> schemeArguments;
+    private List<ParsedArgument> parsedArguments = new ArrayList<>();
 
-    ArgumentParser(String arguments, SchemeArgument[] schemeArguments) {
+    public ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
         this.schemeArguments = schemeArguments;
     }
 
-    List<Argument> parse() {
+    public List<ParsedArgument> parse() {
         if (isMissingArgumentScheme()) {
             return Collections.emptyList();
         }
@@ -45,14 +45,14 @@ class ArgumentParser {
     }
 
     private boolean isMissingArgumentScheme() {
-        return null == this.schemeArguments;
+        return null == this.schemeArguments || this.schemeArguments.isEmpty();
     }
 
     private boolean isMissingArguments() {
         return null == this.arguments || 0 == this.arguments.length();
     }
 
-    private List<Argument> parseArgumentSegments() {
+    private List<ParsedArgument> parseArgumentSegments() {
         for (String argumentSegment : getArgumentSegments()) {
             if (isGnuOption(argumentSegment)) {
                 parseGnuOption(argumentSegment);
@@ -81,7 +81,7 @@ class ArgumentParser {
                 continue;
             }
 
-            this.parsedArguments.add(new GnuOption(argumentSegment));
+            this.parsedArguments.add(new ParsedArgument(schemeArgument));
             break;
         }
     }
@@ -97,7 +97,7 @@ class ArgumentParser {
                     continue;
                 }
 
-                this.parsedArguments.add(new PosixOption(option));
+                this.parsedArguments.add(new ParsedArgument(schemeArgument));
                 break;
             }
         }

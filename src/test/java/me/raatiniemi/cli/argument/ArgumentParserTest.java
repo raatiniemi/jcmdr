@@ -32,12 +32,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class ArgumentParserTest {
     private String message;
-    private List<Argument> expected;
+    private List<ParsedArgument> expected;
     private ArgumentParser parser;
 
     public ArgumentParserTest(
             String message,
-            Argument[] expected,
+            ParsedArgument[] expected,
             String arguments,
             SchemeArgument[] schemeArguments
     ) {
@@ -46,7 +46,10 @@ public class ArgumentParserTest {
             this.expected = Arrays.asList(expected);
         }
 
-        this.parser = new ArgumentParser(arguments, schemeArguments);
+        this.parser = new ArgumentParser(
+                arguments,
+                null == schemeArguments ? null : Arrays.asList(schemeArguments)
+        );
     }
 
     private static SchemeArgument buildSchemeArgument(
@@ -86,9 +89,9 @@ public class ArgumentParserTest {
                                 null
                         },
                         {
-                                "With POSIX option",
-                                new Argument[]{
-                                        new PosixOption("d")
+                                "With short option",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null))
                                 },
                                 "-d",
                                 new SchemeArgument[]{
@@ -96,10 +99,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options",
-                                new PosixOption[]{
-                                        new PosixOption("d"),
-                                        new PosixOption("v")
+                                "With short options",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument("v", null))
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
@@ -108,10 +111,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options (combined)",
-                                new Argument[]{
-                                        new PosixOption("d"),
-                                        new PosixOption("v")
+                                "With short options (combined)",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument("v", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -120,9 +123,9 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX options and without full argument scheme",
-                                new Argument[]{
-                                        new PosixOption("d")
+                                "With short options, without full argument scheme",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -130,9 +133,9 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU option",
-                                new Argument[]{
-                                        new GnuOption("debug")
+                                "With long option",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
@@ -140,10 +143,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU options",
-                                new Argument[]{
-                                        new GnuOption("debug"),
-                                        new GnuOption("verbose")
+                                "With long options",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug")),
+                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -152,19 +155,19 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With GNU options and without full argument scheme",
-                                new Argument[]{
-                                        new GnuOption("debug")
+                                "With long options, without full argument scheme",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("", "debug")
+                                        buildSchemeArgument(null, "debug")
                                 }
                         },
                         {
-                                "GNU option separated with dash",
-                                new Argument[]{
-                                        new GnuOption("human-readable")
+                                "Long option separated with dash",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "human-readable"))
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
@@ -172,10 +175,10 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
-                                "With POSIX and GNU options",
-                                new Argument[]{
-                                        new PosixOption("d"),
-                                        new GnuOption("verbose")
+                                "With short and long options",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("d", null)),
+                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{
@@ -202,12 +205,12 @@ public class ArgumentParserTest {
     }
 
     private void assertValidArguments() {
-        List<Argument> actual = this.parser.parse();
+        List<ParsedArgument> actual = this.parser.parse();
         assertEquals(this.message, this.expected, actual);
     }
 
     private void assertInvalidArguments() {
-        List<Argument> actual = this.parser.parse();
+        List<ParsedArgument> actual = this.parser.parse();
         assertTrue(this.message, actual.isEmpty());
     }
 }

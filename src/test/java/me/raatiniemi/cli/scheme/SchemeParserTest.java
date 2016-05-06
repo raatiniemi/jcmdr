@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -45,15 +46,9 @@ public class SchemeParserTest {
         this.parser = new SchemeParser(parseTarget);
     }
 
-    private static SchemeArgument buildSchemeArgument(String shortName, String longName) {
-        return new SchemeArgument.Builder()
-                .shortName(shortName)
-                .longName(longName)
-                .build();
-    }
-
     @Parameters
-    public static Collection<Object[]> parameters() {
+    public static Collection<Object[]> parameters()
+            throws NoSuchMethodException {
         return Arrays.asList(
                 new Object[][]{
                         {
@@ -64,38 +59,64 @@ public class SchemeParserTest {
                         {
                                 "With short name option",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null)
+                                        new SchemeArgument.Builder()
+                                                .shortName("d")
+                                                .methodReference(WithShortNameOption.class.getMethod("d"))
+                                                .build()
                                 },
                                 WithShortNameOption.class
                         },
                         {
                                 "With short name options",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null),
-                                        buildSchemeArgument("h", null)
+                                        new SchemeArgument.Builder()
+                                                .shortName("d")
+                                                .methodReference(WithShortNameOptions.class.getMethod("d"))
+                                                .build(),
+                                        new SchemeArgument.Builder()
+                                                .shortName("h")
+                                                .methodReference(WithShortNameOptions.class.getMethod("h"))
+                                                .build()
                                 },
                                 WithShortNameOptions.class
                         },
                         {
                                 "With long name option",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug")
+                                        new SchemeArgument.Builder()
+                                                .longName("debug")
+                                                .methodReference(WithLongNameOption.class.getMethod("d"))
+                                                .build()
                                 },
                                 WithLongNameOption.class
                         },
                         {
                                 "With long name options",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug"),
-                                        buildSchemeArgument(null, "help")
+                                        new SchemeArgument.Builder()
+                                                .longName("debug")
+                                                .methodReference(WithLongNameOptions.class.getMethod("d"))
+                                                .build(),
+                                        new SchemeArgument.Builder()
+                                                .longName("help")
+                                                .methodReference(WithLongNameOptions.class.getMethod("h"))
+                                                .build()
                                 },
                                 WithLongNameOptions.class
                         },
                         {
                                 "With short and long name options",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", "debug"),
-                                        buildSchemeArgument("h", "help")
+                                        new SchemeArgument.Builder()
+                                                .shortName("d")
+                                                .longName("debug")
+                                                .methodReference(WithShortAndLongNameOptions.class.getMethod("d"))
+                                                .build(),
+                                        new SchemeArgument.Builder()
+                                                .shortName("h")
+                                                .longName("help")
+                                                .methodReference(WithShortAndLongNameOptions.class.getMethod("h"))
+                                                .build()
                                 },
                                 WithShortAndLongNameOptions.class
                         }

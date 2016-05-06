@@ -16,11 +16,22 @@
 
 package me.raatiniemi.cli.argument;
 
-class PosixOption extends Argument {
-    private String option;
+import me.raatiniemi.cli.scheme.SchemeArgument;
 
-    PosixOption(String option) {
-        this.option = option;
+import java.lang.reflect.InvocationTargetException;
+
+public class ParsedArgument {
+    private SchemeArgument schemeArgument;
+
+    ParsedArgument(SchemeArgument schemeArgument) {
+        this.schemeArgument = schemeArgument;
+    }
+
+    public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
+        // TODO: Wrap the InvocationTargetException and IllegalAccessException.
+        // The call method should throw an IllegalCallException
+        // or something like that to keep the level of abstraction.
+        this.schemeArgument.call(target);
     }
 
     @Override
@@ -29,16 +40,16 @@ class PosixOption extends Argument {
             return true;
         }
 
-        if (!(o instanceof PosixOption)) {
+        if (!(o instanceof ParsedArgument)) {
             return false;
         }
 
-        PosixOption that = (PosixOption) o;
-        return this.option.equals(that.option);
+        ParsedArgument that = (ParsedArgument) o;
+        return this.schemeArgument.equals(that.schemeArgument);
     }
 
     @Override
     public int hashCode() {
-        return this.option.hashCode();
+        return this.schemeArgument.hashCode();
     }
 }
