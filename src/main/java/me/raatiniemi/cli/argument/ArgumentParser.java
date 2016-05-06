@@ -32,6 +32,10 @@ public class ArgumentParser {
         this.schemeArguments = schemeArguments;
     }
 
+    private static boolean isGnuOption(String argumentSegment) {
+        return argumentSegment.startsWith("--");
+    }
+
     public List<ParsedArgument> parse() {
         if (isMissingArgumentScheme()) {
             return Collections.emptyList();
@@ -67,10 +71,6 @@ public class ArgumentParser {
 
     private String[] getArgumentSegments() {
         return this.arguments.split(" ");
-    }
-
-    private boolean isGnuOption(String argumentSegment) {
-        return argumentSegment.startsWith("--");
     }
 
     private void parseGnuOption(String argumentSegment) {
