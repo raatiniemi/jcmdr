@@ -77,12 +77,10 @@ public class ArgumentParser {
         argumentSegment = argumentSegment.replace("--", "");
 
         for (SchemeArgument schemeArgument : this.schemeArguments) {
-            if (!schemeArgument.validate(argumentSegment)) {
-                continue;
+            if (schemeArgument.validate(argumentSegment)) {
+                this.parsedArguments.add(new ParsedArgument(schemeArgument));
+                break;
             }
-
-            this.parsedArguments.add(new ParsedArgument(schemeArgument));
-            break;
         }
     }
 
@@ -93,12 +91,10 @@ public class ArgumentParser {
         for (char character : options) {
             String option = String.valueOf(character);
             for (SchemeArgument schemeArgument : this.schemeArguments) {
-                if (!schemeArgument.validate(option)) {
-                    continue;
+                if (schemeArgument.validate(option)) {
+                    this.parsedArguments.add(new ParsedArgument(schemeArgument));
+                    break;
                 }
-
-                this.parsedArguments.add(new ParsedArgument(schemeArgument));
-                break;
             }
         }
     }
