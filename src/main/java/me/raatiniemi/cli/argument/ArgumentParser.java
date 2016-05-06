@@ -74,10 +74,10 @@ public class ArgumentParser {
     }
 
     private void parseGnuOption(String argumentSegment) {
-        argumentSegment = argumentSegment.replace("--", "");
+        String argument = argumentSegment.replace("--", "");
 
         for (SchemeArgument schemeArgument : this.schemeArguments) {
-            if (schemeArgument.validate(argumentSegment)) {
+            if (schemeArgument.validate(argument)) {
                 this.parsedArguments.add(new ParsedArgument(schemeArgument));
                 break;
             }
@@ -85,8 +85,8 @@ public class ArgumentParser {
     }
 
     private void parsePosixArgumentSegment(String argumentSegment) {
-        argumentSegment = argumentSegment.replace("-", "");
-        char[] options = argumentSegment.toCharArray();
+        String argument = argumentSegment.replace("-", "");
+        char[] options = argument.toCharArray();
 
         for (char character : options) {
             String option = String.valueOf(character);
