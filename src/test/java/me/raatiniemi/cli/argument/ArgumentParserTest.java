@@ -17,6 +17,7 @@
 package me.raatiniemi.cli.argument;
 
 import me.raatiniemi.cli.scheme.SchemeArgument;
+import me.raatiniemi.cli.scheme.SchemeArgumentBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -56,10 +57,7 @@ public class ArgumentParserTest {
             String shortName,
             String longName
     ) {
-        return new SchemeArgument.Builder()
-                .shortName(shortName)
-                .longName(longName)
-                .build();
+        return SchemeArgumentBuilder.build(shortName, longName);
     }
 
     @Parameters

@@ -70,12 +70,12 @@ public class SchemeArgument {
         return result;
     }
 
-    public static class Builder {
+    static class Builder {
         private String shortName;
         private String longName;
         private Method methodReference;
 
-        public Builder shortName(String shortName) {
+        Builder shortName(String shortName) {
             if (null != shortName && shortName.length() > 0) {
                 this.shortName = shortName;
             }
@@ -83,7 +83,7 @@ public class SchemeArgument {
             return this;
         }
 
-        public Builder longName(String longName) {
+        Builder longName(String longName) {
             if (null != longName && longName.length() > 0) {
                 this.longName = longName;
             }
@@ -99,7 +99,7 @@ public class SchemeArgument {
             return this;
         }
 
-        public SchemeArgument build() {
+        SchemeArgument build() {
             return new SchemeArgument(
                     this.shortName,
                     this.longName,
