@@ -79,25 +79,22 @@ public class ArgumentParser {
     private void parseGnuOption(String argumentSegment) {
         String argument = argumentSegment.replace(PREFIX_GNU_OPTION, "");
 
-        for (SchemeArgument schemeArgument : this.schemeArguments) {
-            if (schemeArgument.validate(argument)) {
-                this.parsedArguments.add(new ParsedArgument(schemeArgument));
-                break;
-            }
-        }
+        collectParsedArgument(argument);
     }
 
     private void parsePosixArgumentSegment(String argumentSegment) {
         String argument = argumentSegment.replace(PREFIX_POSIX_OPTION, "");
-        char[] options = argument.toCharArray();
 
-        for (char character : options) {
-            String option = String.valueOf(character);
-            for (SchemeArgument schemeArgument : this.schemeArguments) {
-                if (schemeArgument.validate(option)) {
-                    this.parsedArguments.add(new ParsedArgument(schemeArgument));
-                    break;
-                }
+        for (char character : argument.toCharArray()) {
+            collectParsedArgument(String.valueOf(character));
+        }
+    }
+
+    private void collectParsedArgument(String argument) {
+        for (SchemeArgument schemeArgument : this.schemeArguments) {
+            if (schemeArgument.validate(argument)) {
+                this.parsedArguments.add(new ParsedArgument(schemeArgument));
+                break;
             }
         }
     }
