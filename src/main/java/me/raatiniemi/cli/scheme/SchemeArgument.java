@@ -35,17 +35,9 @@ public class SchemeArgument {
         this.methodReference = methodReference;
     }
 
-    private String getShortName() {
-        return this.shortName;
-    }
-
-    private String getLongName() {
-        return longName;
-    }
-
     public boolean validate(String argument) {
-        return argument.equals(getShortName())
-                || argument.equals(getLongName());
+        return argument.equals(this.shortName)
+                || argument.equals(this.longName);
     }
 
     public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
@@ -63,16 +55,16 @@ public class SchemeArgument {
         }
 
         SchemeArgument argument = (SchemeArgument) o;
-        return Objects.equals(getShortName(), argument.getShortName())
-                && Objects.equals(getLongName(), argument.getLongName())
+        return Objects.equals(this.shortName, argument.shortName)
+                && Objects.equals(this.longName, argument.longName)
                 && Objects.equals(this.methodReference, argument.methodReference);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + Objects.hashCode(getShortName());
-        result = 31 * result + Objects.hashCode(getLongName());
+        result = 31 * result + Objects.hashCode(this.shortName);
+        result = 31 * result + Objects.hashCode(this.longName);
         result = 31 * result + Objects.hashCode(this.methodReference);
 
         return result;
