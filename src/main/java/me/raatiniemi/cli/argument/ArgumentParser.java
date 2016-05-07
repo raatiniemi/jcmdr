@@ -23,6 +23,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class ArgumentParser {
+    private static final String PREFIX_GNU_OPTION = "--";
+    private static final String PREFIX_POSIX_OPTION = "-";
+
     private String arguments;
     private List<SchemeArgument> schemeArguments;
     private List<ParsedArgument> parsedArguments = new ArrayList<>();
@@ -33,7 +36,7 @@ public class ArgumentParser {
     }
 
     private static boolean isGnuOption(String argumentSegment) {
-        return argumentSegment.startsWith("--");
+        return argumentSegment.startsWith(PREFIX_GNU_OPTION);
     }
 
     public List<ParsedArgument> parse() {
@@ -74,7 +77,7 @@ public class ArgumentParser {
     }
 
     private void parseGnuOption(String argumentSegment) {
-        String argument = argumentSegment.replace("--", "");
+        String argument = argumentSegment.replace(PREFIX_GNU_OPTION, "");
 
         for (SchemeArgument schemeArgument : this.schemeArguments) {
             if (schemeArgument.validate(argument)) {
@@ -85,7 +88,7 @@ public class ArgumentParser {
     }
 
     private void parsePosixArgumentSegment(String argumentSegment) {
-        String argument = argumentSegment.replace("-", "");
+        String argument = argumentSegment.replace(PREFIX_POSIX_OPTION, "");
         char[] options = argument.toCharArray();
 
         for (char character : options) {
