@@ -2,6 +2,7 @@ group 'me.raatiniemi'
 version '0.0.1'
 
 apply plugin: 'java'
+apply plugin: 'jacoco'
 apply plugin: 'org.sonarqube'
 
 // noinspection GroovyUnusedAssignment
@@ -24,6 +25,18 @@ buildscript {
     dependencies {
         classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.0.1'
     }
+}
+
+sonarqube {
+    // noinspection GroovyAssignabilityCheck
+    properties {
+        // noinspection GroovyAssignabilityCheck
+        property "sonar.jacoco.reportPath", "${buildDir}/jacoco/test.exec"
+    }
+}
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
 }
 
 dependencies {
