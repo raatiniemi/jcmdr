@@ -16,8 +16,8 @@
 
 package me.raatiniemi.cli;
 
-import me.raatiniemi.cli.argument.ParsedArgument;
 import me.raatiniemi.cli.argument.ArgumentParser;
+import me.raatiniemi.cli.argument.ParsedArgument;
 import me.raatiniemi.cli.scheme.SchemeArgument;
 import me.raatiniemi.cli.scheme.SchemeParser;
 
