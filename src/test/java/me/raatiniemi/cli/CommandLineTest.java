@@ -16,13 +16,13 @@
 
 package me.raatiniemi.cli;
 
+import me.raatiniemi.cli.exception.InvokeArgumentException;
 import me.raatiniemi.cli.scheme.annotation.Argument;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -88,8 +88,7 @@ public class CommandLineTest {
     }
 
     @Test
-    public void process()
-            throws InvocationTargetException, IllegalAccessException {
+    public void process() throws InvokeArgumentException {
         ArgumentTarget argumentTarget = new ArgumentTarget();
         CommandLine.process(argumentTarget, this.arguments);
 

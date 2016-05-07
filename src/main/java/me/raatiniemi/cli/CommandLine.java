@@ -18,10 +18,10 @@ package me.raatiniemi.cli;
 
 import me.raatiniemi.cli.argument.ArgumentParser;
 import me.raatiniemi.cli.argument.ParsedArgument;
+import me.raatiniemi.cli.exception.InvokeArgumentException;
 import me.raatiniemi.cli.scheme.SchemeArgument;
 import me.raatiniemi.cli.scheme.SchemeParser;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 class CommandLine<T> {
@@ -36,13 +36,12 @@ class CommandLine<T> {
     }
 
     static <T> void process(T target, String... args)
-            throws InvocationTargetException, IllegalAccessException {
+            throws InvokeArgumentException {
         CommandLine<T> commandLine = new CommandLine<>(target, args);
         commandLine.processArguments();
     }
 
-    private void processArguments()
-            throws InvocationTargetException, IllegalAccessException {
+    private void processArguments() throws InvokeArgumentException {
         for (ParsedArgument parsedArgument : getParsedArguments()) {
             parsedArgument.call(this.target);
         }

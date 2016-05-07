@@ -16,6 +16,8 @@
 
 package me.raatiniemi.cli.scheme;
 
+import me.raatiniemi.cli.exception.InvokeArgumentException;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Objects;
@@ -40,8 +42,12 @@ public class SchemeArgument {
                 || argument.equals(this.longName);
     }
 
-    public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
-        methodReference.invoke(target);
+    public <T> void call(T target) throws InvokeArgumentException {
+        try {
+            methodReference.invoke(target);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new InvokeArgumentException(e);
+        }
     }
 
     @Override

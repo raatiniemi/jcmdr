@@ -16,9 +16,8 @@
 
 package me.raatiniemi.cli.argument;
 
+import me.raatiniemi.cli.exception.InvokeArgumentException;
 import me.raatiniemi.cli.scheme.SchemeArgument;
-
-import java.lang.reflect.InvocationTargetException;
 
 public class ParsedArgument {
     private SchemeArgument schemeArgument;
@@ -27,10 +26,7 @@ public class ParsedArgument {
         this.schemeArgument = schemeArgument;
     }
 
-    public <T> void call(T target) throws InvocationTargetException, IllegalAccessException {
-        // TODO: Wrap the InvocationTargetException and IllegalAccessException.
-        // The call method should throw an IllegalCallException
-        // or something like that to keep the level of abstraction.
+    public <T> void call(T target) throws InvokeArgumentException {
         this.schemeArgument.call(target);
     }
 
