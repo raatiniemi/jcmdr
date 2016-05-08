@@ -16,14 +16,21 @@
 
 package me.raatiniemi.cli.scheme;
 
+import java.lang.reflect.Method;
+
 /**
  * Builds SchemeArgument from outside of the package when testing.
  */
 public class SchemeArgumentBuilder {
-    public static SchemeArgument build(String shortName, String longName) {
+    public static SchemeArgument build(
+            String shortName,
+            String longName,
+            Method methodReference
+    ) {
         return new SchemeArgument.Builder()
                 .shortName(shortName)
                 .longName(longName)
+                .methodReference(methodReference)
                 .build();
     }
 }

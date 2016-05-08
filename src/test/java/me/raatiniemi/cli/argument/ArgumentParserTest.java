@@ -57,7 +57,7 @@ public class ArgumentParserTest {
             String shortName,
             String longName
     ) {
-        return SchemeArgumentBuilder.build(shortName, longName);
+        return SchemeArgumentBuilder.build(shortName, longName, null);
     }
 
     @Parameters
