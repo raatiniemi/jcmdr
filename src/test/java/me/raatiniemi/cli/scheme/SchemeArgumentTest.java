@@ -116,6 +116,16 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
+                                "With same long options (different case)",
+                                Boolean.TRUE,
+                                new SchemeArgument.Builder()
+                                        .longName("debug")
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .longName("DEBUG")
+                                        .build()
+                        },
+                        {
                                 "With same methods",
                                 Boolean.TRUE,
                                 new SchemeArgument.Builder()

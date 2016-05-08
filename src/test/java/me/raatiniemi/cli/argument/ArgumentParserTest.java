@@ -159,6 +159,16 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
+                                "With long option (different case)",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
+                                },
+                                "--DEBUG",
+                                new SchemeArgument[]{
+                                        buildSchemeArgument(null, "debug")
+                                }
+                        },
+                        {
                                 "With long options, without full argument scheme",
                                 new ParsedArgument[]{
                                         new ParsedArgument(buildSchemeArgument(null, "debug"))

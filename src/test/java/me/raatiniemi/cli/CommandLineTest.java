@@ -68,6 +68,13 @@ public class CommandLineTest {
                                 "--debug"
                         },
                         {
+                                "Enable debug with long name (uppercase)",
+                                new String[]{
+                                        METHOD_DEBUG
+                                },
+                                "--DEBUG"
+                        },
+                        {
                                 "Enable debug and verbose with short name",
                                 new String[]{
                                         METHOD_DEBUG,

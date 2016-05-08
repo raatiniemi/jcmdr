@@ -39,7 +39,7 @@ public class SchemeArgument {
 
     public boolean validate(String argument) {
         return argument.equals(this.shortName)
-                || argument.equals(this.longName);
+                || argument.equalsIgnoreCase(this.longName);
     }
 
     public <T> void call(T target) throws InvokeArgumentException {
@@ -91,7 +91,7 @@ public class SchemeArgument {
 
         Builder longName(String longName) {
             if (null != longName && longName.length() > 0) {
-                this.longName = longName;
+                this.longName = longName.toLowerCase();
             }
 
             return this;
