@@ -22,6 +22,7 @@ import me.raatiniemi.cli.exception.InvokeArgumentException;
 import me.raatiniemi.cli.scheme.SchemeArgument;
 import me.raatiniemi.cli.scheme.SchemeParser;
 
+import java.util.Collection;
 import java.util.List;
 
 class CommandLine<T> {
@@ -47,7 +48,7 @@ class CommandLine<T> {
         }
     }
 
-    private List<ParsedArgument> getParsedArguments() {
+    private Collection<ParsedArgument> getParsedArguments() {
         return getArgumentParser().parse();
     }
 

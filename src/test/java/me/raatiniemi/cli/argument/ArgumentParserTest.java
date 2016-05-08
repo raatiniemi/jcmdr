@@ -25,7 +25,7 @@ import org.junit.runners.Parameterized.Parameters;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -33,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Parameterized.class)
 public class ArgumentParserTest {
     private String message;
-    private List<ParsedArgument> expected;
+    private Collection<ParsedArgument> expected;
     private ArgumentParser parser;
 
     public ArgumentParserTest(
@@ -44,7 +44,7 @@ public class ArgumentParserTest {
     ) {
         this.message = message;
         if (null != expected) {
-            this.expected = Arrays.asList(expected);
+            this.expected = new LinkedHashSet<>(Arrays.asList(expected));
         }
 
         this.parser = new ArgumentParser(
@@ -231,12 +231,12 @@ public class ArgumentParserTest {
     }
 
     private void assertValidArguments() {
-        List<ParsedArgument> actual = this.parser.parse();
+        Collection<ParsedArgument> actual = this.parser.parse();
         assertEquals(this.message, this.expected, actual);
     }
 
     private void assertInvalidArguments() {
-        List<ParsedArgument> actual = this.parser.parse();
+        Collection<ParsedArgument> actual = this.parser.parse();
         assertTrue(this.message, actual.isEmpty());
     }
 }

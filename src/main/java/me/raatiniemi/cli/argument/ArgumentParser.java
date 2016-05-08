@@ -18,9 +18,7 @@ package me.raatiniemi.cli.argument;
 
 import me.raatiniemi.cli.scheme.SchemeArgument;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ArgumentParser {
     private static final String PREFIX_GNU_OPTION = "--";
@@ -28,7 +26,7 @@ public class ArgumentParser {
 
     private String arguments;
     private List<SchemeArgument> schemeArguments;
-    private List<ParsedArgument> parsedArguments = new ArrayList<>();
+    private Set<ParsedArgument> parsedArguments = new LinkedHashSet<>();
 
     public ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
@@ -39,13 +37,13 @@ public class ArgumentParser {
         return argumentSegment.startsWith(PREFIX_GNU_OPTION);
     }
 
-    public List<ParsedArgument> parse() {
+    public Collection<ParsedArgument> parse() {
         if (isMissingArgumentScheme()) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         if (isMissingArguments()) {
-            return Collections.emptyList();
+            return Collections.emptySet();
         }
 
         return parseArgumentSegments();
@@ -59,7 +57,7 @@ public class ArgumentParser {
         return null == this.arguments || 0 == this.arguments.length();
     }
 
-    private List<ParsedArgument> parseArgumentSegments() {
+    private Collection<ParsedArgument> parseArgumentSegments() {
         for (String argumentSegment : getArgumentSegments()) {
             if (isGnuOption(argumentSegment)) {
                 parseGnuOption(argumentSegment);
