@@ -87,6 +87,12 @@ public class ArgumentParserTest {
                                 null
                         },
                         {
+                                "With empty argument scheme",
+                                null,
+                                "-d",
+                                new SchemeArgument[]{}
+                        },
+                        {
                                 "With short option",
                                 new ParsedArgument[]{
                                         new ParsedArgument(buildSchemeArgument("d", null))
