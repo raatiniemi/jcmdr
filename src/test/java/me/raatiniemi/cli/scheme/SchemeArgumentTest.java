@@ -19,6 +19,7 @@ package me.raatiniemi.cli.scheme;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -51,7 +52,7 @@ public class SchemeArgumentTest {
         return SchemeArgumentTest.class.getMethod(methodName);
     }
 
-    @Parameterized.Parameters
+    @Parameters
     public static Collection<Object[]> parameters()
             throws NoSuchMethodException {
         SchemeArgument schemeArgument = new SchemeArgument.Builder()
