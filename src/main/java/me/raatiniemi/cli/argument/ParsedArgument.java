@@ -31,6 +31,11 @@ public class ParsedArgument {
     }
 
     @Override
+    public String toString() {
+        return schemeArgument.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

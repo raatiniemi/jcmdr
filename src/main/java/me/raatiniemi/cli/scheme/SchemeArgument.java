@@ -51,6 +51,11 @@ public class SchemeArgument {
     }
 
     @Override
+    public String toString() {
+        return "{shortName='" + shortName + "', longName='" + longName + "'}";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
