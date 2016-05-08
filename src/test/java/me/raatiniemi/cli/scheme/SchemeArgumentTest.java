@@ -96,7 +96,7 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
-                                "With same long options",
+                                "With different long options",
                                 Boolean.FALSE,
                                 new SchemeArgument.Builder()
                                         .longName("help")
@@ -106,7 +106,7 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
-                                "With different long options",
+                                "With same long options",
                                 Boolean.TRUE,
                                 new SchemeArgument.Builder()
                                         .longName("debug")
