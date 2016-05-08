@@ -96,6 +96,14 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
+                                "With same short options (different case)",
+                                Boolean.FALSE,
+                                schemeArgument,
+                                new SchemeArgument.Builder()
+                                        .shortName("D")
+                                        .build()
+                        },
+                        {
                                 "With different long options",
                                 Boolean.FALSE,
                                 new SchemeArgument.Builder()

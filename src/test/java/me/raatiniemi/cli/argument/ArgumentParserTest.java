@@ -127,6 +127,18 @@ public class ArgumentParserTest {
                                 }
                         },
                         {
+                                "With same short options (different cases)",
+                                new ParsedArgument[]{
+                                        new ParsedArgument(buildSchemeArgument("V", null)),
+                                        new ParsedArgument(buildSchemeArgument("v", null))
+                                },
+                                "-V -v",
+                                new SchemeArgument[]{
+                                        buildSchemeArgument("V", null),
+                                        buildSchemeArgument("v", null)
+                                }
+                        },
+                        {
                                 "With short options, without full argument scheme",
                                 new ParsedArgument[]{
                                         new ParsedArgument(buildSchemeArgument("d", null))
