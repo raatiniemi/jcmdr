@@ -49,7 +49,7 @@ public class SchemeArgumentTest {
 
     private static Method getMethodReference(String methodName)
             throws NoSuchMethodException {
-        return SchemeArgumentTest.class.getMethod(methodName);
+        return SchemeArgumentTestReference.class.getMethod(methodName);
     }
 
     @Parameters
@@ -137,20 +137,36 @@ public class SchemeArgumentTest {
                                 "With same methods",
                                 Boolean.TRUE,
                                 new SchemeArgument.Builder()
-                                        .methodReference(getMethodReference("equals"))
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "firstMethodWithoutArguments"
+                                                )
+                                        )
                                         .build(),
                                 new SchemeArgument.Builder()
-                                        .methodReference(getMethodReference("equals"))
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "firstMethodWithoutArguments"
+                                                )
+                                        )
                                         .build()
                         },
                         {
                                 "With different methods",
                                 Boolean.FALSE,
                                 new SchemeArgument.Builder()
-                                        .methodReference(getMethodReference("equals"))
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "firstMethodWithoutArguments"
+                                                )
+                                        )
                                         .build(),
                                 new SchemeArgument.Builder()
-                                        .methodReference(getMethodReference("hashCode"))
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "secondMethodWithoutArguments"
+                                                )
+                                        )
                                         .build()
                         },
                         {
@@ -200,5 +216,14 @@ public class SchemeArgumentTest {
         }
 
         assertFalse(this.message, schemeArgument.hashCode() == compareTo.hashCode());
+    }
+
+    @SuppressWarnings("unused")
+    private class SchemeArgumentTestReference {
+        public void firstMethodWithoutArguments() {
+        }
+
+        public void secondMethodWithoutArguments() {
+        }
     }
 }
