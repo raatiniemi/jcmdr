@@ -22,7 +22,7 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 public class ParsedArgument {
     private SchemeArgument schemeArgument;
 
-    ParsedArgument(SchemeArgument schemeArgument) {
+    private ParsedArgument(SchemeArgument schemeArgument) {
         this.schemeArgument = schemeArgument;
     }
 
@@ -52,5 +52,19 @@ public class ParsedArgument {
     @Override
     public int hashCode() {
         return this.schemeArgument.hashCode();
+    }
+
+    static class Builder {
+        private SchemeArgument schemeArgument;
+
+        Builder schemeArgument(SchemeArgument schemeArgument) {
+            this.schemeArgument = schemeArgument;
+
+            return this;
+        }
+
+        ParsedArgument build() {
+            return new ParsedArgument(this.schemeArgument);
+        }
     }
 }

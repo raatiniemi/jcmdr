@@ -91,7 +91,11 @@ public class ArgumentParser {
     private void collectParsedArgument(String argument) {
         for (SchemeArgument schemeArgument : this.schemeArguments) {
             if (schemeArgument.validate(argument)) {
-                this.parsedArguments.add(new ParsedArgument(schemeArgument));
+                ParsedArgument parsedArgument = new ParsedArgument.Builder()
+                        .schemeArgument(schemeArgument)
+                        .build();
+
+                this.parsedArguments.add(parsedArgument);
                 break;
             }
         }
