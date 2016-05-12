@@ -22,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -45,6 +46,14 @@ public class SchemeParserTest {
         this.parser = new SchemeParser(parseTarget);
     }
 
+    private static Method getMethodReference(
+            Class<?> classReference,
+            String methodName,
+            Class... arguments
+    ) throws NoSuchMethodException {
+        return classReference.getMethod(methodName, arguments);
+    }
+
     @Parameters
     public static Collection<Object[]> parameters()
             throws NoSuchMethodException {
@@ -60,7 +69,10 @@ public class SchemeParserTest {
                                 new SchemeArgument[]{
                                         SchemeArgumentBuilder.buildWithShortName(
                                                 "d",
-                                                WithShortNameOption.class.getMethod("d")
+                                                getMethodReference(
+                                                        WithShortNameOption.class,
+                                                        "d"
+                                                )
                                         )
                                 },
                                 WithShortNameOption.class
@@ -70,11 +82,17 @@ public class SchemeParserTest {
                                 new SchemeArgument[]{
                                         SchemeArgumentBuilder.buildWithShortName(
                                                 "d",
-                                                WithShortNameOptions.class.getMethod("d")
+                                                getMethodReference(
+                                                        WithShortNameOptions.class,
+                                                        "d"
+                                                )
                                         ),
                                         SchemeArgumentBuilder.buildWithShortName(
                                                 "h",
-                                                WithShortNameOptions.class.getMethod("h")
+                                                getMethodReference(
+                                                        WithShortNameOptions.class,
+                                                        "h"
+                                                )
                                         )
                                 },
                                 WithShortNameOptions.class
@@ -84,7 +102,10 @@ public class SchemeParserTest {
                                 new SchemeArgument[]{
                                         SchemeArgumentBuilder.buildWithLongName(
                                                 "debug",
-                                                WithLongNameOption.class.getMethod("d")
+                                                getMethodReference(
+                                                        WithLongNameOption.class,
+                                                        "d"
+                                                )
                                         )
                                 },
                                 WithLongNameOption.class
@@ -94,11 +115,17 @@ public class SchemeParserTest {
                                 new SchemeArgument[]{
                                         SchemeArgumentBuilder.buildWithLongName(
                                                 "debug",
-                                                WithLongNameOptions.class.getMethod("d")
+                                                getMethodReference(
+                                                        WithLongNameOptions.class,
+                                                        "d"
+                                                )
                                         ),
                                         SchemeArgumentBuilder.buildWithLongName(
                                                 "help",
-                                                WithLongNameOptions.class.getMethod("h")
+                                                getMethodReference(
+                                                        WithLongNameOptions.class,
+                                                        "h"
+                                                )
                                         )
                                 },
                                 WithLongNameOptions.class
@@ -109,15 +136,49 @@ public class SchemeParserTest {
                                         SchemeArgumentBuilder.build(
                                                 "d",
                                                 "debug",
-                                                WithShortAndLongNameOptions.class.getMethod("d")
+                                                getMethodReference(
+                                                        WithShortAndLongNameOptions.class,
+                                                        "d"
+                                                )
                                         ),
                                         SchemeArgumentBuilder.build(
                                                 "h",
                                                 "help",
-                                                WithShortAndLongNameOptions.class.getMethod("h")
+                                                getMethodReference(
+                                                        WithShortAndLongNameOptions.class,
+                                                        "h"
+                                                )
                                         )
                                 },
                                 WithShortAndLongNameOptions.class
+                        },
+                        {
+                                "With short name argument",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithShortName(
+                                                "f",
+                                                getMethodReference(
+                                                        WithShortNameArgument.class,
+                                                        "f",
+                                                        String.class
+                                                )
+                                        )
+                                },
+                                WithShortNameArgument.class
+                        },
+                        {
+                                "With long name argument",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithLongName(
+                                                "file",
+                                                getMethodReference(
+                                                        WithLongNameArgument.class,
+                                                        "f",
+                                                        String.class
+                                                )
+                                        )
+                                },
+                                WithLongNameArgument.class
                         }
                 }
         );
@@ -197,6 +258,20 @@ public class SchemeParserTest {
 
         @Argument(shortName = "h", longName = "help")
         public void h() {
+        }
+    }
+
+    @SuppressWarnings({"unused"})
+    private class WithShortNameArgument {
+        @Argument(shortName = "f")
+        public void f(String filename) {
+        }
+    }
+
+    @SuppressWarnings({"unused"})
+    private class WithLongNameArgument {
+        @Argument(longName = "file")
+        public void f(String filename) {
         }
     }
 }
