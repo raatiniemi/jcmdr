@@ -47,9 +47,11 @@ public class SchemeArgumentTest {
         this.compareTo = compareTo;
     }
 
-    private static Method getMethodReference(String methodName)
-            throws NoSuchMethodException {
-        return SchemeArgumentTestReference.class.getMethod(methodName);
+    private static Method getMethodReference(
+            String methodName,
+            Class... arguments
+    ) throws NoSuchMethodException {
+        return SchemeArgumentTestReference.class.getMethod(methodName, arguments);
     }
 
     @Parameters
@@ -170,6 +172,48 @@ public class SchemeArgumentTest {
                                         .build()
                         },
                         {
+                                "With same methods (different argument types)",
+                                Boolean.FALSE,
+                                new SchemeArgument.Builder()
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "methodWithArgument",
+                                                        String.class
+                                                )
+                                        )
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "methodWithArgument",
+                                                        Long.class
+                                                )
+                                        )
+                                        .build()
+                        },
+                        {
+                                "With same methods (same argument types in different order)",
+                                Boolean.FALSE,
+                                new SchemeArgument.Builder()
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "methodWithArguments",
+                                                        String.class,
+                                                        Long.class
+                                                )
+                                        )
+                                        .build(),
+                                new SchemeArgument.Builder()
+                                        .methodReference(
+                                                getMethodReference(
+                                                        "methodWithArguments",
+                                                        Long.class,
+                                                        String.class
+                                                )
+                                        )
+                                        .build()
+                        },
+                        {
                                 "With null values",
                                 Boolean.FALSE,
                                 schemeArgument,
@@ -224,6 +268,24 @@ public class SchemeArgumentTest {
         }
 
         public void secondMethodWithoutArguments() {
+        }
+
+        public void methodWithArgument(String argument) {
+        }
+
+        public void methodWithArgument(Long argument) {
+        }
+
+        public void methodWithArguments(
+                String firstArgument,
+                Long secondArgument
+        ) {
+        }
+
+        public void methodWithArguments(
+                Long firstArgument,
+                String secondArgument
+        ) {
         }
     }
 }

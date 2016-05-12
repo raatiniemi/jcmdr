@@ -71,9 +71,30 @@ public class SchemeArgument {
         int result = 17;
         result = 31 * result + Objects.hashCode(this.shortName);
         result = 31 * result + Objects.hashCode(this.longName);
-        result = 31 * result + Objects.hashCode(this.methodReference);
 
-        return result;
+        return calculateHashCodeForMethodReference(result);
+    }
+
+    private int calculateHashCodeForMethodReference(int calculatedHashCode) {
+        if (isMethodReferenceMissing()) {
+            return calculatedHashCode;
+        }
+
+        int result = 31 * calculatedHashCode + Objects.hashCode(this.methodReference);
+        return calculateHashCodeForMethodReferenceArguments(result);
+    }
+
+    private boolean isMethodReferenceMissing() {
+        return null == this.methodReference;
+    }
+
+    private int calculateHashCodeForMethodReferenceArguments(int calculatedHashCode) {
+        Class<?>[] parameters = this.methodReference.getParameterTypes();
+        if (0 == parameters.length) {
+            return calculatedHashCode;
+        }
+
+        return 31 * calculatedHashCode + Objects.hashCode(parameters);
     }
 
     static class Builder {
