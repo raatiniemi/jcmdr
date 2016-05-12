@@ -153,14 +153,14 @@ public class SchemeParserTest {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private class WithShortNameOption {
         @Argument(shortName = "d")
         public void d() {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private class WithShortNameOptions {
         @Argument(shortName = "d")
         public void d() {
@@ -171,14 +171,14 @@ public class SchemeParserTest {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private class WithLongNameOption {
         @Argument(longName = "debug")
         public void d() {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private class WithLongNameOptions {
         @Argument(longName = "debug")
         public void d() {
@@ -189,7 +189,7 @@ public class SchemeParserTest {
         }
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "WeakerAccess"})
     private class WithShortAndLongNameOptions {
         @Argument(shortName = "d", longName = "debug")
         public void d() {
