@@ -27,6 +27,8 @@ public class SchemeArgument {
     private final String longName;
     private final Method methodReference;
 
+    private Class<?>[] methodReferenceParameterTypes;
+
     private SchemeArgument(
             String shortName,
             String longName,
@@ -48,6 +50,22 @@ public class SchemeArgument {
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new InvokeArgumentException(e);
         }
+    }
+
+    private Class<?>[] getMethodReferenceParameterTypes() {
+        if (shouldCacheMethodReferenceParameterTypes()) {
+            cacheMethodReferenceParameterTypes();
+        }
+
+        return this.methodReferenceParameterTypes;
+    }
+
+    private boolean shouldCacheMethodReferenceParameterTypes() {
+        return null == this.methodReferenceParameterTypes;
+    }
+
+    private void cacheMethodReferenceParameterTypes() {
+        this.methodReferenceParameterTypes = this.methodReference.getParameterTypes();
     }
 
     @Override
@@ -94,12 +112,15 @@ public class SchemeArgument {
     }
 
     private int calculateHashCodeForMethodReferenceArguments(int calculatedHashCode) {
-        Class<?>[] parameters = this.methodReference.getParameterTypes();
-        if (0 == parameters.length) {
+        if (isMethodReferenceMissingParameters()) {
             return calculatedHashCode;
         }
 
-        return 31 * calculatedHashCode + Objects.hashCode(parameters);
+        return 31 * calculatedHashCode + Objects.hashCode(getMethodReferenceParameterTypes());
+    }
+
+    private boolean isMethodReferenceMissingParameters() {
+        return 0 == getMethodReferenceParameterTypes().length;
     }
 
     static class Builder {
