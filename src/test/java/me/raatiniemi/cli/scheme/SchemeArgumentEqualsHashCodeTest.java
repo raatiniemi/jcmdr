@@ -29,13 +29,13 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class SchemeArgumentTest {
+public class SchemeArgumentEqualsHashCodeTest {
     private String message;
     private Boolean expected;
     private SchemeArgument schemeArgument;
     private Object compareTo;
 
-    public SchemeArgumentTest(
+    public SchemeArgumentEqualsHashCodeTest(
             String message,
             Boolean expected,
             SchemeArgument schemeArgument,
@@ -55,8 +55,7 @@ public class SchemeArgumentTest {
     }
 
     @Parameters
-    public static Collection<Object[]> parameters()
-            throws NoSuchMethodException {
+    public static Collection<Object[]> parameters() throws NoSuchMethodException {
         SchemeArgument schemeArgument = new SchemeArgument.Builder()
                 .shortName("d")
                 .build();
@@ -239,27 +238,27 @@ public class SchemeArgumentTest {
     }
 
     private void assertEqual() {
-        assertTrue(this.message, schemeArgument.equals(compareTo));
+        assertTrue(this.message, this.schemeArgument.equals(this.compareTo));
 
         validateHashCodeWhenEquals();
     }
 
     private void validateHashCodeWhenEquals() {
-        assertTrue(this.message, schemeArgument.hashCode() == compareTo.hashCode());
+        assertTrue(this.message, this.schemeArgument.hashCode() == this.compareTo.hashCode());
     }
 
     private void assertNotEqual() {
-        assertFalse(this.message, schemeArgument.equals(compareTo));
+        assertFalse(this.message, this.schemeArgument.equals(this.compareTo));
 
         validateHashCodeWhenNotEquals();
     }
 
     private void validateHashCodeWhenNotEquals() {
-        if (null == compareTo) {
+        if (null == this.compareTo) {
             return;
         }
 
-        assertFalse(this.message, schemeArgument.hashCode() == compareTo.hashCode());
+        assertFalse(this.message, this.schemeArgument.hashCode() == this.compareTo.hashCode());
     }
 
     @SuppressWarnings("unused")
