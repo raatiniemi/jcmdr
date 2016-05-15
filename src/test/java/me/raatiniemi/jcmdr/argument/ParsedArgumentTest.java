@@ -116,6 +116,30 @@ public class ParsedArgumentTest {
                                 new ParsedArgument.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "help"))
                                         .build()
+                        },
+                        {
+                                "With same argument value",
+                                Boolean.TRUE,
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build()
+                        },
+                        {
+                                "With different argument value",
+                                Boolean.FALSE,
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("debug")
+                                        .build()
                         }
                 }
         );

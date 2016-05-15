@@ -19,11 +19,18 @@ package me.raatiniemi.jcmdr.argument;
 import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
+import java.util.Objects;
+
 public class ParsedArgument {
     private SchemeArgument schemeArgument;
+    private String argumentValue;
 
-    private ParsedArgument(SchemeArgument schemeArgument) {
+    private ParsedArgument(
+            SchemeArgument schemeArgument,
+            String argumentValue
+    ) {
         this.schemeArgument = schemeArgument;
+        this.argumentValue = argumentValue;
     }
 
     public <T> void call(T target) throws InvokeArgumentException {
@@ -46,16 +53,22 @@ public class ParsedArgument {
         }
 
         ParsedArgument that = (ParsedArgument) o;
-        return this.schemeArgument.equals(that.schemeArgument);
+        return Objects.equals(this.schemeArgument, that.schemeArgument)
+                && Objects.equals(this.argumentValue, that.argumentValue);
     }
 
     @Override
     public int hashCode() {
-        return this.schemeArgument.hashCode();
+        int result = 17;
+        result = 31 * result + Objects.hashCode(this.schemeArgument);
+        result = 31 * result + Objects.hashCode(this.argumentValue);
+
+        return result;
     }
 
     static class Builder {
         private SchemeArgument schemeArgument;
+        private String argumentValue;
 
         Builder schemeArgument(SchemeArgument schemeArgument) {
             this.schemeArgument = schemeArgument;
@@ -63,8 +76,17 @@ public class ParsedArgument {
             return this;
         }
 
+        Builder argumentValue(String argumentValue) {
+            this.argumentValue = argumentValue;
+
+            return this;
+        }
+
         ParsedArgument build() {
-            return new ParsedArgument(this.schemeArgument);
+            return new ParsedArgument(
+                    this.schemeArgument,
+                    this.argumentValue
+            );
         }
     }
 }
