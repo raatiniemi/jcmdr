@@ -14,13 +14,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli;
+package me.raatiniemi.jcmdr;
 
-import me.raatiniemi.cli.argument.ArgumentParser;
-import me.raatiniemi.cli.argument.ParsedArgument;
-import me.raatiniemi.cli.exception.InvokeArgumentException;
-import me.raatiniemi.cli.scheme.SchemeArgument;
-import me.raatiniemi.cli.scheme.SchemeParser;
+import me.raatiniemi.jcmdr.argument.ArgumentParser;
+import me.raatiniemi.jcmdr.argument.ParsedArgument;
+import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.scheme.SchemeArgument;
+import me.raatiniemi.jcmdr.scheme.SchemeParser;
 
 import java.util.Collection;
 import java.util.List;

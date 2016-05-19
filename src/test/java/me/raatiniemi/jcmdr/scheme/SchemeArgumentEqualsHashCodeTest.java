@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.scheme;
+package me.raatiniemi.jcmdr.scheme;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

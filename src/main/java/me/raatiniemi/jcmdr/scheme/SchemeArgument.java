@@ -14,9 +14,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.scheme;
+package me.raatiniemi.jcmdr.scheme;
 
-import me.raatiniemi.cli.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

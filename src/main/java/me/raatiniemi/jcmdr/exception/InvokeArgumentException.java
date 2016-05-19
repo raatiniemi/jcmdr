@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Tobias Raatiniemi
+ * Copyright (C) 2016
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,23 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.scheme;
+package me.raatiniemi.jcmdr.exception;
 
-import java.lang.reflect.Method;
-
-/**
- * Builds SchemeArgument from outside of the package when testing.
- */
-public class SchemeArgumentBuilder {
-    public static SchemeArgument build(
-            String shortName,
-            String longName,
-            Method methodReference
-    ) {
-        return new SchemeArgument.Builder()
-                .shortName(shortName)
-                .longName(longName)
-                .methodReference(methodReference)
-                .build();
+public class InvokeArgumentException extends Exception {
+    public InvokeArgumentException(Exception e) {
+        super(e);
     }
 }

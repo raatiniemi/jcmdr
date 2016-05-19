@@ -14,10 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.argument;
+package me.raatiniemi.jcmdr.argument;
 
-import me.raatiniemi.cli.exception.InvokeArgumentException;
-import me.raatiniemi.cli.scheme.SchemeArgument;
+import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 public class ParsedArgument {
     private SchemeArgument schemeArgument;

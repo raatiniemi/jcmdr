@@ -14,10 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli;
+package me.raatiniemi.jcmdr;
 
-import me.raatiniemi.cli.exception.InvokeArgumentException;
-import me.raatiniemi.cli.scheme.annotation.Argument;
+import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.scheme.annotation.Argument;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

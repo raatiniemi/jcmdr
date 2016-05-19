@@ -14,7 +14,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.scheme.annotation;
+package me.raatiniemi.jcmdr.scheme.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

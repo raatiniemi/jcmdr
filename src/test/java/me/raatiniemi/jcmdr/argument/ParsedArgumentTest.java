@@ -14,10 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.cli.argument;
+package me.raatiniemi.jcmdr.argument;
 
-import me.raatiniemi.cli.scheme.SchemeArgument;
-import me.raatiniemi.cli.scheme.SchemeArgumentBuilder;
+import me.raatiniemi.jcmdr.scheme.SchemeArgument;
+import me.raatiniemi.jcmdr.scheme.SchemeArgumentBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
