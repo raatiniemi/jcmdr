@@ -22,7 +22,7 @@ import java.lang.reflect.Method;
  * Builds SchemeArgument from outside of the package when testing.
  */
 public class SchemeArgumentBuilder {
-    public static SchemeArgument build(
+    static SchemeArgument build(
             String shortName,
             String longName,
             Method methodReference
@@ -32,5 +32,25 @@ public class SchemeArgumentBuilder {
                 .longName(longName)
                 .methodReference(methodReference)
                 .build();
+    }
+
+    public static SchemeArgument build(String shortName, String longName) {
+        return build(shortName, longName, null);
+    }
+
+    public static SchemeArgument buildWithShortName(String shortName) {
+        return build(shortName, null, null);
+    }
+
+    static SchemeArgument buildWithShortName(String shortName, Method methodReference) {
+        return build(shortName, null, methodReference);
+    }
+
+    public static SchemeArgument buildWithLongName(String longName) {
+        return build(null, longName, null);
+    }
+
+    static SchemeArgument buildWithLongName(String longName, Method methodReference) {
+        return build(null, longName, methodReference);
     }
 }

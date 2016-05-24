@@ -53,13 +53,6 @@ public class ArgumentParserTest {
         );
     }
 
-    private static SchemeArgument buildSchemeArgument(
-            String shortName,
-            String longName
-    ) {
-        return SchemeArgumentBuilder.build(shortName, longName, null);
-    }
-
     @Parameters
     public static Collection<Object[]> parameters() {
         return Arrays.asList(
@@ -69,7 +62,7 @@ public class ArgumentParserTest {
                                 null,
                                 "",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d")
                                 }
                         },
                         {
@@ -77,7 +70,7 @@ public class ArgumentParserTest {
                                 null,
                                 null,
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d")
                                 }
                         },
                         {
@@ -95,121 +88,121 @@ public class ArgumentParserTest {
                         {
                                 "With short option",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("d", null))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d"))
                                 },
                                 "-d",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d")
                                 }
                         },
                         {
                                 "With short options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("d", null)),
-                                        new ParsedArgument(buildSchemeArgument("v", null))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null),
-                                        buildSchemeArgument("v", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d"),
+                                        SchemeArgumentBuilder.buildWithShortName("v")
                                 }
                         },
                         {
                                 "With short options (combined)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("d", null)),
-                                        new ParsedArgument(buildSchemeArgument("v", null))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null),
-                                        buildSchemeArgument("v", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d"),
+                                        SchemeArgumentBuilder.buildWithShortName("v")
                                 }
                         },
                         {
                                 "With same short options (different cases)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("V", null)),
-                                        new ParsedArgument(buildSchemeArgument("v", null))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("V")),
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
                                 },
                                 "-V -v",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("V", null),
-                                        buildSchemeArgument("v", null)
+                                        SchemeArgumentBuilder.buildWithShortName("V"),
+                                        SchemeArgumentBuilder.buildWithShortName("v")
                                 }
                         },
                         {
                                 "With short options, without full argument scheme",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("d", null))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d"))
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null)
+                                        SchemeArgumentBuilder.buildWithShortName("d")
                                 }
                         },
                         {
                                 "With long option",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug")
+                                        SchemeArgumentBuilder.buildWithLongName("debug")
                                 }
                         },
                         {
                                 "With long options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument(null, "debug")),
-                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug")),
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug"),
-                                        buildSchemeArgument(null, "verbose")
+                                        SchemeArgumentBuilder.buildWithLongName("debug"),
+                                        SchemeArgumentBuilder.buildWithLongName("verbose")
                                 }
                         },
                         {
                                 "With long option (different case)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
                                 },
                                 "--DEBUG",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug")
+                                        SchemeArgumentBuilder.buildWithLongName("debug")
                                 }
                         },
                         {
                                 "With long options, without full argument scheme",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument(null, "debug"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "debug")
+                                        SchemeArgumentBuilder.buildWithLongName("debug")
                                 }
                         },
                         {
                                 "Long option separated with dash",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument(null, "human-readable"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("human-readable"))
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument(null, "human-readable")
+                                        SchemeArgumentBuilder.buildWithLongName("human-readable")
                                 }
                         },
                         {
                                 "With short and long options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(buildSchemeArgument("d", null)),
-                                        new ParsedArgument(buildSchemeArgument(null, "verbose"))
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
+                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{
-                                        buildSchemeArgument("d", null),
-                                        buildSchemeArgument(null, "verbose")
+                                        SchemeArgumentBuilder.buildWithShortName("d"),
+                                        SchemeArgumentBuilder.buildWithLongName("verbose")
                                 }
                         }
                 }

@@ -48,10 +48,7 @@ public class SchemeArgumentValidateTest {
 
     @Parameters
     public static Collection<Object[]> parameters() {
-        SchemeArgument schemeArgument = new SchemeArgument.Builder()
-                .shortName("d")
-                .longName("debug")
-                .build();
+        SchemeArgument schemeArgument = SchemeArgumentBuilder.build("d", "debug");
 
         return Arrays.asList(
                 new Object[][]{

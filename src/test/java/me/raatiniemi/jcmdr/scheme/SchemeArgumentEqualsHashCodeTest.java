@@ -56,9 +56,7 @@ public class SchemeArgumentEqualsHashCodeTest {
 
     @Parameters
     public static Collection<Object[]> parameters() throws NoSuchMethodException {
-        SchemeArgument schemeArgument = new SchemeArgument.Builder()
-                .shortName("d")
-                .build();
+        SchemeArgument schemeArgument = SchemeArgumentBuilder.buildWithShortName("d");
 
         return Arrays.asList(
                 new Object[][]{
@@ -84,140 +82,113 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 "With different short options",
                                 Boolean.FALSE,
                                 schemeArgument,
-                                new SchemeArgument.Builder()
-                                        .shortName("h")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithShortName("h")
                         },
                         {
                                 "With same short options",
                                 Boolean.TRUE,
                                 schemeArgument,
-                                new SchemeArgument.Builder()
-                                        .shortName("d")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithShortName("d")
                         },
                         {
                                 "With same short options (different case)",
                                 Boolean.FALSE,
                                 schemeArgument,
-                                new SchemeArgument.Builder()
-                                        .shortName("D")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithShortName("D")
                         },
                         {
                                 "With different long options",
                                 Boolean.FALSE,
-                                new SchemeArgument.Builder()
-                                        .longName("help")
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .longName("debug")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithLongName("help"),
+                                SchemeArgumentBuilder.buildWithLongName("debug")
                         },
                         {
                                 "With same long options",
                                 Boolean.TRUE,
-                                new SchemeArgument.Builder()
-                                        .longName("debug")
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .longName("debug")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithLongName("debug"),
+                                SchemeArgumentBuilder.buildWithLongName("debug")
                         },
                         {
                                 "With same long options (different case)",
                                 Boolean.TRUE,
-                                new SchemeArgument.Builder()
-                                        .longName("debug")
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .longName("DEBUG")
-                                        .build()
+                                SchemeArgumentBuilder.buildWithLongName("debug"),
+                                SchemeArgumentBuilder.buildWithLongName("DEBUG")
                         },
                         {
                                 "With same methods",
                                 Boolean.TRUE,
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "firstMethodWithoutArguments"
-                                                )
-                                        )
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "firstMethodWithoutArguments"
-                                                )
-                                        )
-                                        .build()
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference("firstMethodWithoutArguments")
+                                ),
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference("firstMethodWithoutArguments")
+                                )
                         },
                         {
                                 "With different methods",
                                 Boolean.FALSE,
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "firstMethodWithoutArguments"
-                                                )
-                                        )
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "secondMethodWithoutArguments"
-                                                )
-                                        )
-                                        .build()
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference("firstMethodWithoutArguments")
+                                ),
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference("secondMethodWithoutArguments")
+                                )
                         },
                         {
                                 "With same methods (different argument types)",
                                 Boolean.FALSE,
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "methodWithArgument",
-                                                        String.class
-                                                )
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference(
+                                                "methodWithArgument",
+                                                String.class
                                         )
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "methodWithArgument",
-                                                        Long.class
-                                                )
+                                ),
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference(
+                                                "methodWithArgument",
+                                                Long.class
                                         )
-                                        .build()
+                                )
                         },
                         {
                                 "With same methods (same argument types in different order)",
                                 Boolean.FALSE,
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "methodWithArguments",
-                                                        String.class,
-                                                        Long.class
-                                                )
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference(
+                                                "methodWithArguments",
+                                                String.class,
+                                                Long.class
                                         )
-                                        .build(),
-                                new SchemeArgument.Builder()
-                                        .methodReference(
-                                                getMethodReference(
-                                                        "methodWithArguments",
-                                                        Long.class,
-                                                        String.class
-                                                )
+                                ),
+                                SchemeArgumentBuilder.build(
+                                        "d",
+                                        "debug",
+                                        getMethodReference(
+                                                "methodWithArguments",
+                                                Long.class,
+                                                String.class
                                         )
-                                        .build()
+                                )
                         },
                         {
                                 "With null values",
                                 Boolean.FALSE,
                                 schemeArgument,
-                                new SchemeArgument.Builder()
-                                        .build()
+                                SchemeArgumentBuilder.build(null, null, null)
                         }
                 }
         );

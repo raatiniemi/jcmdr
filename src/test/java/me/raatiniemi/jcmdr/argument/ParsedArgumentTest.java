@@ -48,16 +48,9 @@ public class ParsedArgumentTest {
         this.parsedArgument = parsedArgument;
     }
 
-    private static SchemeArgument buildSchemeArgument(
-            String shortName,
-            String longName
-    ) {
-        return SchemeArgumentBuilder.build(shortName, longName, null);
-    }
-
     @Parameters
     public static Collection<Object[]> parameters() {
-        ParsedArgument parsedArgument = new ParsedArgument(buildSchemeArgument("d", "debug"));
+        ParsedArgument parsedArgument = new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"));
 
         return Arrays.asList(
                 new Object[][]{
@@ -70,38 +63,38 @@ public class ParsedArgumentTest {
                         {
                                 "With null",
                                 Boolean.FALSE,
-                                new ParsedArgument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
                                 null
                         },
                         {
                                 "With incompatible object",
                                 Boolean.FALSE,
-                                new ParsedArgument(buildSchemeArgument("d", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
                                 ""
                         },
                         {
                                 "With different options",
                                 Boolean.FALSE,
-                                new ParsedArgument(buildSchemeArgument("d", "debug")),
-                                new ParsedArgument(buildSchemeArgument("h", "help"))
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("h", "help"))
                         },
                         {
                                 "With same options",
                                 Boolean.TRUE,
-                                new ParsedArgument(buildSchemeArgument("d", "debug")),
-                                new ParsedArgument(buildSchemeArgument("d", "debug"))
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"))
                         },
                         {
                                 "With different short options",
                                 Boolean.FALSE,
-                                new ParsedArgument(buildSchemeArgument("h", "debug")),
-                                new ParsedArgument(buildSchemeArgument("d", "debug"))
+                                new ParsedArgument(SchemeArgumentBuilder.build("h", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"))
                         },
                         {
                                 "With different long options",
                                 Boolean.FALSE,
-                                new ParsedArgument(buildSchemeArgument("d", "debug")),
-                                new ParsedArgument(buildSchemeArgument("d", "help"))
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
+                                new ParsedArgument(SchemeArgumentBuilder.build("d", "help"))
                         }
                 }
         );
