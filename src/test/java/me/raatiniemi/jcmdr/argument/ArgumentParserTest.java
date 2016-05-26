@@ -88,7 +88,9 @@ public class ArgumentParserTest {
                         {
                                 "With short option",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build()
                                 },
                                 "-d",
                                 new SchemeArgument[]{
@@ -98,8 +100,12 @@ public class ArgumentParserTest {
                         {
                                 "With short options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                                .build()
                                 },
                                 "-d -v",
                                 new SchemeArgument[]{
@@ -110,8 +116,12 @@ public class ArgumentParserTest {
                         {
                                 "With short options (combined)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                                .build()
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -122,8 +132,12 @@ public class ArgumentParserTest {
                         {
                                 "With same short options (different cases)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("V")),
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("V"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("v"))
+                                                .build()
                                 },
                                 "-V -v",
                                 new SchemeArgument[]{
@@ -134,7 +148,9 @@ public class ArgumentParserTest {
                         {
                                 "With short options, without full argument scheme",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build()
                                 },
                                 "-dv",
                                 new SchemeArgument[]{
@@ -144,7 +160,9 @@ public class ArgumentParserTest {
                         {
                                 "With long option",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                                .build()
                                 },
                                 "--debug",
                                 new SchemeArgument[]{
@@ -154,8 +172,12 @@ public class ArgumentParserTest {
                         {
                                 "With long options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug")),
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
+                                                .build()
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -166,7 +188,9 @@ public class ArgumentParserTest {
                         {
                                 "With long option (different case)",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                                .build()
                                 },
                                 "--DEBUG",
                                 new SchemeArgument[]{
@@ -176,7 +200,9 @@ public class ArgumentParserTest {
                         {
                                 "With long options, without full argument scheme",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                                .build()
                                 },
                                 "--debug --verbose",
                                 new SchemeArgument[]{
@@ -186,7 +212,9 @@ public class ArgumentParserTest {
                         {
                                 "Long option separated with dash",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("human-readable"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("human-readable"))
+                                                .build()
                                 },
                                 "--human-readable",
                                 new SchemeArgument[]{
@@ -196,8 +224,12 @@ public class ArgumentParserTest {
                         {
                                 "With short and long options",
                                 new ParsedArgument[]{
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithShortName("d")),
-                                        new ParsedArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
+                                                .build()
                                 },
                                 "-d --verbose",
                                 new SchemeArgument[]{

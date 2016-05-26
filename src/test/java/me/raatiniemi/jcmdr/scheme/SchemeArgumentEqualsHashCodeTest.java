@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -45,13 +44,6 @@ public class SchemeArgumentEqualsHashCodeTest {
         this.expected = expected;
         this.schemeArgument = schemeArgument;
         this.compareTo = compareTo;
-    }
-
-    private static Method getMethodReference(
-            String methodName,
-            Class... arguments
-    ) throws NoSuchMethodException {
-        return SchemeArgumentTestReference.class.getMethod(methodName, arguments);
     }
 
     @Parameters
@@ -120,12 +112,16 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference("firstMethodWithoutArguments")
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "firstMethodWithoutArguments"
+                                        )
                                 ),
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference("firstMethodWithoutArguments")
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "firstMethodWithoutArguments"
+                                        )
                                 )
                         },
                         {
@@ -134,12 +130,16 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference("firstMethodWithoutArguments")
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "firstMethodWithoutArguments"
+                                        )
                                 ),
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference("secondMethodWithoutArguments")
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "secondMethodWithoutArguments"
+                                        )
                                 )
                         },
                         {
@@ -148,7 +148,7 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference(
+                                        SchemeArgumentTestReference.getMethodReference(
                                                 "methodWithArgument",
                                                 String.class
                                         )
@@ -156,7 +156,7 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference(
+                                        SchemeArgumentTestReference.getMethodReference(
                                                 "methodWithArgument",
                                                 Long.class
                                         )
@@ -168,7 +168,7 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference(
+                                        SchemeArgumentTestReference.getMethodReference(
                                                 "methodWithArguments",
                                                 String.class,
                                                 Long.class
@@ -177,7 +177,7 @@ public class SchemeArgumentEqualsHashCodeTest {
                                 SchemeArgumentBuilder.build(
                                         "d",
                                         "debug",
-                                        getMethodReference(
+                                        SchemeArgumentTestReference.getMethodReference(
                                                 "methodWithArguments",
                                                 Long.class,
                                                 String.class
@@ -230,32 +230,5 @@ public class SchemeArgumentEqualsHashCodeTest {
         }
 
         assertFalse(this.message, this.schemeArgument.hashCode() == this.compareTo.hashCode());
-    }
-
-    @SuppressWarnings("unused")
-    private class SchemeArgumentTestReference {
-        public void firstMethodWithoutArguments() {
-        }
-
-        public void secondMethodWithoutArguments() {
-        }
-
-        public void methodWithArgument(String argument) {
-        }
-
-        public void methodWithArgument(Long argument) {
-        }
-
-        public void methodWithArguments(
-                String firstArgument,
-                Long secondArgument
-        ) {
-        }
-
-        public void methodWithArguments(
-                Long firstArgument,
-                String secondArgument
-        ) {
-        }
     }
 }

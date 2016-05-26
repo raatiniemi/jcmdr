@@ -16,7 +16,6 @@
 
 package me.raatiniemi.jcmdr.argument;
 
-import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgumentBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,7 +49,9 @@ public class ParsedArgumentTest {
 
     @Parameters
     public static Collection<Object[]> parameters() {
-        ParsedArgument parsedArgument = new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"));
+        ParsedArgument parsedArgument = new ParsedArgument.Builder()
+                .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                .build();
 
         return Arrays.asList(
                 new Object[][]{
@@ -63,38 +64,82 @@ public class ParsedArgumentTest {
                         {
                                 "With null",
                                 Boolean.FALSE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build(),
                                 null
                         },
                         {
                                 "With incompatible object",
                                 Boolean.FALSE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build(),
                                 ""
                         },
                         {
                                 "With different options",
                                 Boolean.FALSE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
-                                new ParsedArgument(SchemeArgumentBuilder.build("h", "help"))
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("h", "help"))
+                                        .build()
                         },
                         {
                                 "With same options",
                                 Boolean.TRUE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build()
                         },
                         {
                                 "With different short options",
                                 Boolean.FALSE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("h", "debug")),
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("h", "debug"))
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build()
                         },
                         {
                                 "With different long options",
                                 Boolean.FALSE,
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "debug")),
-                                new ParsedArgument(SchemeArgumentBuilder.build("d", "help"))
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "help"))
+                                        .build()
+                        },
+                        {
+                                "With same argument value",
+                                Boolean.TRUE,
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build()
+                        },
+                        {
+                                "With different argument value",
+                                Boolean.FALSE,
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("verbose")
+                                        .build(),
+                                new ParsedArgument.Builder()
+                                        .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
+                                        .argumentValue("debug")
+                                        .build()
                         }
                 }
         );

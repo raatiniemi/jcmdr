@@ -20,12 +20,15 @@ import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class SchemeArgument {
     private final String shortName;
     private final String longName;
     private final Method methodReference;
+
+    private Class<?>[] methodReferenceParameterTypes;
 
     private SchemeArgument(
             String shortName,
@@ -37,17 +40,56 @@ public class SchemeArgument {
         this.methodReference = methodReference;
     }
 
-    public boolean validate(String argument) {
+    public boolean validate(String argument, Class<?>... argumentValueTypes) {
+        return validateArgument(argument)
+                && validateArgumentValueTypes(argumentValueTypes);
+    }
+
+    private boolean validateArgument(String argument) {
         return argument.equals(this.shortName)
                 || argument.equalsIgnoreCase(this.longName);
     }
 
-    public <T> void call(T target) throws InvokeArgumentException {
+    private boolean validateArgumentValueTypes(Class<?>[] argumentValueTypes) {
+        boolean haveArgumentValueTypes = argumentValueTypes.length > 0;
+
+        if (null == this.methodReference) {
+            return !haveArgumentValueTypes;
+        }
+
+        return Arrays.equals(
+                getMethodReferenceParameterTypes(),
+                argumentValueTypes
+        );
+    }
+
+    public <T> void call(T target, String argumentValue) throws InvokeArgumentException {
         try {
-            methodReference.invoke(target);
+            if (null == argumentValue) {
+                this.methodReference.invoke(target);
+                return;
+            }
+
+            this.methodReference.invoke(target, argumentValue);
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new InvokeArgumentException(e);
         }
+    }
+
+    private Class<?>[] getMethodReferenceParameterTypes() {
+        if (shouldCacheMethodReferenceParameterTypes()) {
+            cacheMethodReferenceParameterTypes();
+        }
+
+        return this.methodReferenceParameterTypes;
+    }
+
+    private boolean shouldCacheMethodReferenceParameterTypes() {
+        return null == this.methodReferenceParameterTypes;
+    }
+
+    private void cacheMethodReferenceParameterTypes() {
+        this.methodReferenceParameterTypes = this.methodReference.getParameterTypes();
     }
 
     @Override
@@ -94,12 +136,15 @@ public class SchemeArgument {
     }
 
     private int calculateHashCodeForMethodReferenceArguments(int calculatedHashCode) {
-        Class<?>[] parameters = this.methodReference.getParameterTypes();
-        if (0 == parameters.length) {
+        if (isMethodReferenceMissingParameters()) {
             return calculatedHashCode;
         }
 
-        return 31 * calculatedHashCode + Objects.hashCode(parameters);
+        return 31 * calculatedHashCode + Objects.hashCode(getMethodReferenceParameterTypes());
+    }
+
+    private boolean isMethodReferenceMissingParameters() {
+        return 0 == getMethodReferenceParameterTypes().length;
     }
 
     static class Builder {
