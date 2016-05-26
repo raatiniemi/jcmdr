@@ -63,9 +63,14 @@ public class SchemeArgument {
         );
     }
 
-    public <T> void call(T target) throws InvokeArgumentException {
+    public <T> void call(T target, String argumentValue) throws InvokeArgumentException {
         try {
-            methodReference.invoke(target);
+            if (null == argumentValue) {
+                this.methodReference.invoke(target);
+                return;
+            }
+
+            this.methodReference.invoke(target, argumentValue);
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new InvokeArgumentException(e);
         }

@@ -34,7 +34,7 @@ public class ParsedArgument {
     }
 
     public <T> void call(T target) throws InvokeArgumentException {
-        this.schemeArgument.call(target);
+        this.schemeArgument.call(target, this.argumentValue);
     }
 
     @Override

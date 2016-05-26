@@ -96,6 +96,13 @@ public class CommandLineTest {
                                         METHOD_VERBOSE
                                 },
                                 "--debug --verbose"
+                        },
+                        {
+                                "Argument with long name and value (separated with an equal sign)",
+                                new String[]{
+                                        "configuration-file=configuration.json"
+                                },
+                                "--configuration-file=configuration.json"
                         }
                 }
         );
@@ -121,6 +128,11 @@ public class CommandLineTest {
         @Argument(shortName = "v", longName = "verbose")
         public void verbose() {
             this.actualCallStack.add(METHOD_VERBOSE);
+        }
+
+        @Argument(longName = "configuration-file")
+        public void setConfigurationFile(String filename) {
+            this.actualCallStack.add("configuration-file=" + filename);
         }
     }
 }
