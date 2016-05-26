@@ -33,21 +33,24 @@ public class SchemeArgumentValidateTest {
     private Boolean expected;
     private SchemeArgument schemeArgument;
     private String argument;
+    private Class<?>[] argumentValueTypes;
 
     public SchemeArgumentValidateTest(
             String message,
             Boolean expected,
             SchemeArgument schemeArgument,
-            String argument
+            String argument,
+            Class<?>[] argumentValueTypes
     ) {
         this.message = message;
         this.expected = expected;
         this.schemeArgument = schemeArgument;
         this.argument = argument;
+        this.argumentValueTypes = argumentValueTypes;
     }
 
     @Parameters
-    public static Collection<Object[]> parameters() {
+    public static Collection<Object[]> parameters() throws NoSuchMethodException {
         SchemeArgument schemeArgument = SchemeArgumentBuilder.build("d", "debug");
 
         return Arrays.asList(
@@ -56,31 +59,100 @@ public class SchemeArgumentValidateTest {
                                 "Correct short name",
                                 Boolean.TRUE,
                                 schemeArgument,
-                                "d"
+                                "d",
+                                null
                         },
                         {
                                 "Incorrect short name",
                                 Boolean.FALSE,
                                 schemeArgument,
-                                "v"
+                                "v",
+                                null
                         },
                         {
                                 "Correct long name",
                                 Boolean.TRUE,
                                 schemeArgument,
-                                "debug"
+                                "debug",
+                                null
                         },
                         {
                                 "Incorrect long name",
                                 Boolean.FALSE,
                                 schemeArgument,
-                                "verbose"
+                                "verbose",
+                                null
                         },
                         {
                                 "Correct long name (with different case)",
                                 Boolean.TRUE,
                                 schemeArgument,
-                                "DEBUG"
+                                "DEBUG",
+                                null
+                        },
+                        {
+                                "Invalid type for argument value",
+                                Boolean.FALSE,
+                                SchemeArgumentBuilder.buildWithShortName(
+                                        "d",
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "methodWithArgument",
+                                                String.class
+                                        )
+                                ),
+                                "d",
+                                new Class[]{
+                                        Object.class
+                                }
+                        },
+                        {
+                                "Valid type for argument value",
+                                Boolean.TRUE,
+                                SchemeArgumentBuilder.buildWithShortName(
+                                        "d",
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "methodWithArgument",
+                                                String.class
+                                        )
+                                ),
+                                "d",
+                                new Class[]{
+                                        String.class
+                                }
+                        },
+                        {
+                                "Invalid type for argument values",
+                                Boolean.FALSE,
+                                SchemeArgumentBuilder.buildWithShortName(
+                                        "d",
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "methodWithArguments",
+                                                String.class,
+                                                Long.class
+                                        )
+                                ),
+                                "d",
+                                new Class[]{
+                                        String.class,
+                                        Object.class
+                                }
+                        },
+                        {
+                                "Valid type for argument values",
+                                Boolean.TRUE,
+                                SchemeArgumentBuilder.buildWithShortName(
+                                        "d",
+                                        SchemeArgumentTestReference.getMethodReference(
+                                                "methodWithArguments",
+                                                String.class,
+                                                Long.class
+                                        )
+                                ),
+                                "d",
+                                new Class[]{
+                                        String.class,
+                                        Long.class
+                                }
                         }
                 }
         );
@@ -109,6 +181,22 @@ public class SchemeArgumentValidateTest {
     }
 
     private boolean performValidation() {
+        if (isMissingArgumentValues()) {
+            return validateWithoutArgumentValues();
+        }
+
+        return validateWithArgumentValues();
+    }
+
+    private boolean isMissingArgumentValues() {
+        return null == this.argumentValueTypes;
+    }
+
+    private boolean validateWithoutArgumentValues() {
         return this.schemeArgument.validate(this.argument);
+    }
+
+    private boolean validateWithArgumentValues() {
+        return this.schemeArgument.validate(this.argument, this.argumentValueTypes);
     }
 }

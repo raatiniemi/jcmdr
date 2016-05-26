@@ -20,6 +20,7 @@ import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class SchemeArgument {
@@ -39,9 +40,27 @@ public class SchemeArgument {
         this.methodReference = methodReference;
     }
 
-    public boolean validate(String argument) {
+    public boolean validate(String argument, Class<?>... argumentValueTypes) {
+        return validateArgument(argument)
+                && validateArgumentValueTypes(argumentValueTypes);
+    }
+
+    private boolean validateArgument(String argument) {
         return argument.equals(this.shortName)
                 || argument.equalsIgnoreCase(this.longName);
+    }
+
+    private boolean validateArgumentValueTypes(Class<?>[] argumentValueTypes) {
+        boolean haveArgumentValueTypes = argumentValueTypes.length > 0;
+
+        if (null == this.methodReference) {
+            return !haveArgumentValueTypes;
+        }
+
+        return Arrays.equals(
+                getMethodReferenceParameterTypes(),
+                argumentValueTypes
+        );
     }
 
     public <T> void call(T target) throws InvokeArgumentException {
