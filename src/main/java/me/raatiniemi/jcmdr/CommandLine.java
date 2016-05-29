@@ -25,7 +25,7 @@ import me.raatiniemi.jcmdr.scheme.SchemeParser;
 import java.util.Collection;
 import java.util.List;
 
-class CommandLine<T> {
+public class CommandLine<T> {
     private T target;
     private String[] args;
     private SchemeParser schemeParser;
@@ -36,7 +36,7 @@ class CommandLine<T> {
         this.schemeParser = new SchemeParser(target.getClass());
     }
 
-    static <T> void process(T target, String... args)
+    public static <T> void process(T target, String... args)
             throws InvokeArgumentException {
         CommandLine<T> commandLine = new CommandLine<>(target, args);
         commandLine.processArguments();
