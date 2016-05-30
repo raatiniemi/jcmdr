@@ -14,23 +14,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.jcmdr.scheme;
+package me.raatiniemi.jcmdr.scheme.exception;
 
-import me.raatiniemi.jcmdr.scheme.exception.InvalidLongNameException;
-import me.raatiniemi.jcmdr.scheme.exception.InvalidShortNameException;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-
-@RunWith(JUnit4.class)
-public class SchemeArgumentTest {
-    @Test(expected = InvalidShortNameException.class)
-    public void build_withInvalidShortName() {
-        SchemeArgumentBuilder.buildWithShortName("debug");
-    }
-
-    @Test(expected = InvalidLongNameException.class)
-    public void build_withInvalidLongName() {
-        SchemeArgumentBuilder.buildWithLongName("d");
+public class InvalidLongNameException extends RuntimeException {
+    public InvalidLongNameException(String message) {
+        super(message);
     }
 }
