@@ -17,6 +17,7 @@
 package me.raatiniemi.jcmdr.scheme;
 
 import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.scheme.exception.InvalidShortNameException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -153,10 +154,17 @@ public class SchemeArgument {
         private Method methodReference;
 
         Builder shortName(String shortName) {
-            if (null != shortName && shortName.length() > 0) {
-                this.shortName = shortName;
+            if (null == shortName || 0 == shortName.length()) {
+                return this;
             }
 
+            if (1 != shortName.length()) {
+                throw new InvalidShortNameException(
+                        "Short name must be one character"
+                );
+            }
+
+            this.shortName = shortName;
             return this;
         }
 
