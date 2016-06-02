@@ -18,6 +18,7 @@ package me.raatiniemi.jcmdr.scheme;
 
 import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidLongNameException;
+import me.raatiniemi.jcmdr.scheme.exception.InvalidSchemeArgumentException;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidShortNameException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -37,6 +38,12 @@ public class SchemeArgument {
             String longName,
             Method methodReference
     ) {
+        if (null == shortName && null == longName) {
+            throw new InvalidSchemeArgumentException(
+                    "Short and/or long name must be supplied"
+            );
+        }
+
         this.shortName = shortName;
         this.longName = longName;
         this.methodReference = methodReference;

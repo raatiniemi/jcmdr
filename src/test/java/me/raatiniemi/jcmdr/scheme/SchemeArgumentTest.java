@@ -17,6 +17,7 @@
 package me.raatiniemi.jcmdr.scheme;
 
 import me.raatiniemi.jcmdr.scheme.exception.InvalidLongNameException;
+import me.raatiniemi.jcmdr.scheme.exception.InvalidSchemeArgumentException;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidShortNameException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,5 +33,10 @@ public class SchemeArgumentTest {
     @Test(expected = InvalidLongNameException.class)
     public void build_withInvalidLongName() {
         SchemeArgumentBuilder.buildWithLongName("d");
+    }
+
+    @Test(expected = InvalidSchemeArgumentException.class)
+    public void build() {
+        SchemeArgumentBuilder.build("", "");
     }
 }

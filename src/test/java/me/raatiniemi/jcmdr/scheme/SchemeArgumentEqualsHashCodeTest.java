@@ -183,12 +183,6 @@ public class SchemeArgumentEqualsHashCodeTest {
                                                 String.class
                                         )
                                 )
-                        },
-                        {
-                                "With null values",
-                                Boolean.FALSE,
-                                schemeArgument,
-                                SchemeArgumentBuilder.build(null, null, null)
                         }
                 }
         );
