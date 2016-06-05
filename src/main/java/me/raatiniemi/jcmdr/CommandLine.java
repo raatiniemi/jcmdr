@@ -24,6 +24,11 @@ import me.raatiniemi.jcmdr.scheme.SchemeParser;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Handle processing of arguments.
+ *
+ * @param <T> Type reference used for parsing the argument scheme.
+ */
 public class CommandLine<T> {
     private T target;
     private String[] args;
@@ -35,6 +40,13 @@ public class CommandLine<T> {
         this.schemeParser = new SchemeParser(target.getClass());
     }
 
+    /**
+     * Process the arguments.
+     *
+     * @param target Instance used for parsing the argument scheme.
+     * @param args   Arguments to process.
+     * @param <T>    Type reference used for parsing the argument scheme.
+     */
     public static <T> void process(T target, String... args) {
         CommandLine<T> commandLine = new CommandLine<>(target, args);
         commandLine.processArguments();
