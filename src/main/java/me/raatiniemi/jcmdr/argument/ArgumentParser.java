@@ -24,8 +24,8 @@ import java.util.*;
  * Handle parsing of arguments against a predefined argument scheme.
  */
 public class ArgumentParser {
-    private static final String PREFIX_GNU_OPTION = "--";
-    private static final String PREFIX_POSIX_OPTION = "-";
+    private static final String PREFIX_LONG_NAME = "--";
+    private static final String PREFIX_SHORT_NAME = "-";
 
     private String arguments;
     private List<SchemeArgument> schemeArguments;
@@ -42,8 +42,8 @@ public class ArgumentParser {
         this.schemeArguments = schemeArguments;
     }
 
-    private static boolean isGnuOption(String argumentSegment) {
-        return argumentSegment.startsWith(PREFIX_GNU_OPTION);
+    private static boolean isLongName(String argumentSegment) {
+        return argumentSegment.startsWith(PREFIX_LONG_NAME);
     }
 
     /**
@@ -73,12 +73,12 @@ public class ArgumentParser {
 
     private Collection<ParsedArgument> parseArgumentSegments() {
         for (String argumentSegment : getArgumentSegments()) {
-            if (isGnuOption(argumentSegment)) {
-                parseGnuOption(argumentSegment);
+            if (isLongName(argumentSegment)) {
+                parseLongName(argumentSegment);
                 continue;
             }
 
-            parsePosixArgumentSegment(argumentSegment);
+            parseShortName(argumentSegment);
         }
 
         return this.parsedArguments;
@@ -88,8 +88,8 @@ public class ArgumentParser {
         return this.arguments.split(" ");
     }
 
-    private void parseGnuOption(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_GNU_OPTION, "");
+    private void parseLongName(String argumentSegment) {
+        String argument = argumentSegment.replace(PREFIX_LONG_NAME, "");
 
         if (argumentHaveValue(argument)) {
             String[] argumentWithValue = argument.split("=", 2);
@@ -107,8 +107,8 @@ public class ArgumentParser {
         return argument.contains("=");
     }
 
-    private void parsePosixArgumentSegment(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_POSIX_OPTION, "");
+    private void parseShortName(String argumentSegment) {
+        String argument = argumentSegment.replace(PREFIX_SHORT_NAME, "");
 
         for (char character : argument.toCharArray()) {
             collectParsedArgument(String.valueOf(character));
