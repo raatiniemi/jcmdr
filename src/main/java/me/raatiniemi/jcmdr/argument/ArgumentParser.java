@@ -26,6 +26,7 @@ import java.util.*;
 public class ArgumentParser {
     private static final String PREFIX_LONG_NAME = "--";
     private static final String PREFIX_SHORT_NAME = "-";
+    private static final String VALUE_SEPARATOR = "=";
 
     private String arguments;
     private List<SchemeArgument> schemeArguments;
@@ -47,7 +48,7 @@ public class ArgumentParser {
     }
 
     private static boolean argumentHaveValue(String argument) {
-        return argument.contains("=");
+        return argument.contains(VALUE_SEPARATOR);
     }
 
     /**
@@ -96,7 +97,7 @@ public class ArgumentParser {
         String argument = argumentSegment.replace(PREFIX_LONG_NAME, "");
 
         if (argumentHaveValue(argument)) {
-            String[] argumentWithValue = argument.split("=", 2);
+            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
             collectParsedArgument(
                     argumentWithValue[0],
                     argumentWithValue[1]
