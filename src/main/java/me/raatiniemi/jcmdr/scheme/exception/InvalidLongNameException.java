@@ -16,6 +16,9 @@
 
 package me.raatiniemi.jcmdr.scheme.exception;
 
+/**
+ * Represent an exception for invalid long name.
+ */
 public class InvalidLongNameException extends RuntimeException {
     public InvalidLongNameException(String message) {
         super(message);
