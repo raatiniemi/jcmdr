@@ -16,6 +16,11 @@
 
 package me.raatiniemi.jcmdr.scheme.exception;
 
+import me.raatiniemi.jcmdr.scheme.SchemeArgument;
+
+/**
+ * Represent an exception for an invalid state of {@link SchemeArgument}.
+ */
 public class InvalidSchemeArgumentException extends IllegalStateException {
     public InvalidSchemeArgumentException(String message) {
         super(message);

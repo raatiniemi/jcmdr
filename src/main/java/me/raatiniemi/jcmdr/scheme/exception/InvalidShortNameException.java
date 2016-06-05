@@ -16,6 +16,9 @@
 
 package me.raatiniemi.jcmdr.scheme.exception;
 
+/**
+ * Represent an exception for invalid short name.
+ */
 public class InvalidShortNameException extends RuntimeException {
     public InvalidShortNameException(String message) {
         super(message);

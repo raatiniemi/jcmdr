@@ -17,6 +17,7 @@
 package me.raatiniemi.jcmdr.scheme;
 
 import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
+import me.raatiniemi.jcmdr.scheme.annotation.Argument;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidLongNameException;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidSchemeArgumentException;
 import me.raatiniemi.jcmdr.scheme.exception.InvalidShortNameException;
@@ -26,6 +27,9 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Represent argument scheme parsed from method with {@link Argument} annotation.
+ */
 public class SchemeArgument {
     private final String shortName;
     private final String longName;
@@ -49,6 +53,13 @@ public class SchemeArgument {
         this.methodReference = methodReference;
     }
 
+    /**
+     * Validate the argument, and value types, against the argument scheme.
+     *
+     * @param argument           Argument to validate.
+     * @param argumentValueTypes Argument value types to validate.
+     * @return True if argument, and value types, match the argument scheme, otherwise false.
+     */
     public boolean validate(String argument, Class<?>... argumentValueTypes) {
         return validateArgument(argument)
                 && validateArgumentValueTypes(argumentValueTypes);
@@ -72,6 +83,13 @@ public class SchemeArgument {
         );
     }
 
+    /**
+     * Call the method associated with the argument scheme.
+     *
+     * @param target        Target class on which to call the method.
+     * @param argumentValue Argument value with which to call the method.
+     * @param <T>           Type reference of the the target class.
+     */
     public <T> void call(T target, String argumentValue) {
         try {
             if (null == argumentValue) {

@@ -20,6 +20,9 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
 
+/**
+ * Handle parsing of arguments against a predefined argument scheme.
+ */
 public class ArgumentParser {
     private static final String PREFIX_GNU_OPTION = "--";
     private static final String PREFIX_POSIX_OPTION = "-";
@@ -28,6 +31,12 @@ public class ArgumentParser {
     private List<SchemeArgument> schemeArguments;
     private Set<ParsedArgument> parsedArguments = new LinkedHashSet<>();
 
+    /**
+     * Construct the argument parser.
+     *
+     * @param arguments       Arguments to parse against the argument scheme.
+     * @param schemeArguments Argument scheme used for parsing.
+     */
     public ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
         this.schemeArguments = schemeArguments;
@@ -37,6 +46,11 @@ public class ArgumentParser {
         return argumentSegment.startsWith(PREFIX_GNU_OPTION);
     }
 
+    /**
+     * Parse the arguments against the argument scheme.
+     *
+     * @return Arguments parsed against the argument scheme.
+     */
     public Collection<ParsedArgument> parse() {
         if (isMissingArgumentScheme()) {
             return Collections.emptySet();

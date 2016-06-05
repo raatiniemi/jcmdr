@@ -16,6 +16,11 @@
 
 package me.raatiniemi.jcmdr.exception;
 
+import me.raatiniemi.jcmdr.scheme.annotation.Argument;
+
+/**
+ * Represent an exception for invalid invocation for a method annotated with {@link Argument}.
+ */
 public class InvokeArgumentException extends RuntimeException {
     public InvokeArgumentException(Exception e) {
         super(e);
