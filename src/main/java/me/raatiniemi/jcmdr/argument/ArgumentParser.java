@@ -46,6 +46,10 @@ public class ArgumentParser {
         return argumentSegment.startsWith(PREFIX_LONG_NAME);
     }
 
+    private static boolean argumentHaveValue(String argument) {
+        return argument.contains("=");
+    }
+
     /**
      * Parse the arguments against the argument scheme.
      *
@@ -101,10 +105,6 @@ public class ArgumentParser {
         }
 
         collectParsedArgument(argument);
-    }
-
-    private boolean argumentHaveValue(String argument) {
-        return argument.contains("=");
     }
 
     private void parseShortName(String argumentSegment) {
