@@ -16,7 +16,6 @@
 
 package me.raatiniemi.jcmdr;
 
-import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 import me.raatiniemi.jcmdr.scheme.annotation.Argument;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,7 +108,7 @@ public class CommandLineTest {
     }
 
     @Test
-    public void process() throws InvokeArgumentException {
+    public void process() {
         ArgumentTarget argumentTarget = new ArgumentTarget();
         CommandLine.process(argumentTarget, this.arguments);
 

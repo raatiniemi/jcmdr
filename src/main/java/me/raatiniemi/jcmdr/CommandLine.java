@@ -18,7 +18,6 @@ package me.raatiniemi.jcmdr;
 
 import me.raatiniemi.jcmdr.argument.ArgumentParser;
 import me.raatiniemi.jcmdr.argument.ParsedArgument;
-import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 import me.raatiniemi.jcmdr.scheme.SchemeParser;
 
@@ -36,13 +35,12 @@ public class CommandLine<T> {
         this.schemeParser = new SchemeParser(target.getClass());
     }
 
-    public static <T> void process(T target, String... args)
-            throws InvokeArgumentException {
+    public static <T> void process(T target, String... args) {
         CommandLine<T> commandLine = new CommandLine<>(target, args);
         commandLine.processArguments();
     }
 
-    private void processArguments() throws InvokeArgumentException {
+    private void processArguments() {
         for (ParsedArgument parsedArgument : getParsedArguments()) {
             parsedArgument.call(this.target);
         }

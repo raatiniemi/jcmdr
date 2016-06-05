@@ -16,7 +16,7 @@
 
 package me.raatiniemi.jcmdr.exception;
 
-public class InvokeArgumentException extends Exception {
+public class InvokeArgumentException extends RuntimeException {
     public InvokeArgumentException(Exception e) {
         super(e);
     }

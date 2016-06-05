@@ -16,7 +16,6 @@
 
 package me.raatiniemi.jcmdr.argument;
 
-import me.raatiniemi.jcmdr.exception.InvokeArgumentException;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.Objects;
@@ -33,7 +32,7 @@ public class ParsedArgument {
         this.argumentValue = argumentValue;
     }
 
-    public <T> void call(T target) throws InvokeArgumentException {
+    public <T> void call(T target) {
         this.schemeArgument.call(target, this.argumentValue);
     }
 

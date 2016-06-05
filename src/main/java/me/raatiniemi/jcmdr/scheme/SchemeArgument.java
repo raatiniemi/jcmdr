@@ -72,7 +72,7 @@ public class SchemeArgument {
         );
     }
 
-    public <T> void call(T target, String argumentValue) throws InvokeArgumentException {
+    public <T> void call(T target, String argumentValue) {
         try {
             if (null == argumentValue) {
                 this.methodReference.invoke(target);
