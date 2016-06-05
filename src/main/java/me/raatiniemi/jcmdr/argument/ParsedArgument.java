@@ -20,6 +20,9 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.Objects;
 
+/**
+ * Represents an argument parsed from the arguments and argument scheme.
+ */
 public class ParsedArgument {
     private SchemeArgument schemeArgument;
     private String argumentValue;
@@ -32,6 +35,12 @@ public class ParsedArgument {
         this.argumentValue = argumentValue;
     }
 
+    /**
+     * Call the method associated with the parsed argument.
+     *
+     * @param target Target class on which to call the method.
+     * @param <T>    Type reference of the target class.
+     */
     public <T> void call(T target) {
         this.schemeArgument.call(target, this.argumentValue);
     }
