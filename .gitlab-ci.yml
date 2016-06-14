@@ -7,7 +7,7 @@ stages:
 test:
   stage: test
   script:
-    - gradle test
+    - ./bin/test
   tags:
     - docker
 
