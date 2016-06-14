@@ -1,0 +1,29 @@
+image: raatiniemi/gradle:latest
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  script:
+    - ./bin/test
+  tags:
+    - docker
+
+sonar:
+  stage: test
+  script:
+    - ./bin/sonar
+  only:
+    - tags
+  tags:
+    - docker
+  allow_failure: true
+
+build:
+  stage: build
+  script:
+    - ./bin/build
+  tags:
+    - docker
