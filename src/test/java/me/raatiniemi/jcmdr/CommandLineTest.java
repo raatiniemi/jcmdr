@@ -67,11 +67,25 @@ public class CommandLineTest {
                                 "--debug"
                         },
                         {
+                                "Enable debug with short name java option",
+                                new String[]{
+                                        METHOD_DEBUG
+                                },
+                                "-Dd"
+                        },
+                        {
+                                "Enable debug with long name java option",
+                                new String[]{
+                                        METHOD_DEBUG
+                                },
+                                "-Ddebug"
+                        },
+                        {
                                 "Enable debug with short and long name",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-d --debug"
+                                "-d --debug -Dd -Ddebug"
                         },
                         {
                                 "Enable debug with long name (uppercase)",
@@ -79,6 +93,13 @@ public class CommandLineTest {
                                         METHOD_DEBUG
                                 },
                                 "--DEBUG"
+                        },
+                        {
+                                "Enable debug with long name java option (uppercase)",
+                                new String[]{
+                                        METHOD_DEBUG
+                                },
+                                "-DDEBUG"
                         },
                         {
                                 "Enable debug and verbose with short name",
@@ -97,11 +118,34 @@ public class CommandLineTest {
                                 "--debug --verbose"
                         },
                         {
+                                "Enable debug and verbose with short name java options",
+                                new String[]{
+                                        METHOD_DEBUG,
+                                        METHOD_VERBOSE
+                                },
+                                "-Dd -Dv"
+                        },
+                        {
+                                "Enable debug and verbose with long name java options",
+                                new String[]{
+                                        METHOD_DEBUG,
+                                        METHOD_VERBOSE
+                                },
+                                "-Ddebug -Dverbose"
+                        },
+                        {
                                 "Argument with long name and value (separated with an equal sign)",
                                 new String[]{
                                         "configuration-file=configuration.json"
                                 },
                                 "--configuration-file=configuration.json"
+                        },
+                        {
+                                "Argument with long name java option and value (separated with an equal sign)",
+                                new String[]{
+                                        "configuration-file=configuration.json"
+                                },
+                                "-Dconfiguration-file=configuration.json"
                         }
                 }
         );

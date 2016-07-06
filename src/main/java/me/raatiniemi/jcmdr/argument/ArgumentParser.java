@@ -24,6 +24,7 @@ import java.util.*;
  * Handle parsing of arguments against a predefined argument scheme.
  */
 public class ArgumentParser {
+    private static final String PREFIX_JAVA_OPTION = "-D";
     private static final String PREFIX_LONG_NAME = "--";
     private static final String PREFIX_SHORT_NAME = "-";
     private static final String VALUE_SEPARATOR = "=";
@@ -41,6 +42,10 @@ public class ArgumentParser {
     public ArgumentParser(String arguments, List<SchemeArgument> schemeArguments) {
         this.arguments = arguments;
         this.schemeArguments = schemeArguments;
+    }
+
+    private static boolean isJavaOption(String argumentSegment) {
+        return argumentSegment.startsWith(PREFIX_JAVA_OPTION);
     }
 
     private static boolean isLongName(String argumentSegment) {
@@ -78,6 +83,11 @@ public class ArgumentParser {
 
     private Collection<ParsedArgument> parseArgumentSegments() {
         for (String argumentSegment : getArgumentSegments()) {
+            if (isJavaOption(argumentSegment)) {
+                parseJavaOption(argumentSegment);
+                continue;
+            }
+
             if (isLongName(argumentSegment)) {
                 parseLongName(argumentSegment);
                 continue;
@@ -91,6 +101,21 @@ public class ArgumentParser {
 
     private String[] getArgumentSegments() {
         return this.arguments.split(" ");
+    }
+
+    private void parseJavaOption(String argumentSegment) {
+        String argument = argumentSegment.replaceFirst(PREFIX_JAVA_OPTION, "");
+
+        if (argumentHaveValue(argument)) {
+            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
+            collectParsedArgument(
+                    argumentWithValue[0],
+                    argumentWithValue[1]
+            );
+            return;
+        }
+
+        collectParsedArgument(argument);
     }
 
     private void parseLongName(String argumentSegment) {

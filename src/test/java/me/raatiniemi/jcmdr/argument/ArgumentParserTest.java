@@ -236,6 +236,58 @@ public class ArgumentParserTest {
                                         SchemeArgumentBuilder.buildWithShortName("d"),
                                         SchemeArgumentBuilder.buildWithLongName("verbose")
                                 }
+                        },
+                        {
+                                "With short name java option",
+                                new ParsedArgument[]{
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build()
+                                },
+                                "-Dd",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithShortName("d")
+                                }
+                        },
+                        {
+                                "With long name java option",
+                                new ParsedArgument[]{
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("debug"))
+                                                .build()
+                                },
+                                "-Ddebug",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithLongName("debug")
+                                }
+                        },
+                        {
+                                "With short and long name java options",
+                                new ParsedArgument[]{
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithShortName("d"))
+                                                .build(),
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("verbose"))
+                                                .build()
+                                },
+                                "-Dd -Dverbose",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithShortName("d"),
+                                        SchemeArgumentBuilder.buildWithLongName("verbose")
+                                }
+                        },
+                        {
+                                "With uppercase long name java option (separated with -D)",
+                                new ParsedArgument[]{
+                                        new ParsedArgument.Builder()
+                                                .schemeArgument(SchemeArgumentBuilder.buildWithLongName("ENABLE-DEBUG"))
+                                                .build()
+                                },
+                                "-DENABLE-DEBUG",
+                                new SchemeArgument[]{
+                                        SchemeArgumentBuilder.buildWithLongName("ENABLE-DEBUG")
+                                }
                         }
                 }
         );
