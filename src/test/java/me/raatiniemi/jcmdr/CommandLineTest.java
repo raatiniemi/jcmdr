@@ -36,12 +36,12 @@ public class CommandLineTest {
 
     private String message;
     private List<String> expected;
-    private String arguments;
+    private String[] arguments;
 
     public CommandLineTest(
             String message,
             String[] expected,
-            String arguments
+            String[] arguments
     ) {
         this.message = message;
         this.expected = Arrays.asList(expected);
@@ -57,49 +57,66 @@ public class CommandLineTest {
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-d"
+                                new String[]{
+                                        "-d"
+                                }
                         },
                         {
                                 "Enable debug with long name",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "--debug"
+                                new String[]{
+                                        "--debug"
+                                }
                         },
                         {
                                 "Enable debug with short name java option",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-Dd"
+                                new String[]{
+                                        "-Dd"
+                                }
                         },
                         {
                                 "Enable debug with long name java option",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-Ddebug"
+                                new String[]{
+                                        "-Ddebug"
+                                }
                         },
                         {
                                 "Enable debug with short and long name",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-d --debug -Dd -Ddebug"
+                                new String[]{
+                                        "-d",
+                                        "--debug",
+                                        "-Dd",
+                                        "-Ddebug"
+                                }
                         },
                         {
                                 "Enable debug with long name (uppercase)",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "--DEBUG"
+                                new String[]{
+                                        "--DEBUG"
+                                }
                         },
                         {
                                 "Enable debug with long name java option (uppercase)",
                                 new String[]{
                                         METHOD_DEBUG
                                 },
-                                "-DDEBUG"
+                                new String[]{
+                                        "-DDEBUG"
+                                }
                         },
                         {
                                 "Enable debug and verbose with short name",
@@ -107,7 +124,10 @@ public class CommandLineTest {
                                         METHOD_DEBUG,
                                         METHOD_VERBOSE
                                 },
-                                "-d -v"
+                                new String[]{
+                                        "-d",
+                                        "-v"
+                                }
                         },
                         {
                                 "Enable debug and verbose with long name",
@@ -115,7 +135,10 @@ public class CommandLineTest {
                                         METHOD_DEBUG,
                                         METHOD_VERBOSE
                                 },
-                                "--debug --verbose"
+                                new String[]{
+                                        "--debug",
+                                        "--verbose"
+                                }
                         },
                         {
                                 "Enable debug and verbose with short name java options",
@@ -123,7 +146,10 @@ public class CommandLineTest {
                                         METHOD_DEBUG,
                                         METHOD_VERBOSE
                                 },
-                                "-Dd -Dv"
+                                new String[]{
+                                        "-Dd",
+                                        "-Dv"
+                                }
                         },
                         {
                                 "Enable debug and verbose with long name java options",
@@ -131,21 +157,28 @@ public class CommandLineTest {
                                         METHOD_DEBUG,
                                         METHOD_VERBOSE
                                 },
-                                "-Ddebug -Dverbose"
+                                new String[]{
+                                        "-Ddebug",
+                                        "-Dverbose"
+                                }
                         },
                         {
                                 "Argument with long name and value (separated with an equal sign)",
                                 new String[]{
                                         "configuration-file=configuration.json"
                                 },
-                                "--configuration-file=configuration.json"
+                                new String[]{
+                                        "--configuration-file=configuration.json"
+                                }
                         },
                         {
                                 "Argument with long name java option and value (separated with an equal sign)",
                                 new String[]{
                                         "configuration-file=configuration.json"
                                 },
-                                "-Dconfiguration-file=configuration.json"
+                                new String[]{
+                                        "-Dconfiguration-file=configuration.json"
+                                }
                         }
                 }
         );

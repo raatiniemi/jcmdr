@@ -73,7 +73,8 @@ public class CommandLine<T> {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (String arg : this.args) {
-            stringBuilder.append(arg);
+            stringBuilder.append(" ")
+                    .append(arg);
         }
 
         return stringBuilder.toString();
