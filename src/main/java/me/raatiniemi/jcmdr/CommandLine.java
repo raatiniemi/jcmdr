@@ -70,14 +70,14 @@ public class CommandLine<T> {
     }
 
     private String buildArguments() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder arguments = new StringBuilder();
 
         for (String arg : this.args) {
-            stringBuilder.append(" ")
+            arguments.append(" ")
                     .append(arg);
         }
 
-        return stringBuilder.toString();
+        return arguments.toString();
     }
 
     private List<SchemeArgument> parseSchemeArgument() {
