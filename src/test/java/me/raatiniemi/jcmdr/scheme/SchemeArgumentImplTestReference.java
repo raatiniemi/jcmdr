@@ -19,12 +19,12 @@ package me.raatiniemi.jcmdr.scheme;
 import java.lang.reflect.Method;
 
 @SuppressWarnings("unused")
-class SchemeArgumentTestReference {
+class SchemeArgumentImplTestReference {
     static Method getMethodReference(
             String methodName,
             Class... arguments
     ) throws NoSuchMethodException {
-        return SchemeArgumentTestReference.class.getMethod(methodName, arguments);
+        return SchemeArgumentImplTestReference.class.getMethod(methodName, arguments);
     }
 
     public void firstMethodWithoutArguments() {

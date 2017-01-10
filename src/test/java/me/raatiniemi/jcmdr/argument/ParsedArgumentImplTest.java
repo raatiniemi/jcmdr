@@ -29,13 +29,13 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class ParsedArgumentTest {
+public class ParsedArgumentImplTest {
     private String message;
     private Boolean expected;
     private ParsedArgument parsedArgument;
     private Object compareTo;
 
-    public ParsedArgumentTest(
+    public ParsedArgumentImplTest(
             String message,
             Boolean expected,
             ParsedArgument parsedArgument,
@@ -49,7 +49,7 @@ public class ParsedArgumentTest {
 
     @Parameters
     public static Collection<Object[]> parameters() {
-        ParsedArgument parsedArgument = new ParsedArgument.Builder()
+        ParsedArgument parsedArgument = new ParsedArgumentImpl.Builder()
                 .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                 .build();
 
@@ -64,7 +64,7 @@ public class ParsedArgumentTest {
                         {
                                 "With null",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build(),
                                 null
@@ -72,7 +72,7 @@ public class ParsedArgumentTest {
                         {
                                 "With incompatible object",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build(),
                                 ""
@@ -80,51 +80,51 @@ public class ParsedArgumentTest {
                         {
                                 "With different options",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("h", "help"))
                                         .build()
                         },
                         {
                                 "With same options",
                                 Boolean.TRUE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build()
                         },
                         {
                                 "With different short options",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("h", "debug"))
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build()
                         },
                         {
                                 "With different long options",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "help"))
                                         .build()
                         },
                         {
                                 "With same argument value",
                                 Boolean.TRUE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .argumentValue("verbose")
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .argumentValue("verbose")
                                         .build()
@@ -132,11 +132,11 @@ public class ParsedArgumentTest {
                         {
                                 "With different argument value",
                                 Boolean.FALSE,
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .argumentValue("verbose")
                                         .build(),
-                                new ParsedArgument.Builder()
+                                new ParsedArgumentImpl.Builder()
                                         .schemeArgument(SchemeArgumentBuilder.build("d", "debug"))
                                         .argumentValue("debug")
                                         .build()

@@ -53,7 +53,7 @@ public class SchemeParser {
         return method -> {
             Argument argument = method.getAnnotation(Argument.class);
 
-            return new SchemeArgument.Builder()
+            return new SchemeArgumentImpl.Builder()
                     .shortName(argument.shortName())
                     .longName(argument.longName())
                     .methodReference(method)

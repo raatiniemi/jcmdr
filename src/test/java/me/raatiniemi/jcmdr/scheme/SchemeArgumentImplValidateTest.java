@@ -28,14 +28,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class SchemeArgumentValidateTest {
+public class SchemeArgumentImplValidateTest {
     private String message;
     private Boolean expected;
     private SchemeArgument schemeArgument;
     private String argument;
     private Class<?>[] argumentValueTypes;
 
-    public SchemeArgumentValidateTest(
+    public SchemeArgumentImplValidateTest(
             String message,
             Boolean expected,
             SchemeArgument schemeArgument,
@@ -95,7 +95,7 @@ public class SchemeArgumentValidateTest {
                                 Boolean.FALSE,
                                 SchemeArgumentBuilder.buildWithShortName(
                                         "d",
-                                        SchemeArgumentTestReference.getMethodReference(
+                                        SchemeArgumentImplTestReference.getMethodReference(
                                                 "methodWithArgument",
                                                 String.class
                                         )
@@ -110,7 +110,7 @@ public class SchemeArgumentValidateTest {
                                 Boolean.TRUE,
                                 SchemeArgumentBuilder.buildWithShortName(
                                         "d",
-                                        SchemeArgumentTestReference.getMethodReference(
+                                        SchemeArgumentImplTestReference.getMethodReference(
                                                 "methodWithArgument",
                                                 String.class
                                         )
@@ -125,7 +125,7 @@ public class SchemeArgumentValidateTest {
                                 Boolean.FALSE,
                                 SchemeArgumentBuilder.buildWithShortName(
                                         "d",
-                                        SchemeArgumentTestReference.getMethodReference(
+                                        SchemeArgumentImplTestReference.getMethodReference(
                                                 "methodWithArguments",
                                                 String.class,
                                                 Long.class
@@ -142,7 +142,7 @@ public class SchemeArgumentValidateTest {
                                 Boolean.TRUE,
                                 SchemeArgumentBuilder.buildWithShortName(
                                         "d",
-                                        SchemeArgumentTestReference.getMethodReference(
+                                        SchemeArgumentImplTestReference.getMethodReference(
                                                 "methodWithArguments",
                                                 String.class,
                                                 Long.class
