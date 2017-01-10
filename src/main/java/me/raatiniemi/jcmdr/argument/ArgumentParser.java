@@ -144,7 +144,7 @@ public class ArgumentParser {
     private void collectParsedArgument(String argument) {
         for (SchemeArgument schemeArgument : this.schemeArguments) {
             if (schemeArgument.validate(argument)) {
-                ParsedArgument parsedArgument = new ParsedArgument.Builder()
+                ParsedArgument parsedArgument = new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .build();
 
@@ -157,7 +157,7 @@ public class ArgumentParser {
     private void collectParsedArgument(String argument, String argumentValue) {
         for (SchemeArgument schemeArgument : this.schemeArguments) {
             if (schemeArgument.validate(argument, String.class)) {
-                ParsedArgument parsedArgument = new ParsedArgument.Builder()
+                ParsedArgument parsedArgument = new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .argumentValue(argumentValue)
                         .build();
