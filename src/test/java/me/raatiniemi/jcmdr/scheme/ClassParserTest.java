@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static java.util.Objects.nonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -39,7 +40,7 @@ public class ClassParserTest {
 
     public ClassParserTest(String message, SchemeArgument[] expected, Class<?> parseTarget) {
         this.message = message;
-        if (null != expected) {
+        if (nonNull(expected)) {
             this.expected = Arrays.asList(expected);
         }
 
@@ -195,7 +196,7 @@ public class ClassParserTest {
     }
 
     private boolean haveValidArgumentScheme() {
-        return null != this.expected;
+        return nonNull(expected);
     }
 
     private void assertValidArgumentScheme() {

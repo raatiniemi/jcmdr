@@ -24,6 +24,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static java.util.Objects.isNull;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -189,7 +190,7 @@ public class SchemeArgumentImplValidateTest {
     }
 
     private boolean isMissingArgumentValues() {
-        return null == this.argumentValueTypes;
+        return isNull(argumentValueTypes);
     }
 
     private boolean validateWithoutArgumentValues() {

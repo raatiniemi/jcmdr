@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -43,14 +45,16 @@ public class ArgumentParserTest {
             SchemeArgument[] schemeArguments
     ) {
         this.message = message;
-        if (null != expected) {
+        if (nonNull(expected)) {
             this.expected = new LinkedHashSet<>(Arrays.asList(expected));
         }
 
-        this.parser = new ArgumentParser(
-                arguments,
-                null == schemeArguments ? null : Arrays.asList(schemeArguments)
-        );
+        if (isNull(schemeArguments)) {
+            this.parser = new ArgumentParser(arguments, null);
+            return;
+        }
+
+        this.parser = new ArgumentParser(arguments, Arrays.asList(schemeArguments));
     }
 
     @Parameters
@@ -304,7 +308,7 @@ public class ArgumentParserTest {
     }
 
     private boolean haveValidArguments() {
-        return null != this.expected;
+        return nonNull(expected);
     }
 
     private void assertValidArguments() {

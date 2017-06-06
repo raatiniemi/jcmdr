@@ -20,6 +20,7 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
 
+import static java.util.Objects.isNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 
 /**
@@ -76,7 +77,7 @@ public class ArgumentParser {
     }
 
     private boolean isMissingArgumentScheme() {
-        return null == this.schemeArguments || this.schemeArguments.isEmpty();
+        return isNull(schemeArguments) || schemeArguments.isEmpty();
     }
 
     private boolean isMissingArguments() {

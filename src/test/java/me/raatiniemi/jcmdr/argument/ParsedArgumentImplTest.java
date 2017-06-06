@@ -25,6 +25,7 @@ import org.junit.runners.Parameterized.Parameters;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static java.util.Objects.isNull;
 import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -176,7 +177,7 @@ public class ParsedArgumentImplTest {
     }
 
     private void validateHashCodeWhenNotEqual() {
-        if (null == this.compareTo) {
+        if (isNull(this.compareTo)) {
             return;
         }
 

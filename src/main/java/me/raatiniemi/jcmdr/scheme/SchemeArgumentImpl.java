@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 
 class SchemeArgumentImpl implements SchemeArgument {
@@ -40,7 +42,7 @@ class SchemeArgumentImpl implements SchemeArgument {
             String longName,
             Method methodReference
     ) {
-        if (null == shortName && null == longName) {
+        if (isNull(shortName) && isNull(longName)) {
             throw new InvalidSchemeArgumentException(
                     "Short and/or long name must be supplied"
             );
@@ -65,7 +67,7 @@ class SchemeArgumentImpl implements SchemeArgument {
     private boolean validateArgumentValueTypes(Class<?>[] argumentValueTypes) {
         boolean haveArgumentValueTypes = argumentValueTypes.length > 0;
 
-        if (null == this.methodReference) {
+        if (isNull(methodReference)) {
             return !haveArgumentValueTypes;
         }
 
@@ -78,7 +80,7 @@ class SchemeArgumentImpl implements SchemeArgument {
     @Override
     public <T> void call(T target, String argumentValue) {
         try {
-            if (null == argumentValue) {
+            if (isNull(argumentValue)) {
                 this.methodReference.invoke(target);
                 return;
             }
@@ -98,7 +100,7 @@ class SchemeArgumentImpl implements SchemeArgument {
     }
 
     private boolean shouldCacheMethodReferenceParameterTypes() {
-        return null == this.methodReferenceParameterTypes;
+        return isNull(methodReferenceParameterTypes);
     }
 
     private void cacheMethodReferenceParameterTypes() {
@@ -145,7 +147,7 @@ class SchemeArgumentImpl implements SchemeArgument {
     }
 
     private boolean isMethodReferenceMissing() {
-        return null == this.methodReference;
+        return isNull(methodReference);
     }
 
     private int calculateHashCodeForMethodReferenceArguments(int calculatedHashCode) {
@@ -196,7 +198,7 @@ class SchemeArgumentImpl implements SchemeArgument {
         }
 
         Builder methodReference(Method methodReference) {
-            if (null != methodReference) {
+            if (nonNull(methodReference)) {
                 this.methodReference = methodReference;
             }
 
