@@ -46,7 +46,7 @@ public class SchemeParser {
     }
 
     private static Comparator<Method> sortMethodsByName() {
-        return (lhs, rhs) -> lhs.getName().compareTo(rhs.getName());
+        return Comparator.comparing(Method::getName);
     }
 
     private static Function<Method, SchemeArgument> buildSchemeArgumentFromMethod() {
