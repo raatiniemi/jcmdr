@@ -31,19 +31,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class SchemeParserTest {
+public class ClassParserTest {
     private String message;
     private List<SchemeArgument> expected;
 
-    private SchemeParser parser;
+    private ClassParser parser;
 
-    public SchemeParserTest(String message, SchemeArgument[] expected, Class<?> parseTarget) {
+    public ClassParserTest(String message, SchemeArgument[] expected, Class<?> parseTarget) {
         this.message = message;
         if (null != expected) {
             this.expected = Arrays.asList(expected);
         }
 
-        this.parser = new SchemeParser(parseTarget);
+        this.parser = new ClassParser(parseTarget);
     }
 
     private static Method getMethodReference(

@@ -19,7 +19,7 @@ package me.raatiniemi.jcmdr;
 import me.raatiniemi.jcmdr.argument.ArgumentParser;
 import me.raatiniemi.jcmdr.argument.ParsedArgument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
-import me.raatiniemi.jcmdr.scheme.SchemeParser;
+import me.raatiniemi.jcmdr.scheme.ClassParser;
 
 import java.util.Collection;
 import java.util.List;
@@ -32,12 +32,12 @@ import java.util.List;
 public class CommandLine<T> {
     private T target;
     private String[] args;
-    private SchemeParser schemeParser;
+    private ClassParser classParser;
 
     private CommandLine(T target, String[] args) {
         this.target = target;
         this.args = args;
-        this.schemeParser = new SchemeParser(target.getClass());
+        this.classParser = new ClassParser(target.getClass());
     }
 
     /**
@@ -81,6 +81,6 @@ public class CommandLine<T> {
     }
 
     private List<SchemeArgument> parseSchemeArgument() {
-        return this.schemeParser.parse();
+        return this.classParser.parse();
     }
 }
