@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
+
 class SchemeArgumentImpl implements SchemeArgument {
     private final String shortName;
     private final String longName;
@@ -164,7 +166,7 @@ class SchemeArgumentImpl implements SchemeArgument {
         private Method methodReference;
 
         Builder shortName(String shortName) {
-            if (null == shortName || 0 == shortName.length()) {
+            if (isNullOrEmpty(shortName)) {
                 return this;
             }
 
@@ -179,7 +181,7 @@ class SchemeArgumentImpl implements SchemeArgument {
         }
 
         Builder longName(String longName) {
-            if (null == longName || 0 == longName.length()) {
+            if (isNullOrEmpty(longName)) {
                 return this;
             }
 

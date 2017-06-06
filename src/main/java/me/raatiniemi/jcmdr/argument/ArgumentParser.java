@@ -20,6 +20,8 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
 
+import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
+
 /**
  * Handle parsing of arguments against a predefined argument scheme.
  */
@@ -78,7 +80,7 @@ public class ArgumentParser {
     }
 
     private boolean isMissingArguments() {
-        return null == this.arguments || 0 == this.arguments.length();
+        return isNullOrEmpty(arguments);
     }
 
     private Collection<ParsedArgument> parseArgumentSegments() {
