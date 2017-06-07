@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class SchemeArgumentImplTest {
+public class MethodSchemeArgumentTest {
     @Test(expected = InvalidShortNameException.class)
     public void build_withInvalidShortName() {
         SchemeArgumentBuilder.buildWithShortName("debug");

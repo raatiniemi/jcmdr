@@ -30,14 +30,14 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 
-class SchemeArgumentImpl implements SchemeArgument {
+class MethodSchemeArgument implements SchemeArgument {
     private final String shortName;
     private final String longName;
     private final Method methodReference;
 
     private Class<?>[] methodReferenceParameterTypes;
 
-    private SchemeArgumentImpl(
+    private MethodSchemeArgument(
             String shortName,
             String longName,
             Method methodReference
@@ -118,11 +118,11 @@ class SchemeArgumentImpl implements SchemeArgument {
             return true;
         }
 
-        if (!(o instanceof SchemeArgumentImpl)) {
+        if (!(o instanceof MethodSchemeArgument)) {
             return false;
         }
 
-        SchemeArgumentImpl argument = (SchemeArgumentImpl) o;
+        MethodSchemeArgument argument = (MethodSchemeArgument) o;
         return Objects.equals(this.shortName, argument.shortName)
                 && Objects.equals(this.longName, argument.longName)
                 && Objects.equals(this.methodReference, argument.methodReference);
@@ -205,8 +205,8 @@ class SchemeArgumentImpl implements SchemeArgument {
             return this;
         }
 
-        SchemeArgumentImpl build() {
-            return new SchemeArgumentImpl(
+        MethodSchemeArgument build() {
+            return new MethodSchemeArgument(
                     this.shortName,
                     this.longName,
                     this.methodReference

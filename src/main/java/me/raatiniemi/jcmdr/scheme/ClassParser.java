@@ -53,7 +53,7 @@ class ClassParser implements SchemeParser {
         return method -> {
             Argument argument = method.getAnnotation(Argument.class);
 
-            return new SchemeArgumentImpl.Builder()
+            return new MethodSchemeArgument.Builder()
                     .shortName(argument.shortName())
                     .longName(argument.longName())
                     .methodReference(method)

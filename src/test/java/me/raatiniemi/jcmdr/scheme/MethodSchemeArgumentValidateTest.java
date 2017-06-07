@@ -29,14 +29,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
-public class SchemeArgumentImplValidateTest {
+public class MethodSchemeArgumentValidateTest {
     private String message;
     private Boolean expected;
     private SchemeArgument schemeArgument;
     private String argument;
     private Class<?>[] argumentValueTypes;
 
-    public SchemeArgumentImplValidateTest(
+    public MethodSchemeArgumentValidateTest(
             String message,
             Boolean expected,
             SchemeArgument schemeArgument,
