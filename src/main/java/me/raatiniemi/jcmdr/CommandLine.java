@@ -22,8 +22,10 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 import me.raatiniemi.jcmdr.scheme.SchemeParser;
 import me.raatiniemi.jcmdr.scheme.SchemeParserFactory;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handle processing of arguments.
@@ -54,9 +56,7 @@ public final class CommandLine<T> {
     }
 
     private void processArguments() {
-        for (ParsedArgument parsedArgument : getParsedArguments()) {
-            parsedArgument.call(this.target);
-        }
+        getParsedArguments().forEach(parsedArgument -> parsedArgument.call(target));
     }
 
     private Collection<ParsedArgument> getParsedArguments() {
@@ -71,14 +71,8 @@ public final class CommandLine<T> {
     }
 
     private String buildArguments() {
-        StringBuilder arguments = new StringBuilder();
-
-        for (String arg : this.args) {
-            arguments.append(" ")
-                    .append(arg);
-        }
-
-        return arguments.toString();
+        return Arrays.stream(args)
+                .collect(Collectors.joining(" "));
     }
 
     private List<SchemeArgument> parseSchemeArgument() {

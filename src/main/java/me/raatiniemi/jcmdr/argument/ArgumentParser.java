@@ -145,29 +145,23 @@ public final class ArgumentParser {
     }
 
     private void collectParsedArgument(String argument) {
-        for (SchemeArgument schemeArgument : this.schemeArguments) {
-            if (schemeArgument.validate(argument)) {
-                ParsedArgument parsedArgument = new ParsedArgumentImpl.Builder()
+        schemeArguments.parallelStream()
+                .filter(schemeArgument -> schemeArgument.validate(argument))
+                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
-                        .build();
-
-                this.parsedArguments.add(parsedArgument);
-                break;
-            }
-        }
+                        .build())
+                .findFirst()
+                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
     }
 
     private void collectParsedArgument(String argument, String argumentValue) {
-        for (SchemeArgument schemeArgument : this.schemeArguments) {
-            if (schemeArgument.validate(argument, String.class)) {
-                ParsedArgument parsedArgument = new ParsedArgumentImpl.Builder()
+        schemeArguments.parallelStream()
+                .filter(schemeArgument -> schemeArgument.validate(argument, String.class))
+                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .argumentValue(argumentValue)
-                        .build();
-
-                this.parsedArguments.add(parsedArgument);
-                break;
-            }
-        }
+                        .build())
+                .findFirst()
+                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
     }
 }
