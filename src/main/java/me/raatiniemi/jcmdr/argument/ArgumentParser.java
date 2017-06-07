@@ -26,7 +26,7 @@ import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 /**
  * Handle parsing of arguments against a predefined argument scheme.
  */
-public class ArgumentParser {
+public final class ArgumentParser {
     private static final String PREFIX_JAVA_OPTION = "-D";
     private static final String PREFIX_LONG_NAME = "--";
     private static final String PREFIX_SHORT_NAME = "-";

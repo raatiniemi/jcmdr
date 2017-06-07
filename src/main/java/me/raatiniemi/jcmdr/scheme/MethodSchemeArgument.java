@@ -30,7 +30,7 @@ import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 
-class MethodSchemeArgument implements SchemeArgument {
+final class MethodSchemeArgument implements SchemeArgument {
     private final String shortName;
     private final String longName;
     private final Method methodReference;

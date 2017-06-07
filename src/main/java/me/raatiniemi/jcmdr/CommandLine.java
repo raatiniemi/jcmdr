@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @param <T> Type reference used for parsing the argument scheme.
  */
-public class CommandLine<T> {
+public final class CommandLine<T> {
     private T target;
     private String[] args;
     private SchemeParser schemeParser;

@@ -20,7 +20,7 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.Objects;
 
-class ParsedArgumentImpl implements ParsedArgument {
+final class ParsedArgumentImpl implements ParsedArgument {
     private SchemeArgument schemeArgument;
     private String argumentValue;
 
