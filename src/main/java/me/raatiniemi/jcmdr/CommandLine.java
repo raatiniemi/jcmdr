@@ -19,8 +19,8 @@ package me.raatiniemi.jcmdr;
 import me.raatiniemi.jcmdr.argument.ArgumentParser;
 import me.raatiniemi.jcmdr.argument.ParsedArgument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
-import me.raatiniemi.jcmdr.scheme.ClassParser;
 import me.raatiniemi.jcmdr.scheme.SchemeParser;
+import me.raatiniemi.jcmdr.scheme.SchemeParserFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -38,7 +38,7 @@ public class CommandLine<T> {
     private CommandLine(T target, String[] args) {
         this.target = target;
         this.args = args;
-        this.schemeParser = new ClassParser(target.getClass());
+        this.schemeParser = SchemeParserFactory.createFor(target.getClass());
     }
 
     /**
