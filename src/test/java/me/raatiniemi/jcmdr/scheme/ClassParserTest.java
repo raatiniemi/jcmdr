@@ -44,7 +44,7 @@ public class ClassParserTest {
             this.expected = Arrays.asList(expected);
         }
 
-        this.parser = new ClassParser(parseTarget);
+        parser = new ClassParser(parseTarget);
     }
 
     private static Method getMethodReference(
@@ -200,13 +200,13 @@ public class ClassParserTest {
     }
 
     private void assertValidArgumentScheme() {
-        List<SchemeArgument> actual = this.parser.parse();
-        assertEquals(this.message, this.expected, actual);
+        List<SchemeArgument> actual = parser.parse();
+        assertEquals(message, expected, actual);
     }
 
     private void assertInvalidScheme() {
-        List<SchemeArgument> actual = this.parser.parse();
-        assertTrue(this.message, actual.isEmpty());
+        List<SchemeArgument> actual = parser.parse();
+        assertTrue(message, actual.isEmpty());
     }
 
     @SuppressWarnings("unused")

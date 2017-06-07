@@ -99,11 +99,11 @@ public final class ArgumentParser {
             parseShortName(argumentSegment);
         }
 
-        return this.parsedArguments;
+        return parsedArguments;
     }
 
     private String[] getArgumentSegments() {
-        return this.arguments.split(" ");
+        return arguments.split(" ");
     }
 
     private void parseJavaOption(String argumentSegment) {

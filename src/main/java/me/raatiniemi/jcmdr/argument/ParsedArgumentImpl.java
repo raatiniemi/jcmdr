@@ -34,7 +34,7 @@ final class ParsedArgumentImpl implements ParsedArgument {
 
     @Override
     public <T> void call(T target) {
-        this.schemeArgument.call(target, this.argumentValue);
+        schemeArgument.call(target, argumentValue);
     }
 
     @Override
@@ -53,15 +53,15 @@ final class ParsedArgumentImpl implements ParsedArgument {
         }
 
         ParsedArgumentImpl that = (ParsedArgumentImpl) o;
-        return Objects.equals(this.schemeArgument, that.schemeArgument)
-                && Objects.equals(this.argumentValue, that.argumentValue);
+        return Objects.equals(schemeArgument, that.schemeArgument)
+                && Objects.equals(argumentValue, that.argumentValue);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + Objects.hashCode(this.schemeArgument);
-        result = 31 * result + Objects.hashCode(this.argumentValue);
+        result = 31 * result + Objects.hashCode(schemeArgument);
+        result = 31 * result + Objects.hashCode(argumentValue);
 
         return result;
     }
@@ -83,10 +83,7 @@ final class ParsedArgumentImpl implements ParsedArgument {
         }
 
         ParsedArgument build() {
-            return new ParsedArgumentImpl(
-                    this.schemeArgument,
-                    this.argumentValue
-            );
+            return new ParsedArgumentImpl(schemeArgument, argumentValue);
         }
     }
 }

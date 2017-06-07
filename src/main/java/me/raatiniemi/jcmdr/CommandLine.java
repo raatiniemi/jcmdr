@@ -40,7 +40,8 @@ public final class CommandLine<T> {
     private CommandLine(T target, String[] args) {
         this.target = target;
         this.args = args;
-        this.schemeParser = SchemeParserFactory.createFor(target.getClass());
+
+        schemeParser = SchemeParserFactory.createFor(target.getClass());
     }
 
     /**
@@ -76,6 +77,6 @@ public final class CommandLine<T> {
     }
 
     private List<SchemeArgument> parseSchemeArgument() {
-        return this.schemeParser.parse();
+        return schemeParser.parse();
     }
 }

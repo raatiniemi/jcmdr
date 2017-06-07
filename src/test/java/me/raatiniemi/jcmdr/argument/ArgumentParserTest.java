@@ -50,11 +50,11 @@ public class ArgumentParserTest {
         }
 
         if (isNull(schemeArguments)) {
-            this.parser = new ArgumentParser(arguments, null);
+            parser = new ArgumentParser(arguments, null);
             return;
         }
 
-        this.parser = new ArgumentParser(arguments, Arrays.asList(schemeArguments));
+        parser = new ArgumentParser(arguments, Arrays.asList(schemeArguments));
     }
 
     @Parameters
@@ -312,12 +312,12 @@ public class ArgumentParserTest {
     }
 
     private void assertValidArguments() {
-        Collection<ParsedArgument> actual = this.parser.parse();
-        assertEquals(this.message, this.expected, actual);
+        Collection<ParsedArgument> actual = parser.parse();
+        assertEquals(message, expected, actual);
     }
 
     private void assertInvalidArguments() {
-        Collection<ParsedArgument> actual = this.parser.parse();
-        assertTrue(this.message, actual.isEmpty());
+        Collection<ParsedArgument> actual = parser.parse();
+        assertTrue(message, actual.isEmpty());
     }
 }

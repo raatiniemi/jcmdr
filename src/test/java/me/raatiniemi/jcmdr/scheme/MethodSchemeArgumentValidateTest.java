@@ -170,15 +170,15 @@ public class MethodSchemeArgumentValidateTest {
     }
 
     private Boolean shouldValidationSucceed() {
-        return this.expected;
+        return expected;
     }
 
     private void assertSuccessfulValidation() {
-        assertTrue(this.message, performValidation());
+        assertTrue(message, performValidation());
     }
 
     private void assertFailedValidation() {
-        assertFalse(this.message, performValidation());
+        assertFalse(message, performValidation());
     }
 
     private boolean performValidation() {
@@ -194,10 +194,10 @@ public class MethodSchemeArgumentValidateTest {
     }
 
     private boolean validateWithoutArgumentValues() {
-        return this.schemeArgument.validate(this.argument);
+        return schemeArgument.validate(argument);
     }
 
     private boolean validateWithArgumentValues() {
-        return this.schemeArgument.validate(this.argument, this.argumentValueTypes);
+        return schemeArgument.validate(argument, argumentValueTypes);
     }
 }

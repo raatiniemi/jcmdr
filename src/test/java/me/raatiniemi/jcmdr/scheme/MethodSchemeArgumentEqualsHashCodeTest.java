@@ -200,21 +200,21 @@ public class MethodSchemeArgumentEqualsHashCodeTest {
     }
 
     private Boolean shouldBeEquals() {
-        return this.expected;
+        return expected;
     }
 
     private void assertEqual() {
-        assertTrue(this.message, this.schemeArgument.equals(this.compareTo));
+        assertTrue(message, schemeArgument.equals(compareTo));
 
         validateHashCodeWhenEquals();
     }
 
     private void validateHashCodeWhenEquals() {
-        assertTrue(this.message, this.schemeArgument.hashCode() == this.compareTo.hashCode());
+        assertTrue(message, schemeArgument.hashCode() == compareTo.hashCode());
     }
 
     private void assertNotEqual() {
-        assertFalse(this.message, this.schemeArgument.equals(this.compareTo));
+        assertFalse(message, schemeArgument.equals(compareTo));
 
         validateHashCodeWhenNotEquals();
     }
@@ -224,6 +224,6 @@ public class MethodSchemeArgumentEqualsHashCodeTest {
             return;
         }
 
-        assertFalse(this.message, this.schemeArgument.hashCode() == this.compareTo.hashCode());
+        assertFalse(message, schemeArgument.hashCode() == compareTo.hashCode());
     }
 }

@@ -187,9 +187,9 @@ public class CommandLineTest {
     @Test
     public void process() {
         ArgumentTarget argumentTarget = new ArgumentTarget();
-        CommandLine.process(argumentTarget, this.arguments);
+        CommandLine.process(argumentTarget, arguments);
 
-        assertEquals(this.message, this.expected, argumentTarget.actualCallStack);
+        assertEquals(message, expected, argumentTarget.actualCallStack);
     }
 
     @SuppressWarnings({"WeakerAccess", "unused"})
@@ -198,17 +198,17 @@ public class CommandLineTest {
 
         @Argument(shortName = "d", longName = "debug")
         public void debug() {
-            this.actualCallStack.add(METHOD_DEBUG);
+            actualCallStack.add(METHOD_DEBUG);
         }
 
         @Argument(shortName = "v", longName = "verbose")
         public void verbose() {
-            this.actualCallStack.add(METHOD_VERBOSE);
+            actualCallStack.add(METHOD_VERBOSE);
         }
 
         @Argument(longName = "configuration-file")
         public void setConfigurationFile(String filename) {
-            this.actualCallStack.add("configuration-file=" + filename);
+            actualCallStack.add("configuration-file=" + filename);
         }
     }
 }

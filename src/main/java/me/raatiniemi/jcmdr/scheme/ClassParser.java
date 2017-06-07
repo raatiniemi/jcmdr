@@ -71,6 +71,6 @@ final class ClassParser implements SchemeParser {
     }
 
     private List<Method> getMethods() {
-        return Arrays.asList(this.target.getMethods());
+        return Arrays.asList(target.getMethods());
     }
 }

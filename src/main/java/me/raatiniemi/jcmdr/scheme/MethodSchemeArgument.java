@@ -64,8 +64,8 @@ final class MethodSchemeArgument implements SchemeArgument {
     }
 
     private boolean validateArgument(String argument) {
-        return argument.equals(this.shortName)
-                || argument.equalsIgnoreCase(this.longName);
+        return argument.equals(shortName)
+                || argument.equalsIgnoreCase(longName);
     }
 
     private boolean validateArgumentValueTypes(Class<?>[] argumentValueTypes) {
@@ -85,11 +85,11 @@ final class MethodSchemeArgument implements SchemeArgument {
     public <T> void call(T target, String argumentValue) {
         try {
             if (isNull(argumentValue)) {
-                this.methodReference.invoke(target);
+                methodReference.invoke(target);
                 return;
             }
 
-            this.methodReference.invoke(target, argumentValue);
+            methodReference.invoke(target, argumentValue);
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new InvokeArgumentException(e);
         }
@@ -100,7 +100,7 @@ final class MethodSchemeArgument implements SchemeArgument {
             cacheMethodReferenceParameterTypes();
         }
 
-        return this.methodReferenceParameterTypes;
+        return methodReferenceParameterTypes;
     }
 
     private boolean shouldCacheMethodReferenceParameterTypes() {
@@ -108,7 +108,7 @@ final class MethodSchemeArgument implements SchemeArgument {
     }
 
     private void cacheMethodReferenceParameterTypes() {
-        this.methodReferenceParameterTypes = this.methodReference.getParameterTypes();
+        methodReferenceParameterTypes = methodReference.getParameterTypes();
     }
 
     @Override
@@ -127,16 +127,16 @@ final class MethodSchemeArgument implements SchemeArgument {
         }
 
         MethodSchemeArgument argument = (MethodSchemeArgument) o;
-        return Objects.equals(this.shortName, argument.shortName)
-                && Objects.equals(this.longName, argument.longName)
-                && Objects.equals(this.methodReference, argument.methodReference);
+        return Objects.equals(shortName, argument.shortName)
+                && Objects.equals(longName, argument.longName)
+                && Objects.equals(methodReference, argument.methodReference);
     }
 
     @Override
     public int hashCode() {
         int result = 17;
-        result = 31 * result + Objects.hashCode(this.shortName);
-        result = 31 * result + Objects.hashCode(this.longName);
+        result = 31 * result + Objects.hashCode(shortName);
+        result = 31 * result + Objects.hashCode(longName);
 
         return calculateHashCodeForMethodReference(result);
     }
@@ -146,7 +146,7 @@ final class MethodSchemeArgument implements SchemeArgument {
             return calculatedHashCode;
         }
 
-        int result = 31 * calculatedHashCode + Objects.hashCode(this.methodReference);
+        int result = 31 * calculatedHashCode + Objects.hashCode(methodReference);
         return calculateHashCodeForMethodReferenceArguments(result);
     }
 
@@ -213,11 +213,7 @@ final class MethodSchemeArgument implements SchemeArgument {
         }
 
         MethodSchemeArgument build() {
-            return new MethodSchemeArgument(
-                    this.shortName,
-                    this.longName,
-                    this.methodReference
-            );
+            return new MethodSchemeArgument(shortName, longName, methodReference);
         }
     }
 }

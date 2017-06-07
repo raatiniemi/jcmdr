@@ -157,30 +157,30 @@ public class ParsedArgumentImplTest {
     }
 
     private Boolean shouldBeEqual() {
-        return this.expected;
+        return expected;
     }
 
     private void assertEqual() {
-        assertTrue(this.message, this.parsedArgument.equals(this.compareTo));
+        assertTrue(message, parsedArgument.equals(compareTo));
 
         validateHashCodeWhenEqual();
     }
 
     private void validateHashCodeWhenEqual() {
-        assertTrue(this.message, this.parsedArgument.hashCode() == this.compareTo.hashCode());
+        assertTrue(message, parsedArgument.hashCode() == compareTo.hashCode());
     }
 
     private void assertNotEqual() {
-        assertFalse(this.message, this.parsedArgument.equals(this.compareTo));
+        assertFalse(message, parsedArgument.equals(compareTo));
 
         validateHashCodeWhenNotEqual();
     }
 
     private void validateHashCodeWhenNotEqual() {
-        if (isNull(this.compareTo)) {
+        if (isNull(compareTo)) {
             return;
         }
 
-        assertFalse(this.message, this.parsedArgument.hashCode() == this.compareTo.hashCode());
+        assertFalse(message, parsedArgument.hashCode() == compareTo.hashCode());
     }
 }
