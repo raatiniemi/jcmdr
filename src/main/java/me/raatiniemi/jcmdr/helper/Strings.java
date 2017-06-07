@@ -19,6 +19,9 @@ package me.raatiniemi.jcmdr.helper;
 import static java.util.Objects.isNull;
 
 public final class Strings {
+    private Strings() {
+    }
+
     public static boolean isNullOrEmpty(String s) {
         return isNull(s) || 0 == s.length();
     }
