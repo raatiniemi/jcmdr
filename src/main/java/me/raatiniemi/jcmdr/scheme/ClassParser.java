@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 /**
  * Parse the argument scheme from a target class.
  */
-public class ClassParser {
+public class ClassParser implements SchemeParser {
     private Class<?> target;
 
     /**
@@ -61,11 +61,7 @@ public class ClassParser {
         };
     }
 
-    /**
-     * Parse the argument scheme.
-     *
-     * @return Argument scheme parsed from the target.
-     */
+    @Override
     public List<SchemeArgument> parse() {
         return getMethods().stream()
                 .filter(includeMethodsWithAnnotation())

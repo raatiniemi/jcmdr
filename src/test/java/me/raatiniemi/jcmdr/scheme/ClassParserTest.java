@@ -36,7 +36,7 @@ public class ClassParserTest {
     private String message;
     private List<SchemeArgument> expected;
 
-    private ClassParser parser;
+    private SchemeParser parser;
 
     public ClassParserTest(String message, SchemeArgument[] expected, Class<?> parseTarget) {
         this.message = message;
