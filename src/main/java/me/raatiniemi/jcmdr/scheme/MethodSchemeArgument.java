@@ -53,6 +53,10 @@ class MethodSchemeArgument implements SchemeArgument {
         this.methodReference = methodReference;
     }
 
+    static Builder builder() {
+        return new Builder();
+    }
+
     @Override
     public boolean validate(String argument, Class<?>... argumentValueTypes) {
         return validateArgument(argument)
@@ -166,6 +170,9 @@ class MethodSchemeArgument implements SchemeArgument {
         private String shortName;
         private String longName;
         private Method methodReference;
+
+        private Builder() {
+        }
 
         Builder shortName(String shortName) {
             if (isNullOrEmpty(shortName)) {

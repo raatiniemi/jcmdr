@@ -27,7 +27,7 @@ public class SchemeArgumentBuilder {
             String longName,
             Method methodReference
     ) {
-        return new MethodSchemeArgument.Builder()
+        return MethodSchemeArgument.builder()
                 .shortName(shortName)
                 .longName(longName)
                 .methodReference(methodReference)
