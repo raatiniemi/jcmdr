@@ -151,7 +151,7 @@ public final class ArgumentParser {
                         .schemeArgument(schemeArgument)
                         .build())
                 .findFirst()
-                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
+                .ifPresent(parsedArguments::add);
     }
 
     private void collectParsedArgument(String argument, String argumentValue) {
@@ -162,6 +162,6 @@ public final class ArgumentParser {
                         .argumentValue(argumentValue)
                         .build())
                 .findFirst()
-                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
+                .ifPresent(parsedArguments::add);
     }
 }
