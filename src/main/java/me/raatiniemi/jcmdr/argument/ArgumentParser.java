@@ -19,6 +19,7 @@ package me.raatiniemi.jcmdr.argument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
@@ -85,25 +86,27 @@ public final class ArgumentParser {
     }
 
     private Collection<ParsedArgument> parseArgumentSegments() {
-        for (String argumentSegment : getArgumentSegments()) {
-            if (isJavaOption(argumentSegment)) {
-                parseJavaOption(argumentSegment);
-                continue;
-            }
-
-            if (isLongName(argumentSegment)) {
-                parseLongName(argumentSegment);
-                continue;
-            }
-
-            parseShortName(argumentSegment);
-        }
+        getArgumentSegments().forEach(this::parseArgumentSegment);
 
         return parsedArguments;
     }
 
-    private String[] getArgumentSegments() {
-        return arguments.split(" ");
+    private void parseArgumentSegment(String argumentSegment) {
+        if (isJavaOption(argumentSegment)) {
+            parseJavaOption(argumentSegment);
+            return;
+        }
+
+        if (isLongName(argumentSegment)) {
+            parseLongName(argumentSegment);
+            return;
+        }
+
+        parseShortName(argumentSegment);
+    }
+
+    private Stream<String> getArgumentSegments() {
+        return Arrays.stream(arguments.split(" "));
     }
 
     private void parseJavaOption(String argumentSegment) {
