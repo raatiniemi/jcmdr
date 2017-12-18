@@ -93,12 +93,12 @@ public final class ArgumentParser {
 
     private void parseArgumentSegment(String argumentSegment) {
         if (isJavaOption(argumentSegment)) {
-            parseJavaOption(argumentSegment);
+            parseJavaOption(argumentSegment).ifPresent(parsedArguments::add);
             return;
         }
 
         if (isLongName(argumentSegment)) {
-            parseLongName(argumentSegment);
+            parseLongName(argumentSegment).ifPresent(parsedArguments::add);
             return;
         }
 
@@ -109,62 +109,58 @@ public final class ArgumentParser {
         return Arrays.stream(arguments.split(" "));
     }
 
-    private void parseJavaOption(String argumentSegment) {
+    private Optional<ParsedArgument> parseJavaOption(String argumentSegment) {
         String argument = argumentSegment.replaceFirst(PREFIX_JAVA_OPTION, "");
 
         if (argumentHaveValue(argument)) {
             String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
-            collectParsedArgument(
+            return collectParsedArgument(
                     argumentWithValue[0],
                     argumentWithValue[1]
             );
-            return;
         }
 
-        collectParsedArgument(argument);
+        return collectParsedArgument(argument);
     }
 
-    private void parseLongName(String argumentSegment) {
+    private Optional<ParsedArgument> parseLongName(String argumentSegment) {
         String argument = argumentSegment.replace(PREFIX_LONG_NAME, "");
 
         if (argumentHaveValue(argument)) {
             String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
-            collectParsedArgument(
+            return collectParsedArgument(
                     argumentWithValue[0],
                     argumentWithValue[1]
             );
-            return;
         }
 
-        collectParsedArgument(argument);
+        return collectParsedArgument(argument);
     }
 
     private void parseShortName(String argumentSegment) {
         String argument = argumentSegment.replace(PREFIX_SHORT_NAME, "");
 
         for (char character : argument.toCharArray()) {
-            collectParsedArgument(String.valueOf(character));
+            collectParsedArgument(String.valueOf(character)).ifPresent(parsedArguments::add);
         }
     }
 
-    private void collectParsedArgument(String argument) {
-        schemeArguments.parallelStream()
+    private Optional<ParsedArgument> collectParsedArgument(String argument) {
+        return schemeArguments.parallelStream()
                 .filter(schemeArgument -> schemeArgument.validate(argument))
                 .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .build())
-                .findFirst()
-                .ifPresent(parsedArguments::add);
+                .findFirst();
     }
 
-    private void collectParsedArgument(String argument, String argumentValue) {
-        schemeArguments.parallelStream()
+    private Optional<ParsedArgument> collectParsedArgument(String argument, String argumentValue) {
+        return schemeArguments.parallelStream()
                 .filter(schemeArgument -> schemeArgument.validate(argument, String.class))
                 .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .argumentValue(argumentValue)
                         .build())
-                .findFirst()
-                .ifPresent(parsedArguments::add);
+                .findFirst();
     }
 }
