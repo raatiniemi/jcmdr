@@ -19,6 +19,7 @@ package me.raatiniemi.jcmdr.argument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
@@ -102,7 +103,7 @@ public final class ArgumentParser {
             return;
         }
 
-        parseShortName(argumentSegment);
+        parsedArguments.addAll(parseShortName(argumentSegment));
     }
 
     private Stream<String> getArgumentSegments() {
@@ -137,12 +138,16 @@ public final class ArgumentParser {
         return collectParsedArgument(argument);
     }
 
-    private void parseShortName(String argumentSegment) {
+    private List<ParsedArgument> parseShortName(String argumentSegment) {
         String argument = argumentSegment.replace(PREFIX_SHORT_NAME, "");
 
-        for (char character : argument.toCharArray()) {
-            collectParsedArgument(String.valueOf(character)).ifPresent(parsedArguments::add);
-        }
+        return argument.chars()
+                .mapToObj(i -> (char) i)
+                .map(String::valueOf)
+                .map(this::collectParsedArgument)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     private Optional<ParsedArgument> collectParsedArgument(String argument) {
