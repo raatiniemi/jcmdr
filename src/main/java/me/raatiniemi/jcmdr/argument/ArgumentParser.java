@@ -19,6 +19,7 @@ package me.raatiniemi.jcmdr.argument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,6 +34,10 @@ public final class ArgumentParser {
     private static final String PREFIX_LONG_NAME = "--";
     private static final String PREFIX_SHORT_NAME = "-";
     private static final String VALUE_SEPARATOR = "=";
+
+    private final Function<String, String> removeJavaPrefix = s -> s.replaceFirst(PREFIX_JAVA_OPTION, "");
+    private final Function<String, String> removeLongNamePrefix = s -> s.replaceFirst(PREFIX_LONG_NAME, "");
+    private final Function<String, String> removeShortNamePrefix = s -> s.replaceFirst(PREFIX_SHORT_NAME, "");
 
     private String arguments;
     private List<SchemeArgument> schemeArguments;
@@ -102,14 +107,14 @@ public final class ArgumentParser {
         Stream<String> stream = Stream.of(argumentSegment);
 
         if (isJavaOption(argumentSegment)) {
-            return stream.map(s -> s.replaceFirst(PREFIX_JAVA_OPTION, ""));
+            return stream.map(removeJavaPrefix);
         }
 
         if (isLongName(argumentSegment)) {
-            return stream.map(s -> s.replaceFirst(PREFIX_LONG_NAME, ""));
+            return stream.map(removeLongNamePrefix);
         }
 
-        return stream.map(s -> s.replaceFirst(PREFIX_SHORT_NAME, ""))
+        return stream.map(removeShortNamePrefix)
                 .flatMap(s -> s.chars()
                         .mapToObj(i -> (char) i)
                         .map(String::valueOf));
