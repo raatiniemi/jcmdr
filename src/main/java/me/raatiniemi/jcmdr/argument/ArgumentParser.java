@@ -36,7 +36,6 @@ public final class ArgumentParser {
 
     private String arguments;
     private List<SchemeArgument> schemeArguments;
-    private Set<ParsedArgument> parsedArguments = new LinkedHashSet<>();
 
     /**
      * Construct the argument parser.
@@ -87,67 +86,45 @@ public final class ArgumentParser {
     }
 
     private Collection<ParsedArgument> parseArgumentSegments() {
-        getArgumentSegments().forEach(this::parseArgumentSegment);
-
-        return parsedArguments;
-    }
-
-    private void parseArgumentSegment(String argumentSegment) {
-        if (isJavaOption(argumentSegment)) {
-            parseJavaOption(argumentSegment).ifPresent(parsedArguments::add);
-            return;
-        }
-
-        if (isLongName(argumentSegment)) {
-            parseLongName(argumentSegment).ifPresent(parsedArguments::add);
-            return;
-        }
-
-        parsedArguments.addAll(parseShortName(argumentSegment));
+        return getArgumentSegments()
+                .flatMap(this::processArgumentSegment)
+                .map(this::parseArgumentSegment)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     private Stream<String> getArgumentSegments() {
         return Arrays.stream(arguments.split(" "));
     }
 
-    private Optional<ParsedArgument> parseJavaOption(String argumentSegment) {
-        String argument = argumentSegment.replaceFirst(PREFIX_JAVA_OPTION, "");
+    private Stream<String> processArgumentSegment(String argumentSegment) {
+        Stream<String> stream = Stream.of(argumentSegment);
 
-        if (argumentHaveValue(argument)) {
-            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
+        if (isJavaOption(argumentSegment)) {
+            return stream.map(s -> s.replaceFirst(PREFIX_JAVA_OPTION, ""));
+        }
+
+        if (isLongName(argumentSegment)) {
+            return stream.map(s -> s.replaceFirst(PREFIX_LONG_NAME, ""));
+        }
+
+        return stream.map(s -> s.replaceFirst(PREFIX_SHORT_NAME, ""))
+                .flatMap(s -> s.chars()
+                        .mapToObj(i -> (char) i)
+                        .map(String::valueOf));
+    }
+
+    private Optional<ParsedArgument> parseArgumentSegment(String argumentSegment) {
+        if (argumentHaveValue(argumentSegment)) {
+            String[] argumentWithValue = argumentSegment.split(VALUE_SEPARATOR, 2);
             return collectParsedArgument(
                     argumentWithValue[0],
                     argumentWithValue[1]
             );
         }
 
-        return collectParsedArgument(argument);
-    }
-
-    private Optional<ParsedArgument> parseLongName(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_LONG_NAME, "");
-
-        if (argumentHaveValue(argument)) {
-            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
-            return collectParsedArgument(
-                    argumentWithValue[0],
-                    argumentWithValue[1]
-            );
-        }
-
-        return collectParsedArgument(argument);
-    }
-
-    private List<ParsedArgument> parseShortName(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_SHORT_NAME, "");
-
-        return argument.chars()
-                .mapToObj(i -> (char) i)
-                .map(String::valueOf)
-                .map(this::collectParsedArgument)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+        return collectParsedArgument(argumentSegment);
     }
 
     private Optional<ParsedArgument> collectParsedArgument(String argument) {
