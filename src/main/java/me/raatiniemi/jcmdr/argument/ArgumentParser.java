@@ -42,6 +42,21 @@ public final class ArgumentParser {
             .mapToObj(i -> (char) i)
             .map(String::valueOf);
 
+    private final Function<String, Stream<String>> processArgumentSegment = argumentSegment -> {
+        Stream<String> stream = Stream.of(argumentSegment);
+
+        if (isJavaOption(argumentSegment)) {
+            return stream.map(removeJavaPrefix);
+        }
+
+        if (isLongName(argumentSegment)) {
+            return stream.map(removeLongNamePrefix);
+        }
+
+        return stream.map(removeShortNamePrefix)
+                .flatMap(eachCharacter);
+    };
+
     private String arguments;
     private List<SchemeArgument> schemeArguments;
 
@@ -95,7 +110,7 @@ public final class ArgumentParser {
 
     private Collection<ParsedArgument> parseArgumentSegments() {
         return getArgumentSegments()
-                .flatMap(this::processArgumentSegment)
+                .flatMap(processArgumentSegment)
                 .map(this::parseArgumentSegment)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
@@ -104,21 +119,6 @@ public final class ArgumentParser {
 
     private Stream<String> getArgumentSegments() {
         return Arrays.stream(arguments.split(" "));
-    }
-
-    private Stream<String> processArgumentSegment(String argumentSegment) {
-        Stream<String> stream = Stream.of(argumentSegment);
-
-        if (isJavaOption(argumentSegment)) {
-            return stream.map(removeJavaPrefix);
-        }
-
-        if (isLongName(argumentSegment)) {
-            return stream.map(removeLongNamePrefix);
-        }
-
-        return stream.map(removeShortNamePrefix)
-                .flatMap(eachCharacter);
     }
 
     private Optional<ParsedArgument> parseArgumentSegment(String argumentSegment) {
