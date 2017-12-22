@@ -38,7 +38,7 @@ public final class ArgumentParser {
     private final Function<String, String> removeJavaPrefix = s -> s.replaceFirst(PREFIX_JAVA_OPTION, "");
     private final Function<String, String> removeLongNamePrefix = s -> s.replaceFirst(PREFIX_LONG_NAME, "");
     private final Function<String, String> removeShortNamePrefix = s -> s.replaceFirst(PREFIX_SHORT_NAME, "");
-    private final Function<String, Stream<String>> eachCharacter = s -> s.chars()
+    private final Function<String, Stream<String>> convertEachCharacterToString = s -> s.chars()
             .mapToObj(i -> (char) i)
             .map(String::valueOf);
 
@@ -54,7 +54,7 @@ public final class ArgumentParser {
         }
 
         return stream.map(removeShortNamePrefix)
-                .flatMap(eachCharacter);
+                .flatMap(convertEachCharacterToString);
     };
 
     private final Function<String, Optional<ParsedArgument>> parseArgumentSegment = argumentSegment -> {
