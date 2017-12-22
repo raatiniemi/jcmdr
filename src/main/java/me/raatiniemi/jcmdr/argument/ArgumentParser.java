@@ -57,6 +57,18 @@ public final class ArgumentParser {
                 .flatMap(eachCharacter);
     };
 
+    private final Function<String, Optional<ParsedArgument>> parseArgumentSegment = argumentSegment -> {
+        if (argumentHaveValue(argumentSegment)) {
+            String[] argumentWithValue = argumentSegment.split(VALUE_SEPARATOR, 2);
+            return collectParsedArgument(
+                    argumentWithValue[0],
+                    argumentWithValue[1]
+            );
+        }
+
+        return collectParsedArgument(argumentSegment);
+    };
+
     private String arguments;
     private List<SchemeArgument> schemeArguments;
 
@@ -111,7 +123,7 @@ public final class ArgumentParser {
     private Collection<ParsedArgument> parseArgumentSegments() {
         return getArgumentSegments()
                 .flatMap(processArgumentSegment)
-                .map(this::parseArgumentSegment)
+                .map(parseArgumentSegment)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toCollection(LinkedHashSet::new));
@@ -119,18 +131,6 @@ public final class ArgumentParser {
 
     private Stream<String> getArgumentSegments() {
         return Arrays.stream(arguments.split(" "));
-    }
-
-    private Optional<ParsedArgument> parseArgumentSegment(String argumentSegment) {
-        if (argumentHaveValue(argumentSegment)) {
-            String[] argumentWithValue = argumentSegment.split(VALUE_SEPARATOR, 2);
-            return collectParsedArgument(
-                    argumentWithValue[0],
-                    argumentWithValue[1]
-            );
-        }
-
-        return collectParsedArgument(argumentSegment);
     }
 
     private Optional<ParsedArgument> collectParsedArgument(String argument) {
