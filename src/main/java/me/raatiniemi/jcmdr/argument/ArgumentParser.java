@@ -137,9 +137,7 @@ public final class ArgumentParser {
     private Optional<ParsedArgument> collectParsedArgument(String argument) {
         return schemeArguments.parallelStream()
                 .filter(matches(argument))
-                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
-                        .schemeArgument(schemeArgument)
-                        .build())
+                .map(buildParsedArgumentWithoutValue())
                 .findFirst();
     }
 
@@ -147,13 +145,29 @@ public final class ArgumentParser {
         return schemeArgument -> schemeArgument.validate(argument, argumentValueTypes);
     }
 
+    private Function<SchemeArgument, ParsedArgument> buildParsedArgumentWithoutValue() {
+        return buildParsedArgument("");
+    }
+
+    private Function<SchemeArgument, ParsedArgument> buildParsedArgument(String argumentValue) {
+        return schemeArgument -> {
+            ParsedArgumentImpl.Builder builder = new ParsedArgumentImpl.Builder()
+                    .schemeArgument(schemeArgument);
+
+            if (isNullOrEmpty(argumentValue)) {
+                return builder.build();
+            }
+
+            return builder
+                    .argumentValue(argumentValue)
+                    .build();
+        };
+    }
+
     private Optional<ParsedArgument> collectParsedArgument(String argument, String argumentValue) {
         return schemeArguments.parallelStream()
-                .filter(matches(argument, String.class))
-                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
-                        .schemeArgument(schemeArgument)
-                        .argumentValue(argumentValue)
-                        .build())
+                .filter(matches(argument, argumentValue.getClass()))
+                .map(buildParsedArgument(argumentValue))
                 .findFirst();
     }
 }
