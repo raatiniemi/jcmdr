@@ -20,6 +20,7 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -135,16 +136,20 @@ public final class ArgumentParser {
 
     private Optional<ParsedArgument> collectParsedArgument(String argument) {
         return schemeArguments.parallelStream()
-                .filter(schemeArgument -> schemeArgument.validate(argument))
+                .filter(matches(argument))
                 .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .build())
                 .findFirst();
     }
 
+    private Predicate<SchemeArgument> matches(String argument, Class<?>... argumentValueTypes) {
+        return schemeArgument -> schemeArgument.validate(argument, argumentValueTypes);
+    }
+
     private Optional<ParsedArgument> collectParsedArgument(String argument, String argumentValue) {
         return schemeArguments.parallelStream()
-                .filter(schemeArgument -> schemeArgument.validate(argument, String.class))
+                .filter(matches(argument, String.class))
                 .map(schemeArgument -> new ParsedArgumentImpl.Builder()
                         .schemeArgument(schemeArgument)
                         .argumentValue(argumentValue)
