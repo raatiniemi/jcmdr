@@ -17,7 +17,16 @@
 package me.raatiniemi.jcmdr.scheme;
 
 public final class SchemeParserFactory {
+    private SchemeParserFactory() {
+    }
+
     public static SchemeParser createFor(Class<?> target) {
+        SchemeParserFactory factory = new SchemeParserFactory();
+
+        return factory.create(target);
+    }
+
+    private SchemeParser create(Class<?> target) {
         return new ClassParser(target);
     }
 }
