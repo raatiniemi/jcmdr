@@ -42,10 +42,12 @@ jar {
 }
 
 sonarqube {
-    // noinspection GroovyAssignabilityCheck
     properties {
-        // noinspection GroovyAssignabilityCheck
-        property "sonar.jacoco.reportPath", "${buildDir}/jacoco/test.exec"
+        properties['sonar.java.binaries'] = 'build/classes/main'
+        properties['sonar.java.test.binaries'] = 'build/classes/test'
+
+        properties['sonar.junit.reportPaths'] = 'build/test-results'
+        properties['sonar.jacoco.reportPath'] = "${buildDir}/jacoco/test.exec"
     }
 }
 
