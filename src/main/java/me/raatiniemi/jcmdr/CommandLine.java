@@ -33,9 +33,9 @@ import java.util.stream.Collectors;
  * @param <T> Type reference used for parsing the argument scheme.
  */
 public final class CommandLine<T> {
-    private T target;
-    private String[] args;
-    private SchemeParser schemeParser;
+    private final T target;
+    private final String[] args;
+    private final SchemeParser schemeParser;
 
     private CommandLine(T target, String[] args) {
         this.target = target;

@@ -21,8 +21,8 @@ import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 import java.util.Objects;
 
 final class ParsedArgumentImpl implements ParsedArgument {
-    private SchemeArgument schemeArgument;
-    private String argumentValue;
+    private final SchemeArgument schemeArgument;
+    private final String argumentValue;
 
     private ParsedArgumentImpl(
             SchemeArgument schemeArgument,

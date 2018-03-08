@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * Parse the argument scheme from a target class.
  */
 final class ClassParser implements SchemeParser {
-    private Class<?> target;
+    private final Class<?> target;
 
     /**
      * Construct the scheme parser.

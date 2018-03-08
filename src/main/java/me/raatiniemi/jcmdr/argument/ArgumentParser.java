@@ -70,8 +70,8 @@ public final class ArgumentParser {
         return collectParsedArgument(argumentSegment);
     };
 
-    private String arguments;
-    private List<SchemeArgument> schemeArguments;
+    private final String arguments;
+    private final List<SchemeArgument> schemeArguments;
 
     /**
      * Construct the argument parser.
