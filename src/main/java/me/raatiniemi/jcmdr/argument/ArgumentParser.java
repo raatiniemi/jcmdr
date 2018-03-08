@@ -19,6 +19,10 @@ package me.raatiniemi.jcmdr.argument;
 import me.raatiniemi.jcmdr.scheme.SchemeArgument;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
@@ -32,9 +36,42 @@ public final class ArgumentParser {
     private static final String PREFIX_SHORT_NAME = "-";
     private static final String VALUE_SEPARATOR = "=";
 
+    private final Function<String, String> removeJavaPrefix = s -> s.replaceFirst(PREFIX_JAVA_OPTION, "");
+    private final Function<String, String> removeLongNamePrefix = s -> s.replaceFirst(PREFIX_LONG_NAME, "");
+    private final Function<String, String> removeShortNamePrefix = s -> s.replaceFirst(PREFIX_SHORT_NAME, "");
+    private final Function<String, Stream<String>> convertEachCharacterToString = s -> s.chars()
+            .mapToObj(i -> (char) i)
+            .map(String::valueOf);
+
+    private final Function<String, Stream<String>> processArgumentSegment = argumentSegment -> {
+        Stream<String> stream = Stream.of(argumentSegment);
+
+        if (isJavaOption(argumentSegment)) {
+            return stream.map(removeJavaPrefix);
+        }
+
+        if (isLongName(argumentSegment)) {
+            return stream.map(removeLongNamePrefix);
+        }
+
+        return stream.map(removeShortNamePrefix)
+                .flatMap(convertEachCharacterToString);
+    };
+
+    private final Function<String, Optional<ParsedArgument>> parseArgumentSegment = argumentSegment -> {
+        if (argumentHaveValue(argumentSegment)) {
+            String[] argumentWithValue = argumentSegment.split(VALUE_SEPARATOR, 2);
+            return collectParsedArgument(
+                    argumentWithValue[0],
+                    argumentWithValue[1]
+            );
+        }
+
+        return collectParsedArgument(argumentSegment);
+    };
+
     private String arguments;
     private List<SchemeArgument> schemeArguments;
-    private Set<ParsedArgument> parsedArguments = new LinkedHashSet<>();
 
     /**
      * Construct the argument parser.
@@ -85,83 +122,52 @@ public final class ArgumentParser {
     }
 
     private Collection<ParsedArgument> parseArgumentSegments() {
-        for (String argumentSegment : getArgumentSegments()) {
-            if (isJavaOption(argumentSegment)) {
-                parseJavaOption(argumentSegment);
-                continue;
+        return getArgumentSegments()
+                .flatMap(processArgumentSegment)
+                .map(parseArgumentSegment)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+    }
+
+    private Stream<String> getArgumentSegments() {
+        return Arrays.stream(arguments.split(" "));
+    }
+
+    private Optional<ParsedArgument> collectParsedArgument(String argument) {
+        return schemeArguments.parallelStream()
+                .filter(matches(argument))
+                .map(buildParsedArgumentWithoutValue())
+                .findFirst();
+    }
+
+    private Predicate<SchemeArgument> matches(String argument, Class<?>... argumentValueTypes) {
+        return schemeArgument -> schemeArgument.validate(argument, argumentValueTypes);
+    }
+
+    private Function<SchemeArgument, ParsedArgument> buildParsedArgumentWithoutValue() {
+        return buildParsedArgument("");
+    }
+
+    private Function<SchemeArgument, ParsedArgument> buildParsedArgument(String argumentValue) {
+        return schemeArgument -> {
+            ParsedArgumentImpl.Builder builder = new ParsedArgumentImpl.Builder()
+                    .schemeArgument(schemeArgument);
+
+            if (isNullOrEmpty(argumentValue)) {
+                return builder.build();
             }
 
-            if (isLongName(argumentSegment)) {
-                parseLongName(argumentSegment);
-                continue;
-            }
-
-            parseShortName(argumentSegment);
-        }
-
-        return parsedArguments;
+            return builder
+                    .argumentValue(argumentValue)
+                    .build();
+        };
     }
 
-    private String[] getArgumentSegments() {
-        return arguments.split(" ");
-    }
-
-    private void parseJavaOption(String argumentSegment) {
-        String argument = argumentSegment.replaceFirst(PREFIX_JAVA_OPTION, "");
-
-        if (argumentHaveValue(argument)) {
-            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
-            collectParsedArgument(
-                    argumentWithValue[0],
-                    argumentWithValue[1]
-            );
-            return;
-        }
-
-        collectParsedArgument(argument);
-    }
-
-    private void parseLongName(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_LONG_NAME, "");
-
-        if (argumentHaveValue(argument)) {
-            String[] argumentWithValue = argument.split(VALUE_SEPARATOR, 2);
-            collectParsedArgument(
-                    argumentWithValue[0],
-                    argumentWithValue[1]
-            );
-            return;
-        }
-
-        collectParsedArgument(argument);
-    }
-
-    private void parseShortName(String argumentSegment) {
-        String argument = argumentSegment.replace(PREFIX_SHORT_NAME, "");
-
-        for (char character : argument.toCharArray()) {
-            collectParsedArgument(String.valueOf(character));
-        }
-    }
-
-    private void collectParsedArgument(String argument) {
-        schemeArguments.parallelStream()
-                .filter(schemeArgument -> schemeArgument.validate(argument))
-                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
-                        .schemeArgument(schemeArgument)
-                        .build())
-                .findFirst()
-                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
-    }
-
-    private void collectParsedArgument(String argument, String argumentValue) {
-        schemeArguments.parallelStream()
-                .filter(schemeArgument -> schemeArgument.validate(argument, String.class))
-                .map(schemeArgument -> new ParsedArgumentImpl.Builder()
-                        .schemeArgument(schemeArgument)
-                        .argumentValue(argumentValue)
-                        .build())
-                .findFirst()
-                .ifPresent(parsedArgument -> parsedArguments.add(parsedArgument));
+    private Optional<ParsedArgument> collectParsedArgument(String argument, String argumentValue) {
+        return schemeArguments.parallelStream()
+                .filter(matches(argument, argumentValue.getClass()))
+                .map(buildParsedArgument(argumentValue))
+                .findFirst();
     }
 }

@@ -5,3 +5,4 @@ build/
 *.ipr
 *.iws
 local.properties
+out
