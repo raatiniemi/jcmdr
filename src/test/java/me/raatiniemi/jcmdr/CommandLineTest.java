@@ -179,6 +179,24 @@ public class CommandLineTest {
                                 new String[]{
                                         "-Dconfiguration-file=configuration.json"
                                 }
+                        },
+                        {
+                                "Trim balanced double quotes from argument value",
+                                new String[]{
+                                        "configuration-file=configuration.json"
+                                },
+                                new String[]{
+                                        "--configuration-file=\"configuration.json\""
+                                }
+                        },
+                        {
+                                "Trim balanced single quotes from argument value",
+                                new String[]{
+                                        "configuration-file=configuration.json"
+                                },
+                                new String[]{
+                                        "--configuration-file='configuration.json'"
+                                }
                         }
                 }
         );

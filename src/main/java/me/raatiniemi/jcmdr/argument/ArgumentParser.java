@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Objects.isNull;
+import static me.raatiniemi.jcmdr.argument.ArgumentValueSanitizer.sanitize;
 import static me.raatiniemi.jcmdr.helper.Strings.isNullOrEmpty;
 
 /**
@@ -159,7 +160,7 @@ public final class ArgumentParser {
             }
 
             return builder
-                    .argumentValue(argumentValue)
+                    .argumentValue(sanitize(argumentValue))
                     .build();
         };
     }
