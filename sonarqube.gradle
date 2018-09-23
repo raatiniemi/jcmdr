@@ -22,10 +22,16 @@ sonarqube {
         properties['sonar.host.url'] = System.getenv('SONAR_HOST_URL')
         properties['sonar.login'] = System.getenv('SONAR_LOGIN')
 
+        properties['sonar.sourceEncoding'] = 'UTF-8'
+        properties['sonar.scm.provider'] = 'git'
+
+        properties['sonar.java.source'] = JavaVersion.VERSION_1_8
+        properties['sonar.java.target'] = JavaVersion.VERSION_1_8
+
         properties['sonar.java.binaries'] = 'build/classes/main'
         properties['sonar.java.test.binaries'] = 'build/classes/test'
 
-        properties['sonar.junit.reportPaths'] = 'build/test-results'
-        properties['sonar.jacoco.reportPath'] = "${buildDir}/jacoco/test.exec"
+        properties['sonar.junit.reportPaths'] = 'build/test-results/test'
+        properties['sonar.jacoco.reportPaths'] = fileTree(dir: 'build', includes: ['**/*.exec'])
     }
 }
