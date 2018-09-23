@@ -1,10 +1,18 @@
-group 'me.raatiniemi'
-version '0.0.1'
+buildscript {
+    ext {
+        nextVersion = "patch"
+    }
+}
 
-apply plugin: 'java'
-apply plugin: 'jacoco'
-apply plugin: 'org.sonarqube'
-apply plugin: 'com.github.johnrengelman.shadow'
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'com.cinnober.gradle.semver-git' version '2.3.1'
+    id 'org.sonarqube' version '2.6.2'
+    id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+group 'me.raatiniemi'
 
 // noinspection GroovyUnusedAssignment
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -14,21 +22,6 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
-}
-
-buildscript {
-    repositories {
-        jcenter()
-
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
-    }
-
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
-        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6'
-    }
 }
 
 // noinspection GroovyAssignabilityCheck
@@ -41,20 +34,9 @@ jar {
     }
 }
 
-sonarqube {
-    properties {
-        properties['sonar.java.binaries'] = 'build/classes/main'
-        properties['sonar.java.test.binaries'] = 'build/classes/test'
-
-        properties['sonar.junit.reportPaths'] = 'build/test-results'
-        properties['sonar.jacoco.reportPath'] = "${buildDir}/jacoco/test.exec"
-    }
-}
-
-jacoco {
-    toolVersion = "0.7.8"
-}
-
 dependencies {
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'jacoco.gradle'
+apply from: 'sonarqube.gradle'

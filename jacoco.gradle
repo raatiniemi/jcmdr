@@ -14,17 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package me.raatiniemi.jcmdr.argument;
-
-/**
- * Represents an argument parsed from the arguments and argument scheme.
- */
-public interface ParsedArgument {
-    /**
-     * Call the method associated with the parsed argument.
-     *
-     * @param target Target class on which to call the method.
-     * @param <T>    Type reference of the target class.
-     */
-    <T> void call(T target);
+jacoco {
+    toolVersion = '0.8.1'
 }

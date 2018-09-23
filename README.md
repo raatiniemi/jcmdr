@@ -1,4 +1,5 @@
 # jcmdr
+[![pipeline status](https://gitlab.com/raatiniemi/jcmdr/badges/master/pipeline.svg)](https://gitlab.com/raatiniemi/jcmdr/commits/master)
 
 jcmdr is a Java library for parsing command line arguments using annotations.
 
@@ -46,7 +47,7 @@ When the `CommandLine.process` receives an instance the following things happens
 ## License
 
 ```
-Copyright (C) 2016 Tobias Raatiniemi
+Copyright (C) 2018 Tobias Raatiniemi
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
