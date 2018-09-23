@@ -1,29 +1,47 @@
 image: gradle:4.10.1-jdk8
 
-stages:
-  - test
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  policy: push
+  paths:
+  - .gradle
   - build
 
-test:
-  stage: test
-  script:
-    - ./bin/test
-  tags:
-    - docker
+before_script:
+- export GRADLE_USER_HOME=`pwd`/.gradle
 
-sonar:
-  stage: test
-  script:
-    - ./bin/sonar
-  only:
-    - tags
-  tags:
-    - docker
-  allow_failure: true
+stages:
+  - build
+  - test
 
 build:
   stage: build
   script:
-    - ./bin/build
+    - gradle clean --build-cache build
+  artifacts:
+    paths:
+      - build
+    expire_in: 1 day
+  tags:
+    - docker
+
+test:
+  stage: test
+  script:
+    - gradle test
+  except:
+    - master
+  tags:
+    - docker
+
+analyse:
+  stage: test
+  script:
+    - gradle sonarqube
+  only:
+    - master
   tags:
     - docker
