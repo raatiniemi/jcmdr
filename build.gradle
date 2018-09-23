@@ -34,18 +34,9 @@ jar {
     }
 }
 
-sonarqube {
-    properties {
-        properties['sonar.java.binaries'] = 'build/classes/main'
-        properties['sonar.java.test.binaries'] = 'build/classes/test'
-
-        properties['sonar.junit.reportPaths'] = 'build/test-results'
-        properties['sonar.jacoco.reportPath'] = "${buildDir}/jacoco/test.exec"
-    }
-}
-
 dependencies {
     testCompile 'junit:junit:4.12'
 }
 
 apply from: 'jacoco.gradle'
+apply from: 'sonarqube.gradle'
