@@ -18,6 +18,10 @@
 
 sonarqube {
     properties {
+        properties['sonar.organization'] = System.getenv('SONAR_ORGANIZATION')
+        properties['sonar.host.url'] = System.getenv('SONAR_HOST_URL')
+        properties['sonar.login'] = System.getenv('SONAR_LOGIN')
+
         properties['sonar.java.binaries'] = 'build/classes/main'
         properties['sonar.java.test.binaries'] = 'build/classes/test'
 
