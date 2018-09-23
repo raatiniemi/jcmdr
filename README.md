@@ -1,5 +1,8 @@
 # jcmdr
 [![pipeline status](https://gitlab.com/raatiniemi/jcmdr/badges/master/pipeline.svg)](https://gitlab.com/raatiniemi/jcmdr/commits/master)
+[![quality gate](https://sonarcloud.io/api/project_badges/measure?project=me.raatiniemi%3Ajcmdr&metric=alert_status)](https://sonarcloud.io/dashboard?id=me.raatiniemi%3Ajcmdr)
+[![code test coverage](https://sonarcloud.io/api/project_badges/measure?project=me.raatiniemi%3Ajcmdr&metric=coverage)](https://sonarcloud.io/dashboard?id=me.raatiniemi%3Ajcmdr)
+[![technical dept](https://sonarcloud.io/api/project_badges/measure?project=me.raatiniemi%3Ajcmdr&metric=sqale_index)](https://sonarcloud.io/dashboard?id=me.raatiniemi%3Ajcmdr)
 
 jcmdr is a Java library for parsing command line arguments using annotations.
 
